@@ -1,0 +1,9 @@
+// scssファイルをimport
+@import "reset";
+@import "variables";
+@import "header";
+
+body {
+  background-color: $bg-color;
+  font-family: $text-font;
+}
