@@ -20,6 +20,20 @@
   %body
     %header.header
       .header-logo Gather Band
-      .header-login-btn ログイン
+      - if user_signed_in?
+        -# ログインしていれば実行（ログインアイコンを表示）
+        .header-dropdown
+          = image_tag 'default-icon.png', class: 'header-icon drop-btn'
+          .dropdown-content
+            %a.dropdown-link{:href => "#"} プロフィール
+            -# ログアウト機能の追加
+            = link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: 'delete' }, class: 'dropdown-link'
+      - else
+        -# ログインしていない時
+        = link_to 'ログイン', new_user_session_path, class: 'header-login-btn'
     -# application.html.hamlに記述した内容はすべてのHTMLで表示され、yieldで個別のHTMLを読み込んでいる
+    - if flash.present?
+      .flash
+        - flash.each do |key, value|
+          %div{:class => key}= value
     = yield

@@ -2,8 +2,25 @@
 @import "reset";
 @import "variables";
 @import "header";
+@import "devise";
 
 body {
   background-color: $bg-color;
   font-family: $text-font;
+  color: $text-base-color;
+}
+
+.container {
+  padding: 15px 20px;
+  width: 100%;
+}
+
+.flash {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  background-color: #fff;
+  padding: 8px 18px;
 }

@@ -1,10 +1,11 @@
 @import "variables";
 
 .header {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #fff;
+  border-bottom: 1px solid #fff;
   color: #fff;
   padding: 15px 20px;
   font-weight: bold;
@@ -20,5 +21,33 @@
     text-decoration: none;
     background-color: $main-color;
     padding: 8px 18px;
+  }
+}
+
+.header-icon {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+}
+
+.dropdown-content {
+  // visibility: hidden;
+  position: absolute;
+  top: 90%;
+  right: 20px;
+  z-index: 100;
+  background-color: #fff;
+  padding: 6px 10px;
+}
+
+.dropdown-link {
+  display: block;
+  text-decoration: none;
+  color: $text-base-color;
+  font-size: 12px;
+  text-align: right;
+
+  & + & {
+    padding-top: 5px;
   }
 }

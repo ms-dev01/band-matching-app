@@ -1,0 +1,55 @@
+@import "variables";
+
+.devise-h2 {
+  background-color: $main-color;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.devise-container {
+  background-color: #fff;
+  padding: 10px 15px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.field {
+  padding: 8px;
+  text-align: left;
+}
+
+.text {
+  font-size: 16px;
+
+  &-mini {
+    font-size: 12px;
+    text-decoration: none;
+    color: $text-base-color;
+  }
+}
+
+.text-input {
+  width: 100%;
+}
+
+input {
+  border: none;
+  border: 1px solid $border-color;
+}
+
+.devise-btn {
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  background-color: $main-color;
+  padding: 5px 18px;
+  margin: 10px 0 8px 0;
+}
+
+.devise-error-message {
+  font-size: 12px;
+  list-style: none;
+}
