@@ -1,8 +1,10 @@
 // scssファイルをimport
 @import "reset";
+@import "button";
 @import "variables";
 @import "header";
 @import "devise";
+@import "form";
 
 body {
   background-color: $bg-color;
