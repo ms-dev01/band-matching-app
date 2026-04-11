@@ -1,0 +1,79 @@
+.container
+  -if @profile.errors.any?
+    %ul
+      - @profile.errors.full_messages.each do |message|
+        %li= message
+  .form-title プロフィールの編集
+  -# エラーがある場合、メッセージを表示
+  .form-container
+    = form_with(model: @profile, url: profile_path, method: 'patch', local: true) do |f|
+      .label
+        = f.label :icon, 'プロフィール画像：'
+      %div
+        = f.file_field :icon, class: 'file'
+      .label
+        = f.label :nickname, 'ニックネーム：'
+      %div
+        = f.text_field :nickname, class: 'text-field'
+      .label
+        = f.label :gender, '性別：'
+      %div.select-container
+        = f.select :gender, Profile.genders.keys, { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :birth_date, '生年月日：'
+      %div
+        = f.date_field :birth_date, class: 'date-field'
+      .label
+        = f.label :part, '担当パート：'
+      %div.select-container
+        = f.select :part, Profile.parts.keys, { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :experience_years, '担当歴：'
+      %div.select-container
+        = f.select :experience_years, (0..60).to_a, { include_blank: "" }, class: 'select-field'
+        %span.select-span 年
+        = f.select :experience_months, (0..11).to_a, { include_blank: "" },  class: 'select-field'
+        %span.select-span ヶ月
+      .label
+        = f.label :activity_genres, '活動ジャンル：'
+      %div.select-container
+        = f.select :activity_genres, [['趣味', 'hobby'], ['アマチュア', 'amateur'], ['プロ', 'pro']], { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :activity_areas, '活動地域：'
+      %div.select-container
+        = f.select :activity_areas, [['東京都', 'Tokyo'], ['愛知', 'Aichi'], ['大阪', 'Osaka']], { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :activity_styles, '活動志向：'
+      %div.select-container
+        = f.select :activity_styles, Profile.activity_styles.keys, { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :practice_styles, '練習スタイル：'
+      %div.select-container
+        = f.select :practice_styles, Profile.practice_styles.keys, { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :music_types, '楽曲タイプ：'
+      %div.select-container
+        = f.select :music_types, Profile.music_types.keys, { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :wants_live_performance, 'ライブ出演希望：'
+      %div.select-container
+        = f.select :wants_live_performance, [['有', true], ['無', false]] , { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :personalities, '性格タグ：'
+      %div.select-container
+        = f.select :personalities, [['フレンドリー', 'friendly'], ['明るい', 'cheerful'], ['聞き上手', 'listener']], { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :favorite_bands, '好きなバンドタグ：'
+      %div.select-container
+        = f.select :favorite_bands, [['ONE OK ROCK', 'ONE OK ROCK'], ['RADWIMPS', 'RADWIMPS'], ['Perfume', 'Perfume']], { include_blank: "" }, { class: 'select-field' }
+      .label
+        = f.label :sns_links, 'SNSリンク：'
+      %div
+        = f.text_field :sns_links, class: 'text-field'
+      .label
+        = f.label :bio, '自己紹介：'
+      %div
+        = f.text_field :bio, class: 'text-field'
+
+      .btn-container
+        = f.submit '保存', class: 'btn-primary'
