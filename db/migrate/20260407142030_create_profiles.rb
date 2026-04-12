@@ -6,11 +6,11 @@ class CreateProfiles < ActiveRecord::Migration[8.1]
       # ニックネーム
       t.string :nickname, null: false
       # 性別
-      t.integer :gender
+      t.integer :gender, null: false
       # 生年月日
-      t.date :birth_date
+      t.date :birth_date, null: false
       # 担当パート
-      t.integer :part
+      t.integer :part, null: false
       # 担当年数
       t.integer :experience_year
       # 担当月数

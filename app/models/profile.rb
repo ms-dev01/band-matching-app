@@ -14,5 +14,43 @@ class Profile < ApplicationRecord
   enum :music_type, { original: 0, cover: 1, session: 2, arranged_cover: 3 }
 
   # バリデーション設定
-  validates :nickname, presence: true
+  validates :nickname, presence: true, length: { maximum: 20 }
+  validates :gender, presence: true
+  validate :valid_age_range
+  validates :part, presence: true
+  validates :bio, length: { maximum: 300 }
+
+  # 年齢を制限
+  def valid_age_range
+    if birth_date.blank?
+      errors.add(:birth_date, "を入力してください")
+      return
+    end
+
+    age = calculate_age
+
+    # ユーザーは13歳以上100歳未満であること
+    if age < 13
+      errors.add(:birth_date, "は13歳以上である必要があります")
+    end
+
+    # 13歳未満は登録不可
+    if age > 100
+      errors.add(:birth_date, "の年齢が不正です")
+    end
+  end
+
+  def calculate_age
+    # 現在の年から誕生年を引く
+    years = Time.zone.now.year - birth_date.year
+    # 今日のydayから誕生日のydayを引き、誕生日が過ぎたかどうか計算
+    days = Time.zone.now.yday - birth_date.yday
+
+    # daysが負の値であれば、誕生日はまだ来ていないのでyearsを-1する
+    if days < 0
+      years - 1
+    else
+      years
+    end
+  end
 end

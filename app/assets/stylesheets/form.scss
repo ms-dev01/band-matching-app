@@ -11,15 +11,19 @@
 
 .form-container {
   background-color: #fff;
-  padding: 10px 20px;
+  padding: 20px;
 }
 
-.label {
-  margin-top: 15px;
+.form-group {
+  margin-bottom: 20px;
 }
 
 .file {
   border: none;
+}
+
+.required {
+  color: red;
 }
 
 .text-field {
