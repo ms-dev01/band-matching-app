@@ -16,9 +16,9 @@ class ProfilesController < ApplicationController
 
     if @profile.save
       # プロフィール画面に遷移してflashを表示
-      redirect_to profile_path, notice: 'プロフィールを更新しました'
+      redirect_to profile_path, notice: "プロフィールを更新しました"
     else
-      flash.now[:error] = 'プロフィールを更新できませんでした'
+      flash.now[:error] = "プロフィールを更新できませんでした"
       # 同じリクエストのままedit.html.hamlを表示し直す
       # バリデーションエラー（必須項目が空など）のときにHTTPステータスコード422を返す
       render :edit, status: :unprocessable_entity

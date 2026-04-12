@@ -17,11 +17,11 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 # Hamlを高速にコンパイルするgem
-gem 'hamlit'
+gem "hamlit"
 # SCSSをRailsで使用可能にするgem
-gem 'sassc-rails'
+gem "sassc-rails"
 # ユーザー認証機能を簡単に実装するためのgem
-gem 'devise'
+gem "devise"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
