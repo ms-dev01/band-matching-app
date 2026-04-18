@@ -3,9 +3,19 @@
 .btn-primary {
   font-size: 16px;
   color: #fff;
-  font-weight: bold;
   border: none;
+  text-decoration: none;
   background-color: $main-color;
   padding: 6px 20px;
+  margin: 10px 0 8px 0;
+}
+
+.btn-secondary {
+  font-size: 18px;
+  color: #fff;
+  border: none;
+  text-decoration: none;
+  background-color: $main-color;
+  padding: 8px 20px;
   margin: 10px 0 8px 0;
 }

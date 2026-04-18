@@ -1,0 +1,27 @@
+@import "variables";
+
+.display-group {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  & + & {
+    margin-top: 7px;
+  }
+}
+
+.display-group-title {
+  font-size: 14px;
+}
+
+.display-group-content {
+  color: $main-color;
+  font-size: 12px;
+  border: 1px solid $main-color;
+  border-radius: 4px;
+  padding: 2px 5px;
+
+  & + & {
+    margin-left: 5px;
+  }
+}

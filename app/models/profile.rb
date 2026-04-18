@@ -40,6 +40,7 @@ class Profile < ApplicationRecord
     end
   end
 
+  # 年齢を計算
   def calculate_age
     # 現在の年から誕生年を引く
     years = Time.zone.now.year - birth_date.year
@@ -52,5 +53,22 @@ class Profile < ApplicationRecord
     else
       years
     end
+  end
+
+  def experience_text
+    if experience_year == 0 && experience_month == 0
+      "未経験"
+    elseif experience_year == 0
+      "#{experience_month}ヶ月"
+    elseif experience_month == 0
+      "#{experience_year}年"
+    else
+      "#{experience_year}年#{experience_month}ヶ月"
+    end
+  end
+
+  # プロフィールの必須項目が入力されているかどうか
+  def completed?
+    nickname.present? && gender.present? && birth_date.present? && part.present?
   end
 end
