@@ -23,9 +23,10 @@
       - if user_signed_in?
         -# ログインしていれば実行（ログインアイコンを表示）
         .header-dropdown
-          = image_tag 'default-icon.png', class: 'header-icon drop-btn'
+          = image_tag 'default-icon.png', class: 'icon drop-btn'
           .dropdown-content
-            %a.dropdown-link{:href => "#"} プロフィール
+            -# プロフィール画面へのリンク
+            = link_to 'プロフィール', profile_path, class: 'dropdown-link'
             -# ログアウト機能の追加
             = link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: 'delete' }, class: 'dropdown-link'
       - else
