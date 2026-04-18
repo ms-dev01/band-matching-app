@@ -13,11 +13,14 @@ class ApplicationController < ActionController::Base
     # ログインしていない場合、何もせず終了
     return unless user_signed_in?
 
-    # プロフィール画面の場合、何もせず終了
-    return if controller_name == "profiles"
+    # プロフィール編集・更新処理は対象外
+    return if controller_name == "profiles" && action_name.in?(%w[edit update])
+
+    # Devise認証関連の画面は対象外
+    return if devise_controller?
 
     # プロフィールの必須項目が入力されていなければ、プロフィール編集画面に遷移
-    unless current_user.profile.completed?
+    unless current_user.profile&.completed?
       redirect_to edit_profile_path
     end
   end
