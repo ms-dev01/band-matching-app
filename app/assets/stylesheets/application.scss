@@ -5,6 +5,8 @@
 @import "header";
 @import "devise";
 @import "form";
+@import "profile";
+@import "display";
 
 body {
   background-color: $bg-color;
@@ -25,4 +27,10 @@ body {
   font-size: 12px;
   background-color: #fff;
   padding: 8px 18px;
+}
+
+.icon {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
 }
