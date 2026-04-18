@@ -1,1 +1,55 @@
-show
+.container
+  .form-title プロフィール
+  .form-container
+    .profile-main-info
+      .profile-icon
+        = image_tag 'default-icon.png', class: 'icon'
+      .profile-main-top
+        .profile-main-details= "#{@profile.nickname} - #{@profile.part}"
+      .profile-main-bottom
+        .profile-main-details= "(#{@profile.calculate_age}歳 / #{@profile.gender})"
+    .profile-basic-info
+      .profile-title 基本情報
+      .display-group
+        .display-group-title 担当パート：
+        .display-group-content= @profile.part
+        .display-group-content= @profile.experience_text
+      .display-group
+        .display-group-title 活動地域：
+        .display-group-content= "東京都"
+      .display-group
+        .display-group-title 活動ジャンル：
+        .display-group-content= "J-POP"
+      .display-group
+        .display-group-title 活動志向：
+        .display-group-content= @profile.activity_style
+    .profile-play-style
+      .profile-title 活動スタイル
+      .display-group
+        .display-group-title 練習スタイル：
+        .display-group-content= @profile.practice_style
+      .display-group
+        .display-group-title 楽曲タイプ：
+        .display-group-content= @profile.music_type
+      .display-group
+        .display-group-title ライブ出演希望：
+        .display-group-content= @profile.wants_live_performance
+    .profile-my-tag
+      .profile-title マイタグ
+      .display-group
+        .display-group-title 性格タグ：
+        .display-group-content= "フレンドリー"
+        .display-group-content= "聞き上手"
+      .display-group
+        .display-group-title 好きなバンドタグ：
+        .display-group-content= "サザンオールスターズ"
+        .display-group-content= "ONE OK ROCK"
+    .profile-sns-links
+      .profile-title SNSリンク
+      .profile-text= @profile.sns_links
+    .profile-bio
+      .profile-title 自己紹介
+      .profile-text= @profile.bio
+    -# プロフィール編集画面へのリンク
+    .profile-edit-btn
+      = link_to "編集", edit_profile_path, class: "btn-secondary"

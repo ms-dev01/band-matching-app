@@ -2,6 +2,11 @@ class ProfilesController < ApplicationController
   # ログインしていないと使えないようにする
   before_action :authenticate_user!
 
+  def show
+    # ログインユーザのプロフィールを取得
+    @profile = current_user.profile
+  end
+
   def edit
     # current_userのプロフィールが存在すれば、そのプロフィールレコードを取得し、そうでなければ空のProfileインスタンスを作成
     @profile = current_user.prepare_profile
