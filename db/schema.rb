@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_25_154621) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_25_162105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_25_154621) do
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "profile_activity_areas", force: :cascade do |t|
+    t.bigint "activity_area_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_area_id"], name: "index_profile_activity_areas_on_activity_area_id"
+    t.index ["profile_id"], name: "index_profile_activity_areas_on_profile_id"
   end
 
   create_table "profile_activity_genres", force: :cascade do |t|
@@ -66,6 +75,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_25_154621) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "profile_activity_areas", "activity_areas"
+  add_foreign_key "profile_activity_areas", "profiles"
   add_foreign_key "profile_activity_genres", "activity_genres"
   add_foreign_key "profile_activity_genres", "profiles"
   add_foreign_key "profiles", "users"
