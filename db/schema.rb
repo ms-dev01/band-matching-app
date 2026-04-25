@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_25_174531) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_25_180844) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_25_174531) do
     t.index ["profile_id"], name: "index_profile_activity_genres_on_profile_id"
   end
 
+  create_table "profile_personalities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "personality_id", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["personality_id"], name: "index_profile_personalities_on_personality_id"
+    t.index ["profile_id"], name: "index_profile_personalities_on_profile_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.integer "activity_style"
     t.text "bio"
@@ -85,5 +94,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_25_174531) do
   add_foreign_key "profile_activity_areas", "profiles"
   add_foreign_key "profile_activity_genres", "activity_genres"
   add_foreign_key "profile_activity_genres", "profiles"
+  add_foreign_key "profile_personalities", "personalities"
+  add_foreign_key "profile_personalities", "profiles"
   add_foreign_key "profiles", "users"
 end

@@ -9,6 +9,10 @@ class Profile < ApplicationRecord
   has_many :profile_activity_areas, dependent: :destroy
   # プロフィールに紐づく活動地域を取得（中間テーブル経由）
   has_many :activity_areas, through: :profile_activity_areas
+  # プロフィールと性格タグの多対多関係を中間テーブルで管理
+  has_many :profile_personalities, dependent: :destroy
+  # プロフィールに紐づく性格タグを取得（中間テーブル経由）
+  has_many :personalities, through: :profile_personalities
 
   # 性別のパターンを定義
   enum :gender, { male: 0, female: 1, other: 2 }
