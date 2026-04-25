@@ -93,3 +93,24 @@ activity_areas.each do |activity_area|
   # 同じ名前のデータがあればそれを使い、なければ新しく作る（重複防止）
   ActivityArea.find_or_create_by(name: activity_area)
 end
+
+# 性格タグを定義
+personalities = [
+  "フレンドリー",
+  "明るい",
+  "話し上手",
+  "聞き上手",
+  "優しい",
+  "穏やか",
+  "サポート好き",
+  "まとめるのが好き",
+  "活動的",
+  "真面目",
+  "決断力がある",
+  "クリエイティブ"
+]
+
+personalities.each do |personality|
+  # 同じ名前のデータがあればそれを使い、なければ新しく作る（重複防止）
+  Personality.find_or_create_by(name: personality)
+end
