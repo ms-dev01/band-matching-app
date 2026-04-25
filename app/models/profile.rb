@@ -5,6 +5,10 @@ class Profile < ApplicationRecord
   has_many :profile_activity_genres, dependent: :destroy
   # プロフィールに紐づく活動ジャンルを取得（中間テーブル経由）
   has_many :activity_genres, through: :profile_activity_genres
+  # プロフィールと活動地域の多対多関係を中間テーブルで管理
+  has_many :profile_activity_areas, dependent: :destroy
+  # プロフィールに紐づく活動地域を取得（中間テーブル経由）
+  has_many :activity_areas, through: :profile_activity_areas
 
   # 性別のパターンを定義
   enum :gender, { male: 0, female: 1, other: 2 }
