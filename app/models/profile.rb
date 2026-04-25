@@ -1,6 +1,10 @@
 class Profile < ApplicationRecord
   # UserモデルとProfileモデルを紐付け
   belongs_to :user
+  # プロフィールと活動ジャンルの多対多関係を中間テーブルで管理
+  has_many :profile_activity_genres, dependent: :destroy
+  # プロフィールに紐づく活動ジャンルを取得（中間テーブル経由）
+  has_many :activity_genres, through: :profile_activity_genres
 
   # 性別のパターンを定義
   enum :gender, { male: 0, female: 1, other: 2 }
