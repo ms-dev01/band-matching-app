@@ -48,17 +48,15 @@
           %span.select-span 年
           = f.select :experience_month, (0..11).to_a, { include_blank: "" },  class: 'select-field'
           %span.select-span ヶ月
-      .form-group
-        .label
-          = f.label :activity_areas, '活動地域'
+      %fieldset.fieldset
+        %legend 活動地域
         %div.check-boxes-container
           = f.collection_check_boxes :activity_area_ids, ActivityArea.all, :id, :name do |b|
             .check-box-group
               = b.check_box
               = b.label
-      .form-group
-        .label
-          = f.label :activity_genres, '活動ジャンル'
+      %fieldset.fieldset
+        %legend 活動ジャンル
         %div.check-boxes-container
           = f.collection_check_boxes :activity_genre_ids, ActivityGenre.all, :id, :name do |b|
             .check-box-group
@@ -84,19 +82,20 @@
           = f.label :wants_live_performance, 'ライブ出演希望'
         %div.select-container
           = f.select :wants_live_performance, [['有', true], ['無', false]] , { include_blank: "" }, { class: 'select-field' }
-      .form-group
-        .label
-          = f.label :personalities, '性格タグ'
+      %fieldset.fieldset
+        %legend 性格タグ
         %div.check-boxes-container
           = f.collection_check_boxes :personality_ids, Personality.all, :id, :name do |b|
             .check-box-group
               = b.check_box
               = b.label
-      .form-group
-        .label
-          = f.label :favorite_bands, '好きなバンドタグ'
-        %div.select-container
-          = f.select :favorite_bands, [['ONE OK ROCK', 'ONE OK ROCK'], ['RADWIMPS', 'RADWIMPS'], ['Perfume', 'Perfume']], { include_blank: "" }, { class: 'select-field' }
+      %fieldset.fieldset
+        %legend 好きなバンドタグ
+        %div.check-boxes-container
+          = f.collection_check_boxes :favorite_band_ids, FavoriteBand.all, :id, :name do |b|
+            .check-box-group
+              = b.check_box
+              = b.label
       .form-group
         .label
           = f.label :sns_links, 'SNSリンク'

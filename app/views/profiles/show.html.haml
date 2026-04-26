@@ -48,8 +48,9 @@
             %li.display-group-content= personality.name
       .display-group
         .display-group-title 好きなバンドタグ：
-        .display-group-content= "サザンオールスターズ"
-        .display-group-content= "ONE OK ROCK"
+        %ul.display-group-wrapper
+          - @profile.favorite_bands.each do |favorite_band|
+            %li.display-group-content= favorite_band.name
     .profile-sns-links
       .profile-title SNSリンク
       .profile-text= @profile.sns_links
