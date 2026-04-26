@@ -114,3 +114,62 @@ personalities.each do |personality|
   # 同じ名前のデータがあればそれを使い、なければ新しく作る（重複防止）
   Personality.find_or_create_by(name: personality)
 end
+
+# 好きなバンドタグを定義
+favorite_bands = [
+  "ONE OK ROCK",
+  "RADWIMPS",
+  "BUMP OF CHICKEN",
+  "Mr.Children",
+  "キングヌー",
+  "オフィシャルヒゲダンディズム",
+  "エメ",
+  "Perfume",
+  "嵐",
+  "乃木坂46",
+  "欅坂46",
+  "BABYMETAL",
+  "MAN WITH A MISSION",
+  "アレキサンドロス",
+  "LiSA",
+  "イヴ",
+  "YOASOBI",
+  "ジ・オーラル・シガレッツ",
+  "スキャンダル",
+  "あいみょん",
+  "サカナクション",
+  "King & Prince",
+  "スノーマン",
+  "スミカ",
+  "Coldrain",
+  "Fear, and Loathing in Las Vegas",
+  "凛として時雨",
+  "B’z",
+  "GLAY",
+  "LUNA SEA",
+  "ZARD",
+  "サザンオールスターズ",
+  "レディオヘッド",
+  "ミューズ",
+  "リンキンパーク",
+  "グリーンデイ",
+  "フーファイターズ",
+  "コールドプレイ",
+  "ニルヴァーナ",
+  "パラモア",
+  "イマジンドラゴンズ",
+  "レッドホットチリペッパーズ",
+  "クイーン",
+  "ビートルズ",
+  "バックストリートボーイズ",
+  "ワンディレクション",
+  "マルーン5",
+  "アデル",
+  "テイラースウィフト",
+  "エド・シーラン"
+]
+
+favorite_bands.each do |favorite_band|
+  # 同じ名前のデータがあればそれを使い、なければ新しく作る（重複防止）
+  FavoriteBand.find_or_create_by(name: favorite_band)
+end
