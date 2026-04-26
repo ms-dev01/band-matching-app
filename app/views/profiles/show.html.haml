@@ -43,8 +43,9 @@
       .profile-title マイタグ
       .display-group
         .display-group-title 性格タグ：
-        .display-group-content= "フレンドリー"
-        .display-group-content= "聞き上手"
+        %ul.display-group-wrapper
+          - @profile.personalities.each do |personality|
+            %li.display-group-content= personality.name
       .display-group
         .display-group-title 好きなバンドタグ：
         .display-group-content= "サザンオールスターズ"
