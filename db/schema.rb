@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_26_011032) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_26_013631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,6 +54,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_26_011032) do
     t.datetime "updated_at", null: false
     t.index ["activity_genre_id"], name: "index_profile_activity_genres_on_activity_genre_id"
     t.index ["profile_id"], name: "index_profile_activity_genres_on_profile_id"
+  end
+
+  create_table "profile_favorite_bands", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "favorite_band_id", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["favorite_band_id"], name: "index_profile_favorite_bands_on_favorite_band_id"
+    t.index ["profile_id"], name: "index_profile_favorite_bands_on_profile_id"
   end
 
   create_table "profile_personalities", force: :cascade do |t|
@@ -100,6 +109,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_26_011032) do
   add_foreign_key "profile_activity_areas", "profiles"
   add_foreign_key "profile_activity_genres", "activity_genres"
   add_foreign_key "profile_activity_genres", "profiles"
+  add_foreign_key "profile_favorite_bands", "favorite_bands"
+  add_foreign_key "profile_favorite_bands", "profiles"
   add_foreign_key "profile_personalities", "personalities"
   add_foreign_key "profile_personalities", "profiles"
   add_foreign_key "profiles", "users"
