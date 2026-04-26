@@ -1,13 +1,7 @@
 @import "variables";
 
 .display-group {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-
-  & + & {
-    margin-top: 7px;
-  }
+  margin-top: 15px;
 }
 
 .display-group-title {
@@ -15,35 +9,16 @@
   white-space: nowrap;
 }
 
-.display-tag-group {
-  display: flex;
-  justify-content: start;
-  align-items: start;
-  margin: 7px 0 0 0;
-}
-
-.display-group-content {
-  color: $main-color;
-  font-size: 12px;
-  border: 1px solid $main-color;
-  border-radius: 4px;
-  padding: 2px 5px;
-
-  & + & {
-    margin-left: 5px;
-  }
-}
-
-.display-tag-group-wrapper {
+.display-group-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
   gap: 5px;
-  margin: 0;
+  margin: 3px 0 0 0;
   padding: 0;
 }
 
-.display-tag-group-content {
+.display-group-content {
   color: $main-color;
   font-size: 12px;
   border: 1px solid $main-color;
