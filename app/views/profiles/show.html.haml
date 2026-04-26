@@ -17,9 +17,11 @@
       .display-group
         .display-group-title 活動地域：
         .display-group-content= "東京都"
-      .display-group
+      .display-tag-group
         .display-group-title 活動ジャンル：
-        .display-group-content= "J-POP"
+        %ul.display-tag-group-wrapper
+          - @profile.activity_genres.each do |activity_genre|
+            %li.display-tag-group-content= activity_genre.name
       .display-group
         .display-group-title 活動志向：
         .display-group-content= @profile.activity_style

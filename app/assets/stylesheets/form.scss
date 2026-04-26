@@ -75,15 +75,23 @@
   padding: 0 2px;
 }
 
+.check-boxes-container {
+  margin-top: 3px;
+}
+
+.check-box-group {
+  font-size: 14px;
+}
+
+checkbox {
+  border: none;
+  border: 1px solid $border-color;
+}
+
 .text-mini {
   font-size: 12px;
   text-decoration: none;
   color: $text-base-color;
-}
-
-.check-box {
-  border: none;
-  border: 1px solid $border-color;
 }
 
 .btn-container {
