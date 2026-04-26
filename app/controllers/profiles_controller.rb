@@ -41,7 +41,6 @@ class ProfilesController < ApplicationController
       :part,
       :experience_year,
       :experience_month,
-      # :activity_areas,
       :activity_style,
       :practice_style,
       :music_type,
@@ -50,7 +49,8 @@ class ProfilesController < ApplicationController
       # :favorite_bands,
       :sns_links,
       :bio,
-      activity_genre_ids: []
+      activity_genre_ids: [],
+      activity_area_ids: []
     )
   end
 end

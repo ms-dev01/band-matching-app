@@ -51,8 +51,11 @@
       .form-group
         .label
           = f.label :activity_areas, '活動地域'
-        %div.select-container
-          = f.select :activity_areas, [['東京都', 'Tokyo'], ['愛知', 'Aichi'], ['大阪', 'Osaka']], { include_blank: "" }, { class: 'select-field' }
+        %div.check-boxes-container
+          = f.collection_check_boxes :activity_area_ids, ActivityArea.all, :id, :name do |b|
+            .check-box-group
+              = b.check_box
+              = b.label
       .form-group
         .label
           = f.label :activity_genres, '活動ジャンル'
