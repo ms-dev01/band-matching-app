@@ -13,6 +13,10 @@ class Profile < ApplicationRecord
   has_many :profile_personalities, dependent: :destroy
   # プロフィールに紐づく性格タグを取得（中間テーブル経由）
   has_many :personalities, through: :profile_personalities
+  # プロフィールと好きなバンドタグの多対多関係を中間テーブルで管理
+  has_many :profile_favorite_bands, dependent: :destroy
+  # プロフィールに紐づく好きなバンドタグを取得（中間テーブル経由）
+  has_many :favorite_bands, through: :profile_favorite_bands
 
   # 性別のパターンを定義
   enum :gender, { male: 0, female: 1, other: 2 }
