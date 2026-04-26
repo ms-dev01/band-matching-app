@@ -15,7 +15,12 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin: 0 0 20px 0;
+}
+
+.fieldset {
+  border: 1px solid $border-color;
+  margin: 0 0 20px 0;
 }
 
 .file {
@@ -84,7 +89,6 @@
 }
 
 checkbox {
-  border: none;
   border: 1px solid $border-color;
 }
 
