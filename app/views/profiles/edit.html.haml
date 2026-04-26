@@ -87,8 +87,11 @@
       .form-group
         .label
           = f.label :personalities, '性格タグ'
-        %div.select-container
-          = f.select :personalities, [['フレンドリー', 'friendly'], ['明るい', 'cheerful'], ['聞き上手', 'listener']], { include_blank: "" }, { class: 'select-field' }
+        %div.check-boxes-container
+          = f.collection_check_boxes :personality_ids, Personality.all, :id, :name do |b|
+            .check-box-group
+              = b.check_box
+              = b.label
       .form-group
         .label
           = f.label :favorite_bands, '好きなバンドタグ'

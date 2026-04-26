@@ -45,12 +45,12 @@ class ProfilesController < ApplicationController
       :practice_style,
       :music_type,
       :wants_live_performance,
-      # :personalities,
       # :favorite_bands,
       :sns_links,
       :bio,
       activity_genre_ids: [],
-      activity_area_ids: []
+      activity_area_ids: [],
+      personality_ids: []
     )
   end
 end
