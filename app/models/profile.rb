@@ -72,11 +72,11 @@ class Profile < ApplicationRecord
   end
 
   def experience_text
-    if experience_year == nil && experience_month == nil
+    if experience_year.blank? && experience_month.blank?
       "未経験"
-    elsif experience_year == nil
+    elsif experience_year.blank?
       "#{experience_month}ヶ月"
-    elsif experience_month == nil
+    elsif experience_month.blank?
       "#{experience_year}年"
     else
       "#{experience_year}年#{experience_month}ヶ月"
