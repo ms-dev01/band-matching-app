@@ -14,43 +14,52 @@
         .display-group-title 担当パート
         .display-group-wrapper
           .display-group-content= @profile.part
-          .display-group-content= @profile.experience_text
+          - if @profile.experience_text.present?
+            .display-group-content= @profile.experience_text
       .display-group
-        .display-group-title 活動地域：
-        %ul.display-group-wrapper
-          - @profile.activity_areas.each do |activity_area|
-            %li.display-group-content= activity_area.name
+        - if @profile.activity_areas.present?
+          .display-group-title 活動地域
+          %ul.display-group-wrapper
+            - @profile.activity_areas.each do |activity_area|
+              %li.display-group-content= activity_area.name
       .display-group
-        .display-group-title 活動ジャンル：
-        %ul.display-group-wrapper
-          - @profile.activity_genres.each do |activity_genre|
-            %li.display-group-content= activity_genre.name
+        - if @profile.activity_areas.present?
+          .display-group-title 活動ジャンル
+          %ul.display-group-wrapper
+            - @profile.activity_genres.each do |activity_genre|
+              %li.display-group-content= activity_genre.name
       .display-group
-        .display-group-title 活動志向：
-        .display-group-content= @profile.activity_style
+        - if @profile.activity_style.present?
+          .display-group-title 活動志向
+          .display-group-content= @profile.activity_style
     .profile-play-style
       .profile-title 活動スタイル
       .display-group
-        .display-group-title 練習スタイル：
-        .display-group-content= @profile.practice_style
+        - if @profile.practice_style.present?
+          .display-group-title 練習スタイル
+          .display-group-content= @profile.practice_style
       .display-group
-        .display-group-title 楽曲タイプ：
-        .display-group-content= @profile.music_type
+        - if @profile.music_type.present?
+          .display-group-title 楽曲タイプ
+          .display-group-content= @profile.music_type
       .display-group
-        .display-group-title ライブ出演希望：
-        .display-group-content= @profile.wants_live_performance
+        - if @profile.wants_live_performance.present?
+          .display-group-title ライブ出演希望
+          .display-group-content= @profile.wants_live_performance
     .profile-my-tag
       .profile-title マイタグ
       .display-group
-        .display-group-title 性格タグ：
-        %ul.display-group-wrapper
-          - @profile.personalities.each do |personality|
-            %li.display-group-content= personality.name
+        - if @profile.personalities.present?
+          .display-group-title 性格タグ
+          %ul.display-group-wrapper
+            - @profile.personalities.each do |personality|
+              %li.display-group-content= personality.name
       .display-group
-        .display-group-title 好きなバンドタグ：
-        %ul.display-group-wrapper
-          - @profile.favorite_bands.each do |favorite_band|
-            %li.display-group-content= favorite_band.name
+        - if @profile.favorite_bands.present?
+          .display-group-title 好きなバンドタグ
+          %ul.display-group-wrapper
+            - @profile.favorite_bands.each do |favorite_band|
+              %li.display-group-content= favorite_band.name
     .profile-sns-links
       .profile-title SNSリンク
       .profile-text= @profile.sns_links

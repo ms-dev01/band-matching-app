@@ -44,9 +44,9 @@
         .label
           = f.label :experience_year, '担当歴'
         %div.select-container
-          = f.select :experience_year, (0..60).to_a, { include_blank: "" }, class: 'select-field'
+          = f.select :experience_year, (1..60).to_a, { include_blank: "" }, class: 'select-field'
           %span.select-span 年
-          = f.select :experience_month, (0..11).to_a, { include_blank: "" },  class: 'select-field'
+          = f.select :experience_month, (1..11).to_a, { include_blank: "" },  class: 'select-field'
           %span.select-span ヶ月
       %fieldset.fieldset
         %legend 活動地域
