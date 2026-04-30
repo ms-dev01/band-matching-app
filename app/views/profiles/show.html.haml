@@ -23,7 +23,7 @@
             - @profile.activity_areas.each do |activity_area|
               %li.display-group-content= activity_area.name
       .display-group
-        - if @profile.activity_areas.present?
+        - if @profile.activity_genres.present?
           .display-group-title 活動ジャンル
           %ul.display-group-wrapper
             - @profile.activity_genres.each do |activity_genre|
