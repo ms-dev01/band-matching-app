@@ -1,0 +1,5 @@
+# boolean値の日本語表示
+ja:
+  boolean:
+    true: "有"
+    false: "無"
