@@ -5,16 +5,15 @@
       .profile-icon
         = image_tag 'default-icon.png', class: 'icon'
       .profile-main-top
-        .profile-main-details= "#{@profile.nickname} - #{@profile.part}"
+        .profile-main-details= "#{@profile.nickname} - #{t("enums.profile.part.#{@profile.part}")}"
       .profile-main-bottom
-        .profile-main-details= "(#{@profile.calculate_age}歳 / #{@profile.gender})"
+        .profile-main-details= "(#{@profile.calculate_age}歳 / #{t("enums.profile.gender.#{@profile.gender}")})"
     .profile-basic-info
       .profile-title 基本情報
       .display-group
-        .display-group-title 担当パート
-        .display-group-wrapper
-          .display-group-content= @profile.part
-          - if @profile.experience_text.present?
+        - if @profile.experience_text.present?
+          .display-group-title 経験年数
+          .display-group-wrapper
             .display-group-content= @profile.experience_text
       .display-group
         - if @profile.activity_areas.present?
@@ -31,21 +30,25 @@
       .display-group
         - if @profile.activity_style.present?
           .display-group-title 活動志向
-          .display-group-content= @profile.activity_style
+          .display-group-wrapper
+            .display-group-content= t("enums.profile.activity_style.#{@profile.activity_style}")
     .profile-play-style
       .profile-title 活動スタイル
       .display-group
         - if @profile.practice_style.present?
           .display-group-title 練習スタイル
-          .display-group-content= @profile.practice_style
+          .display-group-wrapper
+            .display-group-content= t("enums.profile.practice_style.#{@profile.practice_style}")
       .display-group
         - if @profile.music_type.present?
           .display-group-title 楽曲タイプ
-          .display-group-content= @profile.music_type
+          .display-group-wrapper
+            .display-group-content= t("enums.profile.music_type.#{@profile.music_type}")
       .display-group
-        - if @profile.wants_live_performance.present?
+        - unless @profile.wants_live_performance.nil?
           .display-group-title ライブ出演希望
-          .display-group-content= @profile.wants_live_performance
+          .display-group-wrapper
+            .display-group-content= t("boolean.#{@profile.wants_live_performance}")
     .profile-my-tag
       .profile-title マイタグ
       .display-group
