@@ -34,7 +34,7 @@ class ProfilesController < ApplicationController
   def profile_params
     # formから送信されるパラメータのうち、許可したパラメータのみ受け取る
     params.require(:profile).permit(
-      :icon,
+      :avatar,
       :nickname,
       :gender,
       :birth_date,

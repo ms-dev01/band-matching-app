@@ -23,7 +23,8 @@
       - if user_signed_in?
         -# ログインしていれば実行（ログインアイコンを表示）
         .header-dropdown
-          = image_tag 'default-icon.png', class: 'icon drop-btn'
+          -# avatar_imageメソッドの呼び出し
+          = image_tag current_user.profile.avatar_image, class: 'icon drop-btn'
           .dropdown-content
             -# プロフィール画面へのリンク
             = link_to 'プロフィール', profile_path, class: 'dropdown-link'

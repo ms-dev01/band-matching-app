@@ -1,6 +1,8 @@
 class Profile < ApplicationRecord
   # UserモデルとProfileモデルを紐付け
   belongs_to :user
+  # Profileモデルに画像添付を追加
+  has_one_attached :avatar
   # プロフィールと活動ジャンルの多対多関係を中間テーブルで管理
   has_many :profile_activity_genres, dependent: :destroy
   # プロフィールに紐づく活動ジャンルを取得（中間テーブル経由）
@@ -35,6 +37,15 @@ class Profile < ApplicationRecord
   validate :valid_age_range
   validates :part, presence: true
   validates :bio, length: { maximum: 300 }
+
+  # プロフィール画像がアップロードされていればそれを表示、アップロードされていなければデフォルト画像を表示
+  def avatar_image
+    if avatar&.attached?
+      avatar
+    else
+      "default-avatar.png"
+    end
+  end
 
   # 年齢を制限
   def valid_age_range
@@ -71,6 +82,7 @@ class Profile < ApplicationRecord
     end
   end
 
+  # 担当パートの経験年数
   def experience_text
     if experience_year.blank? && experience_month.blank?
       "未経験"
