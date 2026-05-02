@@ -1,0 +1,13 @@
+# 表示の日本語化
+ja:
+  ui:
+    boolean:
+      true: "有"
+      false: "無"
+    parts:
+      short:
+        vocal: "Vo"
+        guitar: "Gt"
+        bass: "Ba"
+        drums: "Dr"
+        keyboard: "Key"
