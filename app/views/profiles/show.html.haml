@@ -3,12 +3,13 @@
   .form-container
     .profile-main-info
       .profile-icon
-        = image_tag 'default-icon.png', class: 'icon'
+        -# avatar_imageメソッドの呼び出し
+        = image_tag @profile.avatar_image, class: 'profile-icon-img'
       .profile-main-top
         .profile-main-details= "#{@profile.nickname} (#{t("ui.parts.short.#{@profile.part}")})"
       .profile-main-bottom
         .profile-main-details= "#{@profile.calculate_age}歳 / #{t("enums.profile.gender.#{@profile.gender}")}"
-    .profile-play-style
+    .profile-section
       .profile-title 活動情報
       .display-group
         .display-group-title 担当パート
@@ -51,7 +52,7 @@
           .display-group-title ライブ出演希望
           .display-group-wrapper
             .display-group-content= t("ui.boolean.#{@profile.wants_live_performance}")
-    .profile-my-tag
+    .profile-section
       .profile-title マイタグ
       .display-group
         - if @profile.personalities.present?
@@ -65,10 +66,10 @@
           %ul.display-group-wrapper
             - @profile.favorite_bands.each do |favorite_band|
               %li.display-group-content= favorite_band.name
-    .profile-sns-links
+    .profile-section
       .profile-title SNSリンク
       .profile-text= @profile.sns_links
-    .profile-bio
+    .profile-section
       .profile-title 自己紹介
       .profile-text= @profile.bio
     -# プロフィール編集画面へのリンク
