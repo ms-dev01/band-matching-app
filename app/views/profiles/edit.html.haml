@@ -25,7 +25,7 @@
             性別
             %span.required *
         %div.select-container
-          = f.select :gender, Profile.genders.keys, {}, { class: 'select-field' }
+          = f.select :gender, Profile.genders.keys.map { |k| [I18n.t("enums.profile.gender.#{k}"), k]}, {}, { class: 'select-field' }
       .form-group
         .label
           = f.label :birth_date do
@@ -39,7 +39,7 @@
             担当パート
             %span.required *
         %div.select-container
-          = f.select :part, Profile.parts.keys, {}, { class: 'select-field' }
+          = f.select :part, Profile.parts.keys.map { |k| [I18n.t("enums.profile.part.#{k}"), k]}, {}, { class: 'select-field' }
       .form-group
         .label
           = f.label :experience_year, '担当歴'
@@ -66,17 +66,17 @@
         .label
           = f.label :activity_style, '活動志向'
         %div.select-container
-          = f.select :activity_style, Profile.activity_styles.keys, { include_blank: "" }, { class: 'select-field' }
+          = f.select :activity_style, Profile.activity_styles.keys.map { |k| [I18n.t("enums.profile.activity_style.#{k}"), k]}, { include_blank: "" }, { class: 'select-field' }
       .form-group
         .label
           = f.label :practice_style, '練習スタイル'
         %div.select-container
-          = f.select :practice_style, Profile.practice_styles.keys, { include_blank: "" }, { class: 'select-field' }
+          = f.select :practice_style, Profile.practice_styles.keys.map { |k| [I18n.t("enums.profile.practice_style.#{k}"), k]}, { include_blank: "" }, { class: 'select-field' }
       .form-group
         .label
           = f.label :music_type, '楽曲タイプ'
         %div.select-container
-          = f.select :music_type, Profile.music_types.keys, { include_blank: "" }, { class: 'select-field' }
+          = f.select :music_type, Profile.music_types.keys.map { |k| [I18n.t("enums.profile.music_type.#{k}"), k]}, { include_blank: "" }, { class: 'select-field' }
       .form-group
         .label
           = f.label :wants_live_performance, 'ライブ出演希望'
