@@ -5,11 +5,15 @@
       .profile-icon
         = image_tag 'default-icon.png', class: 'icon'
       .profile-main-top
-        .profile-main-details= "#{@profile.nickname} - #{t("enums.profile.part.#{@profile.part}")}"
+        .profile-main-details= "#{@profile.nickname} (#{t("ui.parts.short.#{@profile.part}")})"
       .profile-main-bottom
-        .profile-main-details= "(#{@profile.calculate_age}歳 / #{t("enums.profile.gender.#{@profile.gender}")})"
-    .profile-basic-info
-      .profile-title 基本情報
+        .profile-main-details= "#{@profile.calculate_age}歳 / #{t("enums.profile.gender.#{@profile.gender}")}"
+    .profile-play-style
+      .profile-title 活動情報
+      .display-group
+        .display-group-title 担当パート
+        .display-group-wrapper
+          .display-group-content= t("enums.profile.part.#{@profile.part}")
       .display-group
         - if @profile.experience_text.present?
           .display-group-title 経験年数
@@ -32,23 +36,21 @@
           .display-group-title 活動志向
           .display-group-wrapper
             .display-group-content= t("enums.profile.activity_style.#{@profile.activity_style}")
-    .profile-play-style
-      .profile-title 活動スタイル
-      .display-group
-        - if @profile.practice_style.present?
-          .display-group-title 練習スタイル
-          .display-group-wrapper
-            .display-group-content= t("enums.profile.practice_style.#{@profile.practice_style}")
       .display-group
         - if @profile.music_type.present?
           .display-group-title 楽曲タイプ
           .display-group-wrapper
             .display-group-content= t("enums.profile.music_type.#{@profile.music_type}")
       .display-group
+        - if @profile.practice_style.present?
+          .display-group-title 練習スタイル
+          .display-group-wrapper
+            .display-group-content= t("enums.profile.practice_style.#{@profile.practice_style}")
+      .display-group
         - unless @profile.wants_live_performance.nil?
           .display-group-title ライブ出演希望
           .display-group-wrapper
-            .display-group-content= t("boolean.#{@profile.wants_live_performance}")
+            .display-group-content= t("ui.boolean.#{@profile.wants_live_performance}")
     .profile-my-tag
       .profile-title マイタグ
       .display-group
