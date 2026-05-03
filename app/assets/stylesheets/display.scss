@@ -7,7 +7,7 @@
 }
 
 .display-group-title {
-  font-size: 14px;
+  font-size: 15px;
   white-space: nowrap;
 }
 
@@ -22,15 +22,11 @@
 
 .display-group-content {
   color: $main-color;
-  font-size: 12px;
+  font-size: 13px;
   border: 1px solid $main-color;
   border-radius: 4px;
-  padding: 2px 5px;
+  padding: 3px 6px 1px;
   margin: 0;
   list-style: none;
   display: inline-block;
-}
-
-.unset {
-  display: none;
 }
