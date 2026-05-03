@@ -8,6 +8,8 @@
   background-color: $main-color;
   padding: 6px 20px;
   margin: 10px 0 8px 0;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .btn-secondary {
@@ -16,6 +18,8 @@
   border: none;
   text-decoration: none;
   background-color: $main-color;
-  padding: 8px 20px;
+  padding: 5px 15px;
   margin: 10px 0 8px 0;
+  display: inline-block;
+  cursor: pointer;
 }
