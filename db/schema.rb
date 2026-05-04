@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_04_070517) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_04_153431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -157,6 +157,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_070517) do
     t.index ["band_recruitment_id"], name: "index_recruitment_activity_genres_on_band_recruitment_id"
   end
 
+  create_table "recruitment_parts", force: :cascade do |t|
+    t.bigint "band_recruitment_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "max_count", null: false
+    t.integer "part", null: false
+    t.datetime "updated_at", null: false
+    t.index ["band_recruitment_id"], name: "index_recruitment_parts_on_band_recruitment_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -185,4 +194,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_070517) do
   add_foreign_key "recruitment_activity_areas", "band_recruitments"
   add_foreign_key "recruitment_activity_genres", "activity_genres"
   add_foreign_key "recruitment_activity_genres", "band_recruitments"
+  add_foreign_key "recruitment_parts", "band_recruitments"
 end
