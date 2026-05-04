@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_02_094153) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_03_170142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,6 +52,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_02_094153) do
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "band_recruitments", force: :cascade do |t|
+    t.integer "activity_style"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.date "deadline", null: false
+    t.integer "music_type"
+    t.integer "practice_frequency_count"
+    t.string "practice_frequency_unit"
+    t.integer "practice_style"
+    t.integer "status", default: 0
+    t.string "team_name"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.boolean "wants_live_performance", default: false
+    t.index ["user_id"], name: "index_band_recruitments_on_user_id"
   end
 
   create_table "favorite_bands", force: :cascade do |t|
@@ -135,6 +153,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_02_094153) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "band_recruitments", "users"
   add_foreign_key "profile_activity_areas", "activity_areas"
   add_foreign_key "profile_activity_areas", "profiles"
   add_foreign_key "profile_activity_genres", "activity_genres"
