@@ -1,6 +1,10 @@
 class BandRecruitment < ApplicationRecord
   # UserモデルとBandRecruitmentモデルを紐付け
   belongs_to :user
+  # 募集と活動ジャンルの多対多関係を中間テーブルで管理
+  has_many :recruitment_activity_genres, dependent: :destroy
+  # 募集に紐づく活動ジャンルを取得（中間テーブル経由）
+  has_many :activity_genres, through: :recruitment_activity_genres
 
   # 活動志向のパターンを定義
   enum :activity_style, { hobby: 0, amateur: 1, professional: 2 }
