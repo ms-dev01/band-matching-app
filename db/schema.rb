@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_03_170142) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_04_050232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -139,6 +139,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_03_170142) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "recruitment_activity_genres", force: :cascade do |t|
+    t.bigint "activity_genre_id", null: false
+    t.bigint "band_recruitment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_genre_id"], name: "index_recruitment_activity_genres_on_activity_genre_id"
+    t.index ["band_recruitment_id"], name: "index_recruitment_activity_genres_on_band_recruitment_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -163,4 +172,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_03_170142) do
   add_foreign_key "profile_personalities", "personalities"
   add_foreign_key "profile_personalities", "profiles"
   add_foreign_key "profiles", "users"
+  add_foreign_key "recruitment_activity_genres", "activity_genres"
+  add_foreign_key "recruitment_activity_genres", "band_recruitments"
 end
