@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  team_name: MyString
+  title: MyString
+  activity_style: 1
+  practice_frequency_unit: MyString
+  practice_frequency_count: 1
+  practice_style: 1
+  music_type: 1
+  wants_live_performance: false
+  deadline: 2026-05-04
+  status: 1
+  comment: MyText
+
+two:
+  user: two
+  team_name: MyString
+  title: MyString
+  activity_style: 1
+  practice_frequency_unit: MyString
+  practice_frequency_count: 1
+  practice_style: 1
+  music_type: 1
+  wants_live_performance: false
+  deadline: 2026-05-04
+  status: 1
+  comment: MyText
