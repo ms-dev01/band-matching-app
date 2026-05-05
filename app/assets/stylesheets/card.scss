@@ -1,11 +1,20 @@
 @import "variables";
 
+.recruitment-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .recruitment-card {
-  position: relative;
   background-color: #fff;
-  padding: 0 12px 30px 0;
+  padding: 0 15px 30px 0;
   & + & {
     margin-top: 20px;
+  }
+
+  &.detail {
+    padding: 0 15px 20px 0;
   }
 }
 
@@ -55,12 +64,13 @@
 }
 
 .recruitment-card-bottom {
+  position: relative;
   margin: 10px 0 0 15px;
 }
 
 .card-content {
   display: grid;
-  grid-template-columns: 90px 1fr;
+  grid-template-columns: 93px 1fr;
 
   & + & {
     margin-top: 7px;
@@ -69,6 +79,7 @@
 
 .card-content-title {
   font-size: 13px;
+  padding-top: 2px;
 }
 
 .card-content-list {
@@ -101,14 +112,28 @@
   display: inline-block;
 }
 
-.recruitment-card-icon {
+.card-content-count-lg {
+  color: $main-color;
+  font-size: 13px;
+  margin: 0 3px 0 0;
+  list-style: none;
+  display: inline-block;
+}
+
+.card-icon-container {
   position: absolute;
-  bottom: 10px;
-  right: 15px;
+  bottom: -18px;
+  right: 0;
   display: flex;
   justify-content: start;
   align-items: center;
   gap: 3px;
+
+  &.detail {
+    position: static;
+    margin: 15px 0 0 auto;
+    width: fit-content;
+  }
 }
 
 .card-icon {

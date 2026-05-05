@@ -10,68 +10,68 @@
       .profile-main-bottom
         .profile-main-details= "#{@profile.calculate_age}歳 / #{t("enums.profile.gender.#{@profile.gender}")}"
     .profile-section
-      .profile-title 活動情報
+      .display-title 活動情報
       .display-group
         .display-group-title 担当パート
         .display-group-wrapper
           .display-group-content= t("enums.profile.part.#{@profile.part}")
-      .display-group
-        - if @profile.experience_text.present?
+      - if @profile.experience_text.present?
+        .display-group
           .display-group-title 経験年数
           .display-group-wrapper
             .display-group-content= @profile.experience_text
-      .display-group
-        - if @profile.activity_areas.present?
+      - if @profile.activity_areas.present?
+        .display-group
           .display-group-title 活動地域
           %ul.display-group-wrapper
             - @profile.activity_areas.each do |activity_area|
               %li.display-group-content= activity_area.name
-      .display-group
-        - if @profile.activity_genres.present?
+      - if @profile.activity_genres.present?
+        .display-group
           .display-group-title 活動ジャンル
           %ul.display-group-wrapper
             - @profile.activity_genres.each do |activity_genre|
               %li.display-group-content= activity_genre.name
-      .display-group
-        - if @profile.activity_style.present?
+      - if @profile.activity_style.present?
+        .display-group
           .display-group-title 活動志向
           .display-group-wrapper
             .display-group-content= t("enums.profile.activity_style.#{@profile.activity_style}")
-      .display-group
-        - if @profile.music_type.present?
+      - if @profile.music_type.present?
+        .display-group
           .display-group-title 楽曲タイプ
           .display-group-wrapper
             .display-group-content= t("enums.profile.music_type.#{@profile.music_type}")
-      .display-group
-        - if @profile.practice_style.present?
+      - if @profile.practice_style.present?
+        .display-group
           .display-group-title 練習スタイル
           .display-group-wrapper
             .display-group-content= t("enums.profile.practice_style.#{@profile.practice_style}")
-      .display-group
-        - unless @profile.wants_live_performance.nil?
+      - unless @profile.wants_live_performance.nil?
+        .display-group
           .display-group-title ライブ出演希望
           .display-group-wrapper
             .display-group-content= t("ui.boolean.#{@profile.wants_live_performance}")
     .profile-section
-      .profile-title マイタグ
-      .display-group
-        - if @profile.personalities.present?
+      .display-title マイタグ
+      - if @profile.personalities.present?
+        .display-group
           .display-group-title 性格タグ
           %ul.display-group-wrapper
             - @profile.personalities.each do |personality|
               %li.display-group-content= personality.name
-      .display-group
-        - if @profile.favorite_bands.present?
+      - if @profile.favorite_bands.present?
+        .display-group
           .display-group-title 好きなバンドタグ
           %ul.display-group-wrapper
             - @profile.favorite_bands.each do |favorite_band|
               %li.display-group-content= favorite_band.name
     .profile-section
-      .profile-title SNSリンク
-      .profile-text= @profile.sns_links
+      .display-title SNSリンク
+      .display-text= @profile.sns_links
     .profile-section
-      .profile-title 自己紹介
-      .profile-text= @profile.bio
+      .display-title 自己紹介
+      .display-text= @profile.bio
     -# プロフィール編集画面へのリンク
-    .profile-edit-btn
+    .display-edit-btn
       = link_to "編集", edit_profile_path, class: "btn-secondary"
