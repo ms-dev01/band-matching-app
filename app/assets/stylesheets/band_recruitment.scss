@@ -1,0 +1,20 @@
+@import "variables";
+
+.recruitment-container {
+  display: grid;
+  gap: 15px;
+}
+
+.recruitment-section {
+  margin-top: 40px;
+
+  & + & {
+    margin-top: 60px;
+  }
+}
+
+.recruitment-group {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

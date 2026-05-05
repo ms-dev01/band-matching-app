@@ -1,20 +1,34 @@
 @import "variables";
 
+.display-title {
+  position: relative;
+  border-bottom: 1px solid $border-color;
+  font-size: 17px;
+}
+
 .display-group {
   margin-top: 15px;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
+.display-group-recruitment {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+}
+
 .display-group-title {
   font-size: 15px;
   white-space: nowrap;
+  padding-top: 3px;
 }
 
 .display-group-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
+  align-items: center;
   gap: 5px;
   margin: 0;
   padding: 0;
@@ -29,4 +43,15 @@
   margin: 0;
   list-style: none;
   display: inline-block;
+  width: fit-content;
+}
+
+.display-text {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.display-edit-btn {
+  text-align: center;
+  margin: 50px 0 30px;
 }

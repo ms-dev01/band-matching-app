@@ -1,49 +1,50 @@
-.container
+.container.recruitment-container
   - @band_recruitments.each do |band_recruitment|
-    .recruitment-card
-      .recruitment-card-top
-        .card-status= band_recruitment.status
-        .card-deadline= "期限：#{band_recruitment.deadline}"
-      .recruitment-card-middle
-        .card-team
-          .card-team-title チーム名
-          - if band_recruitment.team_name.present?
-            .card-team-name= band_recruitment.team_name
-          - else
-            .card-team-name 未設定
-        .card-title= band_recruitment.title
-      .recruitment-card-bottom
-        .card-content
-          .card-content-title 募集パート：
-          %ul.card-content-list
-            - band_recruitment.recruitment_parts.each do |part|
-              %li.card-content-text= part.part
-              %span.card-content-count= "×#{part.max_count}"
-        .card-content
-          .card-content-title 活動地域：
-          - if band_recruitment.activity_areas.present?
+    = link_to band_recruitment_path(band_recruitment), class: 'recruitment-card-link' do
+      .recruitment-card
+        .recruitment-card-top
+          .card-status= band_recruitment.status
+          .card-deadline= "期限：#{band_recruitment.deadline}"
+        .recruitment-card-middle
+          .card-team
+            .card-team-title チーム名
+            - if band_recruitment.team_name.present?
+              .card-team-name= band_recruitment.team_name
+            - else
+              .card-team-name 未設定
+          .card-title= band_recruitment.title
+        .recruitment-card-bottom
+          .card-content
+            .card-content-title 募集パート：
             %ul.card-content-list
-              - band_recruitment.activity_areas.each do |activity_area|
-                %li.card-content-text= activity_area.name
-          - else
-            .card-content-text 未設定
-        .card-content
-          .card-content-title 活動ジャンル：
-          - if band_recruitment.activity_genres.present?
-            .card-content-list
-              - band_recruitment.activity_genres.each do |activity_genre|
-                %li.card-content-text= activity_genre.name
-          - else
-            .card-content-text 未設定
-        .card-content
-          .card-content-title 活動志向：
-          - if band_recruitment.activity_style.present?
-            .card-content-list
-              .card-content-text= band_recruitment.activity_style
-          - else
-            .card-content-text 未設定
-      .recruitment-card-icon
-        = image_tag band_recruitment.user.profile.avatar_image, class: 'card-icon'
-        .card-icon-info
-          .card-icon-info-top= "#{band_recruitment.user.profile.nickname} (#{band_recruitment.user.profile.part})"
-          .card-icon-info-bottom= "#{band_recruitment.user.profile.calculate_age}歳 / #{band_recruitment.user.profile.gender}"
+              - band_recruitment.recruitment_parts.each do |part|
+                %li.card-content-text= part.part
+                %span.card-content-count= "×#{part.max_count}"
+          .card-content
+            .card-content-title 活動地域：
+            - if band_recruitment.activity_areas.present?
+              %ul.card-content-list
+                - band_recruitment.activity_areas.each do |activity_area|
+                  %li.card-content-text= activity_area.name
+            - else
+              .card-content-text 未設定
+          .card-content
+            .card-content-title 活動ジャンル：
+            - if band_recruitment.activity_genres.present?
+              .card-content-list
+                - band_recruitment.activity_genres.each do |activity_genre|
+                  %li.card-content-text= activity_genre.name
+            - else
+              .card-content-text 未設定
+          .card-content
+            .card-content-title 活動志向：
+            - if band_recruitment.activity_style.present?
+              .card-content-list
+                .card-content-text= band_recruitment.activity_style
+            - else
+              .card-content-text 未設定
+          .card-icon-container
+            = image_tag band_recruitment.user.profile.avatar_image, class: 'card-icon'
+            .card-icon-info
+              .card-icon-info-top= "#{band_recruitment.user.profile.nickname} (#{band_recruitment.user.profile.part})"
+              .card-icon-info-bottom= "#{band_recruitment.user.profile.calculate_age}歳 / #{band_recruitment.user.profile.gender}"

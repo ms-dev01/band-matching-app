@@ -1,0 +1,70 @@
+.container
+  .recruitment-card.detail
+    .recruitment-card-top
+      .card-status= @band_recruitment.status
+      .card-deadline= "期限：#{@band_recruitment.deadline}"
+    .recruitment-card-middle
+      .card-team
+        .card-team-title チーム名
+        - if @band_recruitment.team_name.present?
+          .card-team-name= @band_recruitment.team_name
+        - else
+          .card-team-name 未設定
+      .card-title= @band_recruitment.title
+      .card-icon-container.detail
+        = image_tag @band_recruitment.user.profile.avatar_image, class: 'card-icon'
+        .card-icon-info
+          .card-icon-info-top= "#{@band_recruitment.user.profile.nickname} (#{@band_recruitment.user.profile.part})"
+          .card-icon-info-bottom= "#{@band_recruitment.user.profile.calculate_age}歳 / #{@band_recruitment.user.profile.gender}"
+    .recruitment-card-bottom
+      .recruitment-section
+        .display-title 募集条件
+        .display-group-recruitment
+          .display-group-title 募集パート
+          .display-group-wrapper
+            - @band_recruitment.recruitment_parts.each do |part|
+              .display-group-content= part.part
+              %span.card-content-count-lg= "×#{part.max_count}"
+        - if @band_recruitment.activity_areas.present?
+          .display-group-recruitment
+            .display-group-title 活動地域
+            .display-group-wrapper
+              - @band_recruitment.activity_areas.each do |activity_area|
+                .display-group-content= activity_area.name
+        - if @band_recruitment.activity_genres.present?
+          .display-group-recruitment
+            .display-group-title 活動ジャンル
+            .display-group-wrapper
+              - @band_recruitment.activity_genres.each do |activity_genre|
+                .display-group-content= activity_genre.name
+        - if @band_recruitment.activity_style.present?
+          .display-group-recruitment
+            .display-group-title 活動志向
+            .display-group-wrapper
+              .display-group-content= @band_recruitment.activity_style
+        - if @band_recruitment.music_type.present?
+          .display-group-recruitment
+            .display-group-title 楽曲タイプ
+            .display-group-wrapper
+              .display-group-content= @band_recruitment.music_type
+        - if @band_recruitment.practice_frequency_unit.present? || @band_recruitment.practice_frequency_count.present?
+          .display-group-recruitment
+            .display-group-title 練習頻度
+            .display-group-wrapper
+              .display-group-content= "#{@band_recruitment.practice_frequency_unit}に#{@band_recruitment.practice_frequency_count}回"
+        - if @band_recruitment.practice_style.present?
+          .display-group-recruitment
+            .display-group-title 練習スタイル
+            .display-group-wrapper
+              .display-group-content= @band_recruitment.practice_style
+        - unless @band_recruitment.wants_live_performance.nil?
+          .display-group-recruitment
+            .display-group-title ライブ出演希望
+            .display-group-wrapper
+              .display-group-content= @band_recruitment.wants_live_performance
+      .recruitment-section
+        .display-title 募集コメント
+        .display-text= @band_recruitment.comment
+    -# プロフィール編集画面へのリンク
+    .display-edit-btn
+      = link_to "編集", edit_band_recruitment_path, class: "btn-secondary"
