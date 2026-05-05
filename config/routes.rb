@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   # root = 「/」のこと, 特に指定がなければhome#indexを表示する
-  root to: "recruitments#index"
+  root to: "band_recruitments#index"
 
   # プロフィールのルーティング
   resource :profile, only: [ :show, :edit, :update ]
