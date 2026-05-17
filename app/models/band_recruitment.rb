@@ -11,9 +11,15 @@ class BandRecruitment < ApplicationRecord
   has_many :activity_areas, through: :recruitment_activity_areas
   # 募集と募集パートの1対多関係を管理
   has_many :recruitment_parts, dependent: :destroy
+  # 親モデル（募集テーブル）から子モデル（募集_パートテーブル）を一緒に保存できるように設定
+  accepts_nested_attributes_for :recruitment_parts,
+    # 必要人数が0のデータは保存しない
+    reject_if: ->(attr) { attr['max_count'].to_i <= 0 }
 
   # 活動志向のパターンを定義
   enum :activity_style, { hobby: 0, amateur: 1, professional: 2 }
+  # 練習頻度のパターンを定義
+  enum :practice_frequency_unit, { week: 0, month: 1, year: 2 }
   # 練習スタイルのパターンを定義
   enum :practice_style, { lively: 0, focused: 1, flexible: 2 }
   # 楽曲タイプのパターンを定義

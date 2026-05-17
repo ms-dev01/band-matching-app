@@ -19,5 +19,5 @@ Rails.application.routes.draw do
   # Profileのルーティング
   resource :profile, only: [ :show, :edit, :update ]
   # BandRecruitmentのルーティング
-  resources :band_recruitments, only: [ :show, :edit ]
+  resources :band_recruitments
 end

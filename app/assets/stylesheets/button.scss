@@ -1,14 +1,15 @@
 @import "variables";
 
 .btn-primary {
-  font-size: 16px;
+  text-align: center;
+  font-size: 18px;
   color: #fff;
   border: none;
   text-decoration: none;
   background-color: $main-color;
   padding: 6px 20px;
-  margin: 10px 0 8px 0;
-  display: inline-block;
+  margin: 0 20px;
+  display: block;
   cursor: pointer;
 }
 
@@ -22,4 +23,38 @@
   margin: 10px 0 8px 0;
   display: inline-block;
   cursor: pointer;
+}
+
+.btn-add {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: $main-color;
+  border-radius: 50%;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    background-color: #fff;
+  }
+
+  &::before {
+    width: 16px;
+    height: 2px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    width: 2px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

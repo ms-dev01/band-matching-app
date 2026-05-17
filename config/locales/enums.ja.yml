@@ -25,3 +25,28 @@ ja:
         cover: "コピー"
         session: "セッション"
         arranged_cover: "アレンジカバー"
+    band_recruitment:
+      activity_style:
+        hobby: "趣味"
+        amateur: "アマチュア"
+        professional: "プロ"
+      practice_frequency_unit:
+        week: "週"
+        month: "月"
+        year: "年"
+      practice_style:
+        lively: "賑やか"
+        focused: "黙々"
+        flexible: "こだわらない"
+      music_type:
+        original: "オリジナル"
+        cover: "コピー"
+        session: "セッション"
+        arranged_cover: "アレンジカバー"
+    recruitment_part:
+      part:
+        vocal: "ボーカル"
+        guitar: "ギター"
+        bass: "ベース"
+        drums: "ドラム"
+        keyboard: "キーボード"

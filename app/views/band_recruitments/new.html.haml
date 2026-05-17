@@ -1,0 +1,94 @@
+.container
+  -# エラーがある場合、メッセージを表示
+  -if @band_recruitment.errors.any?
+    %ul
+      - @band_recruitment.errors.full_messages.each do |message|
+        %li= message
+  .form-title 募集内容
+  .form-container
+    = form_with(model: @band_recruitment, url: band_recruitments_path, method: 'post', local: true) do |f|
+      .form-group
+        .label
+          = f.label :team_name do
+            チーム名
+        %div
+          = f.text_field :team_name, class: 'text-field'
+      .form-group
+        .label
+          = f.label :title do
+            募集タイトル
+            %span.required *
+        %div
+          = f.text_field :title, class: 'text-field'
+      .form-group
+        .label
+          = f.label :part do
+            募集パート
+            %span.required *
+        %div
+          = f.fields_for :recruitment_parts do |rp|
+            .form-field
+              .field-name
+                -# 募集パート名の表示
+                = I18n.t("enums.recruitment_part.part.#{rp.object.part}")
+                -# paramsに値を入れる
+                = rp.hidden_field :part
+              .field-content
+                = f.select :max_count, (0..10).to_a, { include_blank: "" },  class: 'select-field'
+                %span.select-span 人
+      %fieldset.fieldset
+        %legend 活動地域
+        %div.check-boxes-container
+          = f.collection_check_boxes :activity_area_ids, ActivityArea.all, :id, :name do |b|
+            .check-box-group
+              = b.check_box
+              = b.label
+      %fieldset.fieldset
+        %legend 活動ジャンル
+        %div.check-boxes-container
+          = f.collection_check_boxes :activity_genre_ids, ActivityGenre.all, :id, :name do |b|
+            .check-box-group
+              = b.check_box
+              = b.label
+      .form-group
+        .label
+          = f.label :activity_style, '活動志向'
+        %div.select-container
+          = f.select :activity_style, BandRecruitment.activity_styles.keys.map { |k| [I18n.t("enums.band_recruitment.activity_style.#{k}"), k]}, { include_blank: "" }, { class: 'select-field' }
+      .form-group
+        .label
+          = f.label :practice_frequency_unit, '練習頻度'
+        %div.select-container
+          = f.select :practice_frequency_unit, BandRecruitment.practice_frequency_units.keys.map { |k| [I18n.t("enums.band_recruitment.practice_frequency_unit.#{k}"), k]}, { include_blank: "" }, class: 'select-field'
+          %span.select-span に
+          = f.select :practice_frequency_count, (1..99).to_a, { include_blank: "" },  class: 'select-field'
+          %span.select-span 回
+      .form-group
+        .label
+          = f.label :practice_style, '練習スタイル'
+        %div.select-container
+          = f.select :practice_style, BandRecruitment.practice_styles.keys.map { |k| [I18n.t("enums.band_recruitment.practice_style.#{k}"), k]}, { include_blank: "" }, { class: 'select-field' }
+      .form-group
+        .label
+          = f.label :music_type, '楽曲タイプ'
+        %div.select-container
+          = f.select :music_type, BandRecruitment.music_types.keys.map { |k| [I18n.t("enums.band_recruitment.music_type.#{k}"), k]}, { include_blank: "" }, { class: 'select-field' }
+      .form-group
+        .label
+          = f.label :wants_live_performance, 'ライブ出演希望'
+        %div.select-container
+          = f.select :wants_live_performance, [['有', true], ['無', false]] , { include_blank: "" }, { class: 'select-field' }
+      .form-group
+        .label
+          = f.label :deadline do
+            期限
+            %span.required *
+        %div
+          = f.date_field :deadline, class: 'date-field'
+      .form-group
+        .label
+          = f.label :comment, '募集コメント'
+        %div
+          = f.text_area :comment, class: 'text-area'
+      .btn-container
+        = f.submit '保存', class: 'btn-secondary'

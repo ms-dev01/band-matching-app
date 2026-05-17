@@ -37,6 +37,14 @@
   border: 1px solid $border-color;
 }
 
+.text-area {
+  width: 100%;
+  border: none;
+  border: 1px solid $border-color;
+  resize: none;
+  height: 150px;
+}
+
 .select-field,
 .date-field {
   color: $text-base-color;
@@ -89,6 +97,28 @@
 .check-box {
   border: none;
   border: 1px solid $border-color;
+}
+
+.form-field {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  & + & {
+    margin-top: 5px;
+  }
+}
+
+.field-name {
+  width: 100px;
+}
+
+.field-count {
+  width: 50px;
+
+  &::placeholder {
+    color: #fff !important;
+  }
 }
 
 .btn-container {
