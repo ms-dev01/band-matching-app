@@ -1,5 +1,10 @@
 @import "variables";
 
+.display-create-btn {
+  position: relative;
+  margin: 0;
+}
+
 .display-title {
   position: relative;
   border-bottom: 1px solid $border-color;

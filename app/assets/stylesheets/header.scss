@@ -1,37 +1,44 @@
 @import "variables";
 
 .header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  background-color: $bg-color;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #fff;
-  color: #fff;
   padding: 15px 20px;
   font-weight: bold;
+  z-index: 10;
+}
 
-  .header-logo {
-    color: $main-color;
-    font-size: 25px;
-  }
+.header-logo {
+  color: $main-color;
+  font-size: 25px;
+}
 
-  .header-login-btn {
-    color: #fff;
-    font-size: 16px;
-    text-decoration: none;
-    background-color: $main-color;
-    padding: 8px 18px;
-  }
+.header-dropdown {
+  position: relative;
+}
+
+.header-login-btn {
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+  background-color: $main-color;
+  padding: 8px 18px;
 }
 
 .dropdown-content {
   visibility: hidden;
   position: absolute;
-  top: 90%;
-  right: 20px;
-  z-index: 100;
+  top: 60px;
+  left: -36px;
+  z-index: 20;
   background-color: #fff;
   padding: 6px 10px;
+  white-space: nowrap;
 }
 
 .dropdown-link {
