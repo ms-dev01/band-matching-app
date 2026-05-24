@@ -26,16 +26,18 @@
             募集パート
             %span.required *
         %div
-          = f.fields_for :recruitment_parts do |rp|
-            .form-field
-              .field-name
-                -# 募集パート名の表示
-                = I18n.t("enums.recruitment_part.part.#{rp.object.part}")
-                -# paramsに値を入れる
-                = rp.hidden_field :part
-              .field-content
-                = f.select :max_count, (0..10).to_a, { include_blank: "" },  class: 'select-field'
-                %span.select-span 人
+          -# 募集パートをソート（sort_byは数値で並び替えるため、パート名 → 数値に変換）
+          - @band_recruitment.recruitment_parts.sort_by { |rp| RecruitmentPart.parts[rp.part] }.each do |rp|
+            = f.fields_for :recruitment_parts, rp  do |rp|
+              .form-field
+                .field-name
+                  -# 募集パート名の表示
+                  = I18n.t("enums.recruitment_part.part.#{rp.object.part}")
+                  -# paramsに値を入れる
+                  = rp.hidden_field :part
+                .field-content
+                  = rp.select :max_count, (1..5).to_a, { include_blank: "" },  class: 'select-field'
+                  %span.select-span 人
       %fieldset.fieldset
         %legend 活動地域
         %div.check-boxes-container
