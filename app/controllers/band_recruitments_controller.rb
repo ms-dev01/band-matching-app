@@ -1,13 +1,13 @@
 # ApplicationControllerを継承
 class BandRecruitmentsController < ApplicationController
-  before_action :set_band_recruitment, only: [ :edit, :update ]
+  before_action :set_band_recruitment, only: [ :show ]
+  before_action :set_owned_band_recruitment, only: [ :edit, :update ]
 
   def index
     @band_recruitments = BandRecruitment.all
   end
 
   def show
-    @band_recruitment = BandRecruitment.find(params[:id])
   end
 
   def new
@@ -59,12 +59,19 @@ class BandRecruitmentsController < ApplicationController
   end
 
   def set_band_recruitment
-    @band_recruitment = BandRecruitment.find(params[:id])
+    @band_recruitment = BandRecruitment.find_by(id: params[:id])
+    # 募集が存在しない場合はエラーを表示
+    unless @band_recruitment.present?
+      return redirect_to band_recruitments_path, alert: "募集が見つかりません"
+    end
+  end
+
+  def set_owned_band_recruitment
+    @band_recruitment = BandRecruitment.find_by(id: params[:id])
 
     # 本人以外が編集できないように制御
     unless @band_recruitment.user_id == current_user.id
-      redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
-      return
+      return redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
     end
   end
 
