@@ -62,7 +62,7 @@ class BandRecruitmentsController < ApplicationController
     @band_recruitment = BandRecruitment.find_by(id: params[:id])
     # 募集が存在しない場合はエラーを表示
     unless @band_recruitment.present?
-      return redirect_to band_recruitments_path, alert: "募集が見つかりません"
+      redirect_to band_recruitments_path, alert: "募集が見つかりません"
     end
   end
 
@@ -71,7 +71,7 @@ class BandRecruitmentsController < ApplicationController
 
     # 本人以外が編集できないように制御
     unless @band_recruitment.user_id == current_user.id
-      return redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
+      redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
     end
   end
 
