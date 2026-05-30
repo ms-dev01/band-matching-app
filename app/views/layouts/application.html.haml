@@ -33,9 +33,10 @@
       - else
         -# ログインしていない時
         = link_to 'ログイン', new_user_session_path, class: 'header-login-btn'
-    -# application.html.hamlに記述した内容はすべてのHTMLで表示され、yieldで個別のHTMLを読み込んでいる
+    -# flashの表示
     - if flash.present?
       .flash
         - flash.each do |key, value|
           %div{:class => key}= value
+    -# application.html.hamlに記述した内容はすべてのHTMLで表示され、yieldで個別のHTMLを読み込んでいる
     = yield
