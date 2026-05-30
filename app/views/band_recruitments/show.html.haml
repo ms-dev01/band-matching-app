@@ -1,4 +1,9 @@
 .container
+  -# エラーがある場合、メッセージを表示
+  -if @band_recruitment.errors.any?
+    %ul
+      - @band_recruitment.errors.full_messages.each do |message|
+        %li= message
   .recruitment-card.detail
     .recruitment-card-top
       .card-status= @band_recruitment.status
@@ -62,9 +67,11 @@
             .display-group-title ライブ出演希望
             .display-group-wrapper
               .display-group-content= @band_recruitment.wants_live_performance
-      .recruitment-section
-        .display-title 募集コメント
-        .display-text= @band_recruitment.comment
+      - if @band_recruitment.comment.present?
+        .recruitment-section
+          .display-title 募集コメント
+          .display-text= @band_recruitment.comment
     -# プロフィール編集画面へのリンク
-    .display-edit-btn
-      = link_to "編集", edit_band_recruitment_path, class: "btn-secondary"
+    - if @band_recruitment.user_id == current_user.id
+      .display-edit-btn
+        = link_to "編集", edit_band_recruitment_path(@band_recruitment), class: "btn-secondary"

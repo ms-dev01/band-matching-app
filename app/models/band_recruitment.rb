@@ -13,7 +13,7 @@ class BandRecruitment < ApplicationRecord
   has_many :recruitment_parts, dependent: :destroy
   # 親モデル（募集テーブル）から子モデル（募集_パートテーブル）を一緒に保存できるように設定
   accepts_nested_attributes_for :recruitment_parts,
-    # 必要人数がblankまたは0の募集パートは保存しない
+    # 必要人数がblankの募集パートは保存しない
     reject_if: ->(attr) { attr["max_count"].blank? }, allow_destroy: true
 
   # 活動志向のパターンを定義
@@ -36,7 +36,7 @@ class BandRecruitment < ApplicationRecord
 
   # 募集パートは1つ以上入力必須
   def at_least_one_part_present
-    if recruitment_parts.all? { |part| part.max_count.blank? }
+    if recruitment_parts.all? { |rp| rp.max_count.blank? }
       errors.add(:base, "募集パートを1つ以上入力してください")
     end
   end

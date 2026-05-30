@@ -1,0 +1,54 @@
+.flash {
+  position: fixed;
+  top: 0;
+  right: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  width: 160px;
+  background: white;
+  // 古いSafari用
+  -webkit-animation: fade-in-out;
+  animation: fade-in-out;
+  visibility: hidden;
+  z-index: 100;
+  text-align: center;
+  animation-duration: 2s;
+}
+
+// アニメーションの動きを定義
+@-webkit-keyframes fade-in-out {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  50% {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in-out {
+  // 表示開始
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  // 表示途中
+  50% {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  // 表示終了
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
