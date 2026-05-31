@@ -56,7 +56,14 @@
   margin-top: 10px;
 }
 
+.display-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin: 50px 0 30px;
+}
+
 .display-edit-btn {
   text-align: center;
-  margin: 50px 0 30px;
 }

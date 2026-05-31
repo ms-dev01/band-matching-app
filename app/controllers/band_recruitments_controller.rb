@@ -1,7 +1,8 @@
 # ApplicationControllerを継承
 class BandRecruitmentsController < ApplicationController
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
   before_action :set_band_recruitment, only: [ :show ]
-  before_action :set_owned_band_recruitment, only: [ :edit, :update ]
+  before_action :set_owned_band_recruitment, only: [ :edit, :update, :destroy ]
 
   def index
     @band_recruitments = BandRecruitment.all
@@ -58,21 +59,19 @@ class BandRecruitmentsController < ApplicationController
     end
   end
 
+  def destroy
+    @band_recruitment.destroy!
+    # 削除できたら、募集一覧画面に飛ぶ
+    redirect_to root_path, status: :see_other, notice: "削除しました"
+  end
+
   def set_band_recruitment
-    @band_recruitment = BandRecruitment.find_by(id: params[:id])
-    # 募集が存在しない場合はエラーを表示
-    unless @band_recruitment.present?
-      redirect_to band_recruitments_path, alert: "募集が見つかりません"
-    end
+    @band_recruitment = BandRecruitment.find(params[:id])
   end
 
   def set_owned_band_recruitment
-    @band_recruitment = BandRecruitment.find_by(id: params[:id])
-
     # 本人以外が編集できないように制御
-    unless @band_recruitment.user_id == current_user.id
-      redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
-    end
+    @band_recruitment = current_user.band_recruitments.find(params[:id])
   end
 
   def rebuild_parts
