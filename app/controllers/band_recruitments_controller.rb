@@ -5,7 +5,7 @@ class BandRecruitmentsController < ApplicationController
   before_action :set_owned_band_recruitment, only: [ :edit, :update, :destroy ]
 
   def index
-    @band_recruitments = BandRecruitment.all
+    @band_recruitments = BandRecruitment.order(updated_at: :desc)
   end
 
   def show
