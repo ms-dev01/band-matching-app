@@ -34,6 +34,7 @@ class Profile < ApplicationRecord
   # バリデーション設定
   validates :nickname, presence: true, length: { maximum: 20 }
   validates :gender, presence: true
+  validates :birth_date, presence: true
   validate :valid_age_range
   validates :part, presence: true
   validates :bio, length: { maximum: 300 }
@@ -49,21 +50,18 @@ class Profile < ApplicationRecord
 
   # 年齢を制限
   def valid_age_range
-    if birth_date.blank?
-      errors.add(:birth_date, "を入力してください")
-      return
-    end
+    return if birth_date.blank?
 
     age = calculate_age
 
     # ユーザーは13歳以上100歳未満であること
     if age < 13
-      errors.add(:birth_date, "は13歳以上である必要があります")
+      errors.add(:base, "13歳以上の方のみ登録できます")
     end
 
     # 13歳未満は登録不可
     if age > 100
-      errors.add(:birth_date, "の年齢が不正です")
+      errors.add(:base, "正しい生年月日を入力してください")
     end
   end
 

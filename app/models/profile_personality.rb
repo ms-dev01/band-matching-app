@@ -3,5 +3,5 @@ class ProfilePersonality < ApplicationRecord
   belongs_to :personality
 
   # バリデーション設定（同じ性格タグの重複登録を防止）
-  validates :profile_id, uniqueness: { scope: :personality_id }
+  validates :personality_id, uniqueness: { scope: :profile_id }
 end
