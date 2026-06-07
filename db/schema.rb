@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_07_043432) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_07_100309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -163,6 +163,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_07_043432) do
     t.index ["band_recruitment_id"], name: "index_recruitment_activity_genres_on_band_recruitment_id"
   end
 
+  create_table "recruitment_applications", force: :cascade do |t|
+    t.text "application_comment"
+    t.integer "application_part", null: false
+    t.text "approval_comment"
+    t.bigint "band_recruitment_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["band_recruitment_id"], name: "index_recruitment_applications_on_band_recruitment_id"
+    t.index ["user_id", "band_recruitment_id"], name: "idx_on_user_id_band_recruitment_id_077dab728f", unique: true
+    t.index ["user_id"], name: "index_recruitment_applications_on_user_id"
+  end
+
   create_table "recruitment_parts", force: :cascade do |t|
     t.bigint "band_recruitment_id", null: false
     t.datetime "created_at", null: false
@@ -201,5 +215,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_07_043432) do
   add_foreign_key "recruitment_activity_areas", "band_recruitments"
   add_foreign_key "recruitment_activity_genres", "activity_genres"
   add_foreign_key "recruitment_activity_genres", "band_recruitments"
+  add_foreign_key "recruitment_applications", "band_recruitments"
+  add_foreign_key "recruitment_applications", "users"
   add_foreign_key "recruitment_parts", "band_recruitments"
 end
