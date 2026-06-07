@@ -15,6 +15,10 @@ class BandRecruitment < ApplicationRecord
   accepts_nested_attributes_for :recruitment_parts,
     # 必要人数がblankの募集パートは保存しない
     reject_if: ->(attr) { attr["max_count"].blank? }, allow_destroy: true
+  # 募集と参加希望の多対多関係を中間テーブルで管理
+  has_many :recruitment_applications, dependent: :destroy
+  # 募集に紐づくユーザーを取得（中間テーブル経由）
+  has_many :users, through: :recruitment_applications
 
   # 活動志向のパターンを定義
   enum :activity_style, { hobby: 0, amateur: 1, professional: 2 }
