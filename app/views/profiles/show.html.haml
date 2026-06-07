@@ -68,10 +68,10 @@
               %li.display-group-content= favorite_band.name
     .profile-section
       .display-title SNSリンク
-      .display-text= @profile.sns_links
+      .display-text= simple_format(@profile.sns_links)
     .profile-section
       .display-title 自己紹介
-      .display-text= @profile.bio
+      .display-text= simple_format(@profile.bio)
     -# プロフィール編集画面へのリンク
     .display-edit-btn
       = link_to "編集", edit_profile_path, class: "btn-secondary"

@@ -6,7 +6,7 @@
         %li= message
   .recruitment-card.detail
     .recruitment-card-top
-      .card-status= @band_recruitment.status
+      .card-status= t("enums.band_recruitment.status.#{@band_recruitment.status}")
       .card-deadline= "期限：#{@band_recruitment.deadline}"
     .recruitment-card-middle
       .card-team
@@ -19,17 +19,17 @@
       .card-icon-container.detail
         = image_tag @band_recruitment.user.profile.avatar_image, class: 'card-icon'
         .card-icon-info
-          .card-icon-info-top= "#{@band_recruitment.user.profile.nickname} (#{@band_recruitment.user.profile.part})"
-          .card-icon-info-bottom= "#{@band_recruitment.user.profile.calculate_age}歳 / #{@band_recruitment.user.profile.gender}"
+          .card-icon-info-top= "#{@band_recruitment.user.profile.nickname} (#{t("ui.parts.short.#{@band_recruitment.user.profile.part}")})"
+          .card-icon-info-bottom= "#{@band_recruitment.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{@band_recruitment.user.profile.gender}")}"
     .recruitment-card-bottom
       .recruitment-section
         .display-title 募集条件
         .display-group-recruitment
           .display-group-title 募集パート
           .display-group-wrapper
-            - @band_recruitment.recruitment_parts.each do |part|
-              .display-group-content= part.part
-              %span.card-content-count-lg= "×#{part.max_count}"
+            - @band_recruitment.recruitment_parts.sort_by { |rp| RecruitmentPart.parts[rp.part] }.each do |rp|
+              .display-group-content= t("enums.recruitment_part.part.#{rp.part}")
+              %span.card-content-count-lg= "×#{rp.max_count}"
         - if @band_recruitment.activity_areas.present?
           .display-group-recruitment
             .display-group-title 活動地域
@@ -46,31 +46,31 @@
           .display-group-recruitment
             .display-group-title 活動志向
             .display-group-wrapper
-              .display-group-content= @band_recruitment.activity_style
+              .display-group-content= t("enums.band_recruitment.activity_style.#{@band_recruitment.activity_style}")
         - if @band_recruitment.music_type.present?
           .display-group-recruitment
             .display-group-title 楽曲タイプ
             .display-group-wrapper
-              .display-group-content= @band_recruitment.music_type
-        - if @band_recruitment.practice_frequency_unit.present? || @band_recruitment.practice_frequency_count.present?
+              .display-group-content= t("enums.band_recruitment.music_type.#{@band_recruitment.music_type}")
+        - if @band_recruitment.practice_frequency_unit.present? && @band_recruitment.practice_frequency_count.present?
           .display-group-recruitment
             .display-group-title 練習頻度
             .display-group-wrapper
-              .display-group-content= "#{@band_recruitment.practice_frequency_unit}に#{@band_recruitment.practice_frequency_count}回"
+              .display-group-content= "#{t("enums.band_recruitment.practice_frequency_unit.#{@band_recruitment.practice_frequency_unit}")}に#{@band_recruitment.practice_frequency_count}回"
         - if @band_recruitment.practice_style.present?
           .display-group-recruitment
             .display-group-title 練習スタイル
             .display-group-wrapper
-              .display-group-content= @band_recruitment.practice_style
+              .display-group-content= t("enums.band_recruitment.practice_style.#{@band_recruitment.practice_style}")
         - unless @band_recruitment.wants_live_performance.nil?
           .display-group-recruitment
             .display-group-title ライブ出演希望
             .display-group-wrapper
-              .display-group-content= @band_recruitment.wants_live_performance
+              .display-group-content= t("ui.boolean.#{@band_recruitment.wants_live_performance}")
       - if @band_recruitment.comment.present?
         .recruitment-section
           .display-title 募集コメント
-          .display-text= @band_recruitment.comment
+          .display-text= simple_format(@band_recruitment.comment)
     -# プロフィール編集画面へのリンク
     - if @band_recruitment.user_id == current_user.id
       .display-btn

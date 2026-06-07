@@ -1,9 +1,9 @@
-.container.recruitment-container
+.recruitment-container
   - @band_recruitments.each do |band_recruitment|
     = link_to band_recruitment_path(band_recruitment), class: 'recruitment-card-link' do
       .recruitment-card
         .recruitment-card-top
-          .card-status= band_recruitment.status
+          .card-status= t("enums.band_recruitment.status.#{band_recruitment.status}")
           .card-deadline= "期限：#{band_recruitment.deadline}"
         .recruitment-card-middle
           .card-team
@@ -17,9 +17,9 @@
           .card-content
             .card-content-title 募集パート：
             %ul.card-content-list
-              - band_recruitment.recruitment_parts.each do |part|
-                %li.card-content-text= part.part
-                %span.card-content-count= "×#{part.max_count}"
+              - band_recruitment.recruitment_parts.sort_by { |rp| RecruitmentPart.parts[rp.part] }.each do |rp|
+                %li.card-content-text= t("enums.recruitment_part.part.#{rp.part}")
+                %span.card-content-count= "×#{rp.max_count}"
           .card-content
             .card-content-title 活動地域：
             - if band_recruitment.activity_areas.present?
@@ -40,13 +40,13 @@
             .card-content-title 活動志向：
             - if band_recruitment.activity_style.present?
               .card-content-list
-                .card-content-text= band_recruitment.activity_style
+                .card-content-text= t("enums.band_recruitment.activity_style.#{band_recruitment.activity_style}")
             - else
               .card-content-text 未設定
           .card-icon-container
             = image_tag band_recruitment.user.profile.avatar_image, class: 'card-icon'
             .card-icon-info
-              .card-icon-info-top= "#{band_recruitment.user.profile.nickname} (#{band_recruitment.user.profile.part})"
-              .card-icon-info-bottom= "#{band_recruitment.user.profile.calculate_age}歳 / #{band_recruitment.user.profile.gender}"
+              .card-icon-info-top= "#{band_recruitment.user.profile.nickname} (#{t("ui.parts.short.#{band_recruitment.user.profile.part}")})"
+              .card-icon-info-bottom= "#{band_recruitment.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{band_recruitment.user.profile.gender}")}"
 .display-create-btn
   = link_to "", new_band_recruitment_path, class: "btn-add"

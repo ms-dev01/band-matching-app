@@ -100,11 +100,11 @@
         .label
           = f.label :sns_links, 'SNSリンク'
         %div
-          = f.text_field :sns_links, class: 'text-field'
+          = f.text_area :sns_links, class: 'text-area'
       .form-group
         .label
           = f.label :bio, '自己紹介'
         %div
-          = f.text_field :bio, class: 'text-field'
+          = f.text_area :bio, class: 'text-area'
       .btn-container
         = f.submit '保存', class: 'btn-secondary'
