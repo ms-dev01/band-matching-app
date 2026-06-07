@@ -1,9 +1,9 @@
 .container
   -# エラーがある場合、メッセージを表示
   -if @profile.errors.any?
-    %ul
+    %ul.error-message-container
       - @profile.errors.full_messages.each do |message|
-        %li= message
+        %li.error-message= "※#{message}"
   .form-title プロフィールの編集
   .form-container
     = form_with(model: @profile, url: profile_path, method: 'patch', local: true) do |f|

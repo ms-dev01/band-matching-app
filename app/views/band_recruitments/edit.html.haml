@@ -1,9 +1,9 @@
 .container
   -# エラーがある場合、メッセージを表示
   -if @band_recruitment.errors.any?
-    %ul
+    %ul.error-message-container
       - @band_recruitment.errors.full_messages.each do |message|
-        %li= message
+        %li.error-message= "※#{message}"
   .form-title 募集内容
   .form-container
     = form_with(model: @band_recruitment, url: band_recruitment_path(@band_recruitment), method: 'patch', local: true) do |f|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_07_043432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -90,6 +90,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
     t.bigint "profile_id", null: false
     t.datetime "updated_at", null: false
     t.index ["activity_area_id"], name: "index_profile_activity_areas_on_activity_area_id"
+    t.index ["profile_id", "activity_area_id"], name: "idx_on_profile_id_activity_area_id_618dbedb90", unique: true
     t.index ["profile_id"], name: "index_profile_activity_areas_on_profile_id"
   end
 
@@ -99,6 +100,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
     t.bigint "profile_id", null: false
     t.datetime "updated_at", null: false
     t.index ["activity_genre_id"], name: "index_profile_activity_genres_on_activity_genre_id"
+    t.index ["profile_id", "activity_genre_id"], name: "idx_on_profile_id_activity_genre_id_8ae5e106cf", unique: true
     t.index ["profile_id"], name: "index_profile_activity_genres_on_profile_id"
   end
 
@@ -108,6 +110,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
     t.bigint "profile_id", null: false
     t.datetime "updated_at", null: false
     t.index ["favorite_band_id"], name: "index_profile_favorite_bands_on_favorite_band_id"
+    t.index ["profile_id", "favorite_band_id"], name: "idx_on_profile_id_favorite_band_id_902e3d8115", unique: true
     t.index ["profile_id"], name: "index_profile_favorite_bands_on_profile_id"
   end
 
@@ -117,6 +120,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
     t.bigint "profile_id", null: false
     t.datetime "updated_at", null: false
     t.index ["personality_id"], name: "index_profile_personalities_on_personality_id"
+    t.index ["profile_id", "personality_id"], name: "index_profile_personalities_on_profile_id_and_personality_id", unique: true
     t.index ["profile_id"], name: "index_profile_personalities_on_profile_id"
   end
 
@@ -145,6 +149,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["activity_area_id"], name: "index_recruitment_activity_areas_on_activity_area_id"
+    t.index ["band_recruitment_id", "activity_area_id"], name: "idx_on_band_recruitment_id_activity_area_id_4bdb50643d", unique: true
     t.index ["band_recruitment_id"], name: "index_recruitment_activity_areas_on_band_recruitment_id"
   end
 
@@ -154,6 +159,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["activity_genre_id"], name: "index_recruitment_activity_genres_on_activity_genre_id"
+    t.index ["band_recruitment_id", "activity_genre_id"], name: "idx_on_band_recruitment_id_activity_genre_id_c7aabd4499", unique: true
     t.index ["band_recruitment_id"], name: "index_recruitment_activity_genres_on_band_recruitment_id"
   end
 
@@ -163,6 +169,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
     t.integer "max_count", null: false
     t.integer "part", null: false
     t.datetime "updated_at", null: false
+    t.index ["band_recruitment_id", "part"], name: "index_recruitment_parts_on_band_recruitment_id_and_part", unique: true
     t.index ["band_recruitment_id"], name: "index_recruitment_parts_on_band_recruitment_id"
   end
 
