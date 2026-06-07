@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_04_153431) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_04_234756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -61,7 +61,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_153431) do
     t.date "deadline", null: false
     t.integer "music_type"
     t.integer "practice_frequency_count"
-    t.string "practice_frequency_unit"
+    t.integer "practice_frequency_unit"
     t.integer "practice_style"
     t.integer "status", default: 0
     t.string "team_name"
