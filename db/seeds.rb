@@ -8,6 +8,39 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+# ダミーデータの作成
+cat = User.create!(email: "cat@sample.com", password: "password")
+dog = User.create!(email: "dog@sample.com", password: "password")
+rabbit = User.create!(email: "rabbit@sample.com", password: "password")
+
+users = [ cat, dog, rabbit ]
+
+users.each do |user|
+  user.create_profile!(
+    nickname: user.email.split("@").first,
+    gender: "male",
+    birth_date: Date.today - 40.years,
+    part: "vocal"
+  )
+
+  6.times do
+    recruitment = user.band_recruitments.build(
+      user: user,
+      title: Faker::Lorem.sentence(word_count: 3),
+      # 今日から30日以内の未来の日付をランダムで返す
+      deadline: Faker::Date.forward(days: 30),
+      status: 0
+    )
+
+    recruitment.recruitment_parts.build(
+    part: "vocal",
+    max_count: 1
+    )
+
+    recruitment.save!
+  end
+end
+
 # 活動ジャンルを定義
 activity_genres = [
   "J-ROCK",
