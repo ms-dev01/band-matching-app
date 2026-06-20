@@ -54,6 +54,26 @@
 .display-text {
   font-size: 14px;
   margin-top: 10px;
+
+  &.application {
+    border-radius: 4px;
+    background-color: $text-back-color;
+    padding: 5px 8px;
+    margin: 0;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: $text-back-color;
+      width: 15px;
+      height: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -8px;
+      clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
+    }
+  }
 }
 
 .display-btn {
@@ -62,8 +82,19 @@
   align-items: center;
   gap: 30px;
   margin: 50px 0 30px;
+
+  &.application {
+    margin: 0;
+  }
 }
 
 .display-edit-btn {
   text-align: center;
+}
+
+.display-application {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-top: 10px;
 }

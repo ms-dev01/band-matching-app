@@ -134,6 +134,12 @@
     margin: 15px 0 0 auto;
     width: fit-content;
   }
+
+  &.application {
+    position: static;
+    margin: 0;
+    width: 140px;
+  }
 }
 
 .card-icon {
@@ -141,7 +147,7 @@
   width: 40px;
   height: 40px;
   display: block;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .card-icon-info-top {

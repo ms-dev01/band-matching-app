@@ -1,14 +1,15 @@
 # ApplicationControllerを継承
 class BandRecruitmentsController < ApplicationController
   before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
-  before_action :set_band_recruitment, only: [ :show ]
-  before_action :set_owned_band_recruitment, only: [ :edit, :update, :destroy ]
+  before_action :set_band_recruitment, only: [ :show, :edit, :update, :destroy ]
+  before_action :ensure_owner, only: [ :edit, :update, :destroy ]
 
   def index
     @band_recruitments = BandRecruitment.order(updated_at: :desc)
   end
 
   def show
+      @application = current_user.recruitment_applications.new
   end
 
   def new
@@ -24,6 +25,7 @@ class BandRecruitmentsController < ApplicationController
 
   def create
     @band_recruitment = current_user.band_recruitments.new(band_recruitment_params)
+    @band_recruitment.user = current_user
 
     # DBに値が保存されれば、作成された募集ページに飛ぶ
     if @band_recruitment.save
@@ -69,9 +71,12 @@ class BandRecruitmentsController < ApplicationController
     @band_recruitment = BandRecruitment.find(params[:id])
   end
 
-  def set_owned_band_recruitment
+  def ensure_owner
     # 本人以外が編集できないように制御
-    @band_recruitment = current_user.band_recruitments.find(params[:id])
+    unless @band_recruitment.user == current_user
+      redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
+      return
+    end
   end
 
   def rebuild_parts
