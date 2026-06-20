@@ -73,10 +73,8 @@ class BandRecruitmentsController < ApplicationController
 
   def ensure_owner
     # 本人以外が編集できないように制御
-    unless @band_recruitment.user == current_user
+    return if @band_recruitment.user == current_user
       redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
-      return
-    end
   end
 
   def rebuild_parts

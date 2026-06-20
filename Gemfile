@@ -23,7 +23,7 @@ gem "sassc-rails"
 # ユーザー認証機能を簡単に実装するためのgem
 gem "devise"
 # ダミーデータ作成用ツール
-gem 'faker'
+gem "faker"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
