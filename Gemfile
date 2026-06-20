@@ -22,6 +22,8 @@ gem "hamlit"
 gem "sassc-rails"
 # ユーザー認証機能を簡単に実装するためのgem
 gem "devise"
+# ダミーデータ作成用ツール
+gem 'faker'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -58,6 +60,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # デバッグツール追加
+  gem "pry-byebug"
 end
 
 group :development do
