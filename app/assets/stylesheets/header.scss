@@ -35,6 +35,10 @@
 
 .header-dropdown {
   position: relative;
+
+  &:hover .dropdown-content {
+    display: block;
+  }
 }
 
 .header-login-btn {
@@ -46,7 +50,7 @@
 }
 
 .dropdown-content {
-  // visibility: hidden;
+  display: none;
   position: absolute;
   top: 60px;
   left: -36px;
@@ -54,6 +58,16 @@
   background-color: #fff;
   padding: 6px 10px;
   white-space: nowrap;
+
+  // hoverの範囲を広げる
+  &::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 0;
+    width: 91px;
+    height: 5px;
+  }
 }
 
 .dropdown-link {

@@ -29,7 +29,7 @@
         -# ログインしていれば実行（ログインアイコンを表示）
         .header-dropdown
           -# avatar_imageメソッドの呼び出し
-          = image_tag current_user.profile.avatar_image, class: "icon drop-btn"
+          = image_tag current_user.profile.avatar_image, class: "icon"
           .dropdown-content
             -# プロフィール画面へのリンク
             = link_to "プロフィール", profile_path, class: "dropdown-link"
