@@ -23,4 +23,5 @@ Rails.application.routes.draw do
     # RecruitmentApplicationのルーティング
     resources :recruitment_applications, only: [ :create ]
   end
+  resources :recruitment_applications, only: [ :index ]
 end

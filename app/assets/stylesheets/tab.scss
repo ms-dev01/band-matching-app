@@ -1,0 +1,48 @@
+@import "variables";
+
+.tab-container {
+  position: sticky;
+  top: 86px;
+  background-color: $bg-color;
+  // z-index: 10;
+}
+
+.tab-container-top,
+.tab-container-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tab-container-top {
+  padding: 20px;
+}
+
+.tab-container-bottom {
+  padding: 0 20px 20px;
+  margin-top: -10px;
+}
+
+.tab-link {
+  flex: 1;
+  padding: 4px;
+  text-decoration: none;
+  color: $main-color;
+  background-color: #fff;
+  position: relative;
+
+  & + & {
+    border-left: 2px solid $bg-color;
+  }
+}
+
+.active {
+  color: #fff;
+  background-color: $main-color;
+}
+
+.deactive {
+  color: #fff;
+  background-color: $inactive-color;
+}

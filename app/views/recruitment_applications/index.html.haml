@@ -48,6 +48,5 @@
             .card-icon-info
               .card-icon-info-top= "#{band_recruitment.user.profile.nickname} (#{t("ui.parts.short.#{band_recruitment.user.profile.part}")})"
               .card-icon-info-bottom= "#{band_recruitment.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{band_recruitment.user.profile.gender}")}"
-- if user_signed_in?
-  .display-create-btn
-    = link_to "", new_band_recruitment_path, class: "btn-add"
+.display-create-btn
+  = link_to "", new_band_recruitment_path, class: "btn-add"

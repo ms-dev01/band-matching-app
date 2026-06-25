@@ -71,31 +71,32 @@
         .recruitment-section
           .display-title 募集コメント
           .display-text= simple_format(@band_recruitment.comment)
-      - if @band_recruitment.recruitment_applications.present?
-        - if @band_recruitment.user == current_user
-          .recruitment-section
-            .display-title 応募メッセージ
-            - @band_recruitment.recruitment_applications.each do |recruitment_application|
-              .display-application
-                .card-icon-container.application
-                  = image_tag recruitment_application.user.profile.avatar_image, class: 'card-icon'
-                  .card-icon-info
-                    .card-icon-info-top= "#{recruitment_application.user.profile.nickname} (#{t("ui.parts.short.#{recruitment_application.user.profile.part}")})"
-                    .card-icon-info-bottom= "#{recruitment_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{recruitment_application.user.profile.gender}")}"
-                - if recruitment_application.application_comment.present?
-                  .display-text.application= simple_format(recruitment_application.application_comment)
-        - elsif current_user.recruitment_applications.exists?(band_recruitment: @band_recruitment)
-          .recruitment-section
-            .display-title 応募メッセージ
-            - current_user.recruitment_applications.where(band_recruitment: @band_recruitment).each do |recruitment_application|
-              .display-application
-                .card-icon-container.application
-                  = image_tag recruitment_application.user.profile.avatar_image, class: 'card-icon'
-                  .card-icon-info
-                    .card-icon-info-top= "#{recruitment_application.user.profile.nickname} (#{t("ui.parts.short.#{recruitment_application.user.profile.part}")})"
-                    .card-icon-info-bottom= "#{recruitment_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{recruitment_application.user.profile.gender}")}"
-                - if recruitment_application.application_comment.present?
-                  .display-text.application= simple_format(recruitment_application.application_comment)
+      -if user_signed_in?
+        - if @band_recruitment.recruitment_applications.present?
+          - if @band_recruitment.user == current_user
+            .recruitment-section
+              .display-title 応募メッセージ
+              - @band_recruitment.recruitment_applications.each do |recruitment_application|
+                .display-application
+                  .card-icon-container.application
+                    = image_tag recruitment_application.user.profile.avatar_image, class: 'card-icon'
+                    .card-icon-info
+                      .card-icon-info-top= "#{recruitment_application.user.profile.nickname} (#{t("ui.parts.short.#{recruitment_application.user.profile.part}")})"
+                      .card-icon-info-bottom= "#{recruitment_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{recruitment_application.user.profile.gender}")}"
+                  - if recruitment_application.application_comment.present?
+                    .display-text.application= simple_format(recruitment_application.application_comment)
+          - elsif current_user.recruitment_applications.exists?(band_recruitment: @band_recruitment)
+            .recruitment-section
+              .display-title 応募メッセージ
+              - current_user.recruitment_applications.where(band_recruitment: @band_recruitment).each do |recruitment_application|
+                .display-application
+                  .card-icon-container.application
+                    = image_tag recruitment_application.user.profile.avatar_image, class: 'card-icon'
+                    .card-icon-info
+                      .card-icon-info-top= "#{recruitment_application.user.profile.nickname} (#{t("ui.parts.short.#{recruitment_application.user.profile.part}")})"
+                      .card-icon-info-bottom= "#{recruitment_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{recruitment_application.user.profile.gender}")}"
+                  - if recruitment_application.application_comment.present?
+                    .display-text.application= simple_format(recruitment_application.application_comment)
     -# プロフィール編集画面へのリンク
     - if @band_recruitment.user == current_user
       .display-btn
@@ -104,29 +105,30 @@
         .display-edit-btn
           = link_to "編集", edit_band_recruitment_path(@band_recruitment), class: "btn-secondary"
     -# 参加希望ボタンの表示
-    - unless @band_recruitment.user == current_user
-      - if current_user.recruitment_applications.exists?(band_recruitment: @band_recruitment)
-        .btn-container
-          .btn-secondary.applied 応募済み
-      - else
-        .btn-container
-          .btn-secondary.js-application-btn 参加希望
-        .js-application-container
-          -# エラーがある場合、メッセージを表示（将来用）
-          -if @application && @application.errors.any?
-            %ul.error-message-container
-              - @application.errors.full_messages.each do |message|
-                %li.error-message= "※#{message}"
-          .form-container.application
-            = form_with(model: @application, url: band_recruitment_recruitment_applications_path(@band_recruitment), method: 'post', local: true) do |f|
-              .form-group.application
-                .label
-                  = f.label :application_comment do
-                    参加希望メッセージ：
-                %div
-                  = f.text_area :application_comment, class: 'text-area'
-              .display-btn.application
-                .display-cancel-btn
-                  .btn-secondary.cancel.js-cancel-btn キャンセル
-                .display-submit-btn
-                  = f.submit '送信', class: 'btn-secondary submit'
+    - if user_signed_in?
+      - unless @band_recruitment.user == current_user
+        - if current_user.recruitment_applications.exists?(band_recruitment: @band_recruitment)
+          .btn-container
+            .btn-secondary.applied 応募済み
+        - else
+          .btn-container
+            .btn-secondary.js-application-btn 参加希望
+          .js-application-container
+            -# エラーがある場合、メッセージを表示（将来用）
+            -if @application && @application.errors.any?
+              %ul.error-message-container
+                - @application.errors.full_messages.each do |message|
+                  %li.error-message= "※#{message}"
+            .form-container.application
+              = form_with(model: @application, url: band_recruitment_recruitment_applications_path(@band_recruitment), method: 'post', local: true) do |f|
+                .form-group.application
+                  .label
+                    = f.label :application_comment do
+                      参加希望メッセージ：
+                  %div
+                    = f.text_area :application_comment, class: 'text-area'
+                .display-btn.application
+                  .display-cancel-btn
+                    .btn-secondary.cancel.js-cancel-btn キャンセル
+                  .display-submit-btn
+                    = f.submit '送信', class: 'btn-secondary submit'

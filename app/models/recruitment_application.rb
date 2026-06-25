@@ -9,4 +9,13 @@ class RecruitmentApplication < ApplicationRecord
 
   # バリデーション設定（同じ募集への参加希望の重複登録を防止）
   validates :user_id, uniqueness: { scope: :band_recruitment_id }
+  validate :cannot_apply_own_recruitment
+
+  # 自分の募集は応募不可
+  def cannot_apply_own_recruitment
+    return unless band_recruitment
+    if band_recruitment.user_id == user_id
+      errors.add(:base, "自分の募集には応募できません")
+    end
+  end
 end
