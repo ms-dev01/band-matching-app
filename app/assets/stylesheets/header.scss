@@ -11,11 +11,26 @@
   padding: 15px 20px;
   font-weight: bold;
   z-index: 10;
+  height: 86px;
+}
+
+.header-logos {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
 }
 
 .header-logo {
+  display: block;
   color: $main-color;
   font-size: 25px;
+  text-decoration: none;
+}
+
+.header-back {
+  width: 15px;
+  height: 15px;
 }
 
 .header-dropdown {
