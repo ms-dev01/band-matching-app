@@ -19,17 +19,22 @@
     = javascript_importmap_tags
   %body
     %header.header
-      .header-logo Gather Band
+      .header-logos
+        - unless (controller_name == "band_recruitments" && action_name == "index") || ("recruitment_applications" && action_name == "index")
+          = link_to request.referer || root_path do
+            = image_tag "back.svg", class: "header-back"
+        -# ロゴボタンクリックでトップ画面に戻る
+        = link_to "Gather Band", root_path, class: "header-logo"
       - if user_signed_in?
         -# ログインしていれば実行（ログインアイコンを表示）
         .header-dropdown
           -# avatar_imageメソッドの呼び出し
-          = image_tag current_user.profile.avatar_image, class: 'icon drop-btn'
+          = image_tag current_user.profile.avatar_image, class: "icon drop-btn"
           .dropdown-content
             -# プロフィール画面へのリンク
-            = link_to 'プロフィール', profile_path, class: 'dropdown-link'
+            = link_to "プロフィール", profile_path, class: "dropdown-link"
             -# ログアウト機能の追加
-            = link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: 'delete' }, class: 'dropdown-link'
+            = link_to "ログアウト", destroy_user_session_path, data: { turbo_method: "delete" }, class: "dropdown-link"
       - else
         -# ログインしていない時
         = link_to 'ログイン', new_user_session_path, class: 'header-login-btn'
@@ -38,5 +43,21 @@
       .flash
         - flash.each do |key, value|
           %div{:class => key}= value
-    -# application.html.hamlに記述した内容はすべてのHTMLで表示され、yieldで個別のHTMLを読み込んでいる
+    - if action_name == "index"
+      .tab-container
+        .tab-container-top
+          = link_to "全体募集一覧", band_recruitments_path, class: "#{active_parent_tab(controller: "band_recruitments")} tab-link"
+          - if user_signed_in?
+            = link_to "自分の募集一覧", band_recruitments_path(filter: "my-band-recruitment"), class: "#{active_parent_tab(controller: "band_recruitments", filter: "my-band-recruitment")} tab-link"
+          - else
+            .tab-link.deactive 自分の募集一覧
+          - if user_signed_in?
+            = link_to "参加希望", recruitment_applications_path, class: "#{active_parent_tab(controller: "recruitment_applications")} tab-link"
+          - else
+            .tab-link.deactive 参加希望
+        - if controller_name == "recruitment_applications"
+          .tab-container-bottom
+            = link_to "自分から (#{@sent_applications_count})", recruitment_applications_path(filter: "sent"), class: "#{active_child_tab(controller: "recruitment_applications", filter: "sent")} tab-link"
+            = link_to "相手から (#{@received_applications_count})", recruitment_applications_path(filter: "received"), class: "#{active_child_tab(controller: "recruitment_applications", filter: "received")} tab-link"
+      -# application.html.hamlに記述した内容はすべてのHTMLで表示され、yieldで個別のHTMLを読み込んでいる
     = yield

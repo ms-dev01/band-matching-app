@@ -5,11 +5,17 @@ class BandRecruitmentsController < ApplicationController
   before_action :ensure_owner, only: [ :edit, :update, :destroy ]
 
   def index
-    @band_recruitments = BandRecruitment.order(updated_at: :desc)
+    if params[:filter] == "my-band-recruitment"
+      @band_recruitments = current_user.band_recruitments.order(updated_at: :desc)
+    else
+      @band_recruitments = BandRecruitment.order(updated_at: :desc)
+    end
   end
 
   def show
+    if user_signed_in?
       @application = current_user.recruitment_applications.new
+    end
   end
 
   def new
