@@ -42,6 +42,37 @@
   }
 }
 
+.btn-third {
+  font-size: 12px;
+  text-decoration: none;
+  text-align: center;
+  background-color: #fff;
+  padding: 3px 5px;
+  margin: 6px 0 0 0;
+  display: inline-block;
+  cursor: pointer;
+
+  &.approved {
+    color: $secondary-color;
+    border: 1px solid $secondary-color;
+
+    &:hover {
+      background-color: $secondary-color;
+      color: #fff;
+    }
+  }
+
+  &.rejected {
+    color: $inactive-color;
+    border: 1px solid $inactive-color;
+
+    &:hover {
+      background-color: $inactive-color;
+      color: #fff;
+    }
+  }
+}
+
 .btn-add {
   display: block;
   position: fixed;
