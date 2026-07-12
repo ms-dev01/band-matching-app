@@ -92,9 +92,4 @@ class Profile < ApplicationRecord
       "#{experience_year}年#{experience_month}ヶ月"
     end
   end
-
-  # プロフィールの必須項目が入力されているかどうか
-  def completed?
-    nickname.present? && gender.present? && birth_date.present? && part.present?
-  end
 end

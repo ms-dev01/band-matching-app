@@ -17,11 +17,11 @@ Rails.application.routes.draw do
   root to: "band_recruitments#index"
 
   # Profileのルーティング
-  resource :profile, only: [ :show, :edit, :update ]
+  resources :profiles, only: [ :new, :create, :show, :edit, :update ]
   # BandRecruitmentのルーティング
   resources :band_recruitments do
     # RecruitmentApplicationのルーティング
-    resources :recruitment_applications, only: [ :create ]
+    resources :recruitment_applications, only: [ :create, :update ]
   end
   resources :recruitment_applications, only: [ :index ]
 end

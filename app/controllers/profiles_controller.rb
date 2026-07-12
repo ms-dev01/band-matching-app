@@ -3,25 +3,40 @@ class ProfilesController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    # ログインユーザのプロフィールを取得
-    @profile = current_user.profile
+    @profile = Profile.find(params[:id])
+  end
+
+  def new
+    @profile = current_user.build_profile
+  end
+
+  def create
+    @profile = current_user.build_profile(profile_params)
+
+    # DBに値が保存されれば、作成された募集ページに飛ぶ
+    if @profile.save
+      redirect_to profile_path(@profile), notice: "プロフィールを作成しました"
+    else
+      flash.now[:error] = "プロフィールを作成できませんでした"
+      # 同じリクエストのままnew.html.hamlを表示し直す
+      # バリデーションエラー（必須項目が空など）のときにHTTPステータスコード422を返す
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
-    # current_userのプロフィールが存在すれば、そのプロフィールレコードを取得し、そうでなければ空のProfileインスタンスを作成
-    @profile = current_user.prepare_profile
+    @profile = current_user.profile
   end
 
   def update
-    # current_userのプロフィールが存在すれば、そのプロフィールレコードを取得し、そうでなければ空のProfileインスタンスを作成
-    @profile = current_user.prepare_profile
+    @profile = current_user.profile
 
     # 取得したレコードにform送信時に入力されたparamsを渡して上書き
     @profile.assign_attributes(profile_params)
 
     if @profile.save
       # プロフィール画面に遷移してflashを表示
-      redirect_to profile_path, notice: "プロフィールを更新しました"
+      redirect_to profile_path(@profile), notice: "プロフィールを更新しました"
     else
       flash.now[:error] = "プロフィールを更新できませんでした"
       # 同じリクエストのままedit.html.hamlを表示し直す

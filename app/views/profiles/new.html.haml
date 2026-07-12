@@ -4,9 +4,9 @@
     %ul.error-message-container
       - @profile.errors.full_messages.each do |message|
         %li.error-message= "※#{message}"
-  .form-title プロフィールの編集
+  .form-title プロフィールの作成
   .form-container
-    = form_with(model: @profile, url: profile_path(@profile), method: 'patch', local: true) do |f|
+    = form_with(model: @profile, url: profiles_path, method: 'post', local: true) do |f|
       .form-group
         .label
           = f.label :avatar, 'プロフィール画像'
