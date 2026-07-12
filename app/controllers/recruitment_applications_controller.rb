@@ -34,6 +34,28 @@ class RecruitmentApplicationsController < ApplicationController
     end
   end
 
+  def update
+    @band_recruitment = BandRecruitment.find(params[:band_recruitment_id])
+    @application = @band_recruitment.recruitment_applications.find(params[:id])
+
+    # 応募ステータスの変更
+    if params[:status] == "approved"
+      if @application.update(status: :approved)
+        redirect_to band_recruitment_path(@band_recruitment), notice: "承認しました"
+      else
+        redirect_to band_recruitment_path(@band_recruitment), alert: "承認できませんでした"
+      end
+    elsif params[:status] == "rejected"
+      if @application.update(status: :rejected)
+        redirect_to band_recruitment_path(@band_recruitment), notice: "見送りました"
+      else
+        redirect_to band_recruitment_path(@band_recruitment), alert: "見送りできませんでした"
+      end
+    else
+      redirect_to band_recruitment_path(@band_recruitment), alert: "操作できませんでした"
+    end
+  end
+
   private
   def recruitment_application_params
     # formから送信されるパラメータのうち、許可したパラメータのみ受け取る
