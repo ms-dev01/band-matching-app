@@ -120,11 +120,12 @@
                     .display-text.application= simple_format(recruitment_application.application_comment)
     -# 募集編集画面へのリンク
     - if @band_recruitment.user == current_user
-      .display-btn
-        .display-delete-btn
-          = link_to "削除", band_recruitment_path(@band_recruitment), data: { turbo_method: "delete", turbo_confirm: "本当に削除してもよろしいですか？"}, class: "btn-secondary delete"
-        .display-edit-btn
-          = link_to "編集", edit_band_recruitment_path(@band_recruitment), class: "btn-secondary edit"
+      - unless @band_recruitment.recruitment_applications.approved.exists?
+        .display-btn
+          .display-delete-btn
+            = link_to "削除", band_recruitment_path(@band_recruitment), data: { turbo_method: "delete", turbo_confirm: "本当に削除してもよろしいですか？"}, class: "btn-secondary delete"
+          .display-edit-btn
+            = link_to "編集", edit_band_recruitment_path(@band_recruitment), class: "btn-secondary edit"
     -# 参加希望ボタンの表示
     - if user_signed_in?
       - unless @band_recruitment.user == current_user
