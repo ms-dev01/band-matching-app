@@ -13,9 +13,4 @@ class User < ApplicationRecord
   # ユーザーに紐づく募集を取得（中間テーブル経由）
   has_many :applied_band_recruitments, through: :recruitment_applications,
            source: :band_recruitment
-
-  def prepare_profile
-    # profileがあればそれを返し、なければ新しく作る
-    profile || build_profile
-  end
 end

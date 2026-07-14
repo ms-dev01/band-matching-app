@@ -3,8 +3,19 @@
     = link_to band_recruitment_path(band_recruitment), class: 'recruitment-card-link' do
       .recruitment-card
         .recruitment-card-top
-          .card-status= t("enums.band_recruitment.status.#{band_recruitment.status}")
-          .card-deadline= "期限：#{band_recruitment.deadline}"
+          .recruitment-card-top-left
+            .card-status= t("enums.band_recruitment.status.#{band_recruitment.status}")
+            .card-deadline= "期限：#{band_recruitment.deadline}"
+          .recruitment-card-top-right
+            -# 自分が応募した募集であれば、応募ステータスを表示
+            - if (application = band_recruitment.application_by(current_user))
+              .display-my-application-status-container
+                - if application.status == "rejected"
+                  .display-my-application-status.rejected 不成立
+                - elsif application.status == "approved"
+                  .display-my-application-status.approved 承認
+                - else
+                  .display-my-application-status.pending 承認待ち
         .recruitment-card-middle
           .card-team
             .card-team-title チーム名

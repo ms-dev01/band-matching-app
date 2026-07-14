@@ -20,6 +20,12 @@
 
 .recruitment-card-top {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recruitment-card-top-left {
+  display: flex;
   justify-content: start;
   align-items: center;
   gap: 8px;
@@ -131,14 +137,18 @@
 
   &.detail {
     position: static;
-    margin: 15px 0 0 auto;
+    margin: 10px 0 0 auto;
     width: fit-content;
+    justify-content: center;
   }
 
   &.application {
-    position: static;
+    position: relative;
+    bottom: 0;
+    flex-direction: column;
     margin: 0;
-    width: 140px;
+    gap: 1px;
+    width: 120px;
   }
 }
 
@@ -148,12 +158,33 @@
   height: 40px;
   display: block;
   margin: 0;
+
+  &.application {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.card-icon-info {
+  &.application {
+    text-align: center;
+  }
 }
 
 .card-icon-info-top {
   font-size: 11px;
+
+  &.application {
+    font-size: 13px;
+  }
 }
 
 .card-icon-info-bottom {
   font-size: 9px;
+}
+
+.card-icon-profile {
+  position: absolute;
+  top: 30px;
+  right: 25px;
 }

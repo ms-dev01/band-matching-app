@@ -52,4 +52,9 @@ class BandRecruitment < ApplicationRecord
       errors.add(:deadline, "は過去日にできません")
     end
   end
+
+  # 自分の応募を取得
+  def application_by(user)
+    recruitment_applications.find_by(user: user)
+  end
 end

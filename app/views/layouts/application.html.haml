@@ -26,15 +26,15 @@
         -# ロゴボタンクリックでトップ画面に戻る
         = link_to "Gather Band", root_path, class: "header-logo"
       - if user_signed_in?
-        -# ログインしていれば実行（ログインアイコンを表示）
-        .header-dropdown
-          -# avatar_imageメソッドの呼び出し
-          = image_tag current_user.profile.avatar_image, class: "icon"
-          .dropdown-content
-            -# プロフィール画面へのリンク
-            = link_to "プロフィール", profile_path, class: "dropdown-link"
-            -# ログアウト機能の追加
-            = link_to "ログアウト", destroy_user_session_path, data: { turbo_method: "delete" }, class: "dropdown-link"
+        - if current_user.profile&.persisted?
+          .header-dropdown
+            -# avatar_imageメソッドの呼び出し
+            = image_tag current_user.profile.avatar_image, class: "icon"
+            .dropdown-content
+              -# プロフィール画面へのリンク
+              = link_to "プロフィール", profile_path(current_user.profile), class: "dropdown-link"
+              -# ログアウト機能の追加
+              = link_to "ログアウト", destroy_user_session_path, data: { turbo_method: "delete" }, class: "dropdown-link"
       - else
         -# ログインしていない時
         = link_to 'ログイン', new_user_session_path, class: 'header-login-btn'
