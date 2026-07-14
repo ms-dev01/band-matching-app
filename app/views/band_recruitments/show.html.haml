@@ -6,8 +6,10 @@
         %li= message
   .recruitment-card.detail
     .recruitment-card-top
-      .card-status= t("enums.band_recruitment.status.#{@band_recruitment.status}")
-      .card-deadline= "期限：#{@band_recruitment.deadline}"
+      .recruitment-card-top-left
+        .card-status= t("enums.band_recruitment.status.#{@band_recruitment.status}")
+        .card-deadline= "期限：#{@band_recruitment.deadline}"
+      .recruitment-card-top-right
     .recruitment-card-middle
       .card-team
         .card-team-title チーム名

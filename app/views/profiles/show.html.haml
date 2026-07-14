@@ -73,7 +73,7 @@
       .display-title 自己紹介
       .display-text= simple_format(@profile.bio)
     -# プロフィール編集画面へのリンク
-    .display-edit-btn
+    .btn-container
       = link_to "編集", edit_profile_path(@profile), class: "btn-secondary"
 - if turbo_frame_request?
   = turbo_frame_tag "profile_modal" do
