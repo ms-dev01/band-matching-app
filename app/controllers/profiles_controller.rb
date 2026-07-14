@@ -1,9 +1,15 @@
 class ProfilesController < ApplicationController
   # ログインしていないと使えないようにする
   before_action :authenticate_user!
+  before_action :set_profile, only: [ :show, :edit, :update ]
+  # 自分以外のプロフィールは編集できないようにする
+  before_action :authorize_profile!, only: [ :edit, :update ]
 
   def show
-    @profile = Profile.find(params[:id])
+    # モーダル以外で他人のプロフィールへのアクセスは不可
+    unless turbo_frame_request? || @profile.user == current_user
+      redirect_to root_path, alert: "権限がありません"
+    end
   end
 
   def new
@@ -25,12 +31,9 @@ class ProfilesController < ApplicationController
   end
 
   def edit
-    @profile = current_user.profile
   end
 
   def update
-    @profile = current_user.profile
-
     # 取得したレコードにform送信時に入力されたparamsを渡して上書き
     @profile.assign_attributes(profile_params)
 
@@ -46,6 +49,17 @@ class ProfilesController < ApplicationController
   end
 
   private
+
+  def set_profile
+    @profile = Profile.find(params[:id])
+  end
+
+  def authorize_profile!
+    unless @profile.user == current_user
+      redirect_to root_path, alert: "権限がありません"
+    end
+  end
+
   def profile_params
     # formから送信されるパラメータのうち、許可したパラメータのみ受け取る
     params.require(:profile).permit(
