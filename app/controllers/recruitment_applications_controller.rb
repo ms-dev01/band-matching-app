@@ -3,6 +3,12 @@ class RecruitmentApplicationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    # 募集ステータスの更新
+    BandRecruitment.recruiting.each do |band_recruitment|
+      # 募集ステータスの更新
+      band_recruitment.update_status!
+    end
+
     # 「相手から」 = 自分の募集に対する応募一覧を表示
     @received_applications = BandRecruitment.joins(:recruitment_applications).where(band_recruitments: { user_id: current_user.id })
     # 「自分から」 = 自分が応募した募集の一覧を取得
@@ -26,6 +32,18 @@ class RecruitmentApplicationsController < ApplicationController
     @application.application_part = current_user.profile.part
     @application.status = "pending"
 
+    # 募集パートがなければ、エラーメッセージを表示
+    unless @band_recruitment.recruitment_parts.exists?(part: @application.application_part)
+      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは募集されていません"
+      return
+    end
+
+    # 承認するパートが定員に達していたら、エラーメッセージを表示
+    if @band_recruitment.part_full?(@application.application_part)
+      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは定員に達しています"
+      return
+    end
+
     # DBに値が保存されれば、応募成功表示
     if @application.save
       redirect_to band_recruitment_path(@band_recruitment), notice: "応募しました"
@@ -40,7 +58,20 @@ class RecruitmentApplicationsController < ApplicationController
 
     # 応募ステータスの変更
     if params[:status] == "approved"
+      # 承認するパートが定員に達していたら、エラーメッセージを表示
+      if @band_recruitment.part_full?(@application.application_part)
+        redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは定員に達しています"
+        return
+      end
       if @application.update(status: :approved)
+        # 応募パートが定員に達したら、他の応募は見送りにする
+        if @band_recruitment.part_full?(@application.application_part)
+          @band_recruitment.recruitment_applications.pending.where(application_part: @application.application_part).update_all(status: RecruitmentApplication.statuses[:rejected])
+        end
+        # 全募集パートが定員に達したら、募集ステータスを変更
+        if @band_recruitment.all_parts_full?
+          @band_recruitment.update(status: :full)
+        end
         redirect_to band_recruitment_path(@band_recruitment), notice: "承認しました"
       else
         redirect_to band_recruitment_path(@band_recruitment), alert: "承認できませんでした"

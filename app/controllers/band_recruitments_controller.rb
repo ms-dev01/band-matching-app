@@ -5,6 +5,11 @@ class BandRecruitmentsController < ApplicationController
   before_action :ensure_owner, only: [ :edit, :update, :destroy ]
 
   def index
+    BandRecruitment.recruiting.each do |band_recruitment|
+      # 募集ステータスの更新
+      band_recruitment.update_status!
+    end
+
     if params[:filter] == "my-band-recruitment"
       @band_recruitments = current_user.band_recruitments.order(updated_at: :desc)
     else
@@ -13,6 +18,9 @@ class BandRecruitmentsController < ApplicationController
   end
 
   def show
+    # 募集ステータスの更新
+    @band_recruitment.update_status!
+
     if user_signed_in?
       @application = current_user.recruitment_applications.new
     end
@@ -45,7 +53,11 @@ class BandRecruitmentsController < ApplicationController
   end
 
   def edit
-    rebuild_parts
+    # 一人でも承認したら、その募集の編集・削除はできない
+    if @band_recruitment.recruitment_applications.approved.exists? || @band_recruitment.status == "closed"
+      redirect_to band_recruitment_path(@band_recruitment), alert: "編集できません"
+    end
+      rebuild_parts
   end
 
   def update

@@ -45,8 +45,8 @@ ja:
         arranged_cover: "アレンジカバー"
       status:
         recruiting: "募集中"
-        full: "定員到達"
-        closed: "募集締切"
+        full: "満員"
+        closed: "募集終了"
     recruitment_part:
       part:
         vocal: "ボーカル"

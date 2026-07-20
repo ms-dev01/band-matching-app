@@ -32,10 +32,20 @@
 }
 
 .card-status {
+  width: 100px;
   background-color: $main-color;
   color: #fff;
-  padding: 7px 12px;
+  padding: 5px 6px;
   font-size: 18px;
+  text-align: center;
+
+  &.full {
+    background-color: $red-color;
+  }
+
+  &.closed {
+    background-color: $inactive-color;
+  }
 }
 
 .card-deadline {
@@ -124,6 +134,10 @@
   margin: 0 3px 0 0;
   list-style: none;
   display: inline-block;
+
+  &.part_full {
+    color: $inactive-color;
+  }
 }
 
 .card-icon-container {
