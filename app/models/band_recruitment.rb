@@ -63,8 +63,7 @@ class BandRecruitment < ApplicationRecord
   def part_full?(part)
     recruitment_part = recruitment_parts.find_by(part: part)
     unless recruitment_part
-      errors.add(:part, "は募集されていません")
-      return false
+      return nil
     end
       approved_count = recruitment_applications.approved.where(application_part: part).count
       approved_count >= recruitment_part.max_count

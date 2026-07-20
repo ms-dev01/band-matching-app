@@ -31,8 +31,13 @@
           .display-group-title 募集パート
           .display-group-wrapper
             - @band_recruitment.recruitment_parts.sort_by { |rp| RecruitmentPart.parts[rp.part] }.each do |rp|
-              .display-group-content= t("enums.recruitment_part.part.#{rp.part}")
-              %span.card-content-count-lg= "×#{rp.max_count}"
+              -# 募集パートが定員に到達していたら、満員と表示
+              - if @band_recruitment.part_full?(rp.part)
+                .display-group-content.part_full= t("enums.recruitment_part.part.#{rp.part}")
+                %span.card-content-count-lg.part_full 満員
+              - else
+                .display-group-content= t("enums.recruitment_part.part.#{rp.part}")
+                %span.card-content-count-lg= "×#{rp.max_count}"
         - if @band_recruitment.activity_areas.present?
           .display-group-recruitment
             .display-group-title 活動地域
@@ -135,26 +140,27 @@
           .btn-container
             .btn-secondary.applied 応募済み
         - else
-          .btn-container
-            .btn-secondary.js-application-btn{ data: { controller: "application", action: "click->application#show" } }
-              参加希望
-          .js-application-container
-            -# エラーがある場合、メッセージを表示（将来用）
-            -if @application && @application.errors.any?
-              %ul.error-message-container
-                - @application.errors.full_messages.each do |message|
-                  %li.error-message= "※#{message}"
-            .form-container.application
-              = form_with(model: @application, url: band_recruitment_recruitment_applications_path(@band_recruitment), method: 'post', local: true) do |f|
-                .form-group.application
-                  .label
-                    = f.label :application_comment do
-                      参加希望メッセージ：
-                  %div
-                    = f.text_area :application_comment, class: 'text-area'
-                .display-btn.application
-                  .display-cancel-btn
-                    .btn-secondary.cancel.js-cancel-btn{ data: { controller: "application", action: "click->application#hide" } }
-                      キャンセル
-                  .display-submit-btn
-                    = f.submit '送信', class: 'btn-secondary submit'
+          - if !@band_recruitment.part_full?(current_user.profile.part) && @band_recruitment.status == "recruiting" && @band_recruitment.recruitment_parts.exists?(part: current_user.profile.part)
+            .btn-container
+              .btn-secondary.js-application-btn{ data: { controller: "application", action: "click->application#show" } }
+                参加希望
+            .js-application-container
+              -# エラーがある場合、メッセージを表示（将来用）
+              -if @application && @application.errors.any?
+                %ul.error-message-container
+                  - @application.errors.full_messages.each do |message|
+                    %li.error-message= "※#{message}"
+              .form-container.application
+                = form_with(model: @application, url: band_recruitment_recruitment_applications_path(@band_recruitment), method: 'post', local: true) do |f|
+                  .form-group.application
+                    .label
+                      = f.label :application_comment do
+                        参加希望メッセージ：
+                    %div
+                      = f.text_area :application_comment, class: 'text-area'
+                  .display-btn.application
+                    .display-cancel-btn
+                      .btn-secondary.cancel.js-cancel-btn{ data: { controller: "application", action: "click->application#hide" } }
+                        キャンセル
+                    .display-submit-btn
+                      = f.submit '送信', class: 'btn-secondary submit'

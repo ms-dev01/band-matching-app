@@ -32,6 +32,18 @@ class RecruitmentApplicationsController < ApplicationController
     @application.application_part = current_user.profile.part
     @application.status = "pending"
 
+    # 募集パートがなければ、エラーメッセージを表示
+    unless @band_recruitment.recruitment_parts.exists?(part: @application.application_part)
+      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは募集されていません"
+      return
+    end
+
+    # 承認するパートが定員に達していたら、エラーメッセージを表示
+    if @band_recruitment.part_full?(@application.application_part)
+      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは定員に達しています"
+      return
+    end
+
     # DBに値が保存されれば、応募成功表示
     if @application.save
       redirect_to band_recruitment_path(@band_recruitment), notice: "応募しました"

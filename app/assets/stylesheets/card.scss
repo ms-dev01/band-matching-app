@@ -134,6 +134,10 @@
   margin: 0 3px 0 0;
   list-style: none;
   display: inline-block;
+
+  &.part_full {
+    color: $inactive-color;
+  }
 }
 
 .card-icon-container {

@@ -30,8 +30,13 @@
             .card-content-title 募集パート：
             %ul.card-content-list
               - band_recruitment.recruitment_parts.sort_by { |rp| RecruitmentPart.parts[rp.part] }.each do |rp|
-                %li.card-content-text= t("enums.recruitment_part.part.#{rp.part}")
-                %span.card-content-count= "×#{rp.max_count}"
+                -# 募集パートが定員に到達していたら、満員と表示
+                - if band_recruitment.part_full?(rp.part)
+                  .display-group-content.part_full= t("enums.recruitment_part.part.#{rp.part}")
+                  %span.card-content-count-lg.part_full 満員
+                - else
+                  %li.card-content-text= t("enums.recruitment_part.part.#{rp.part}")
+                  %span.card-content-count= "×#{rp.max_count}"
           .card-content
             .card-content-title 活動地域：
             - if band_recruitment.activity_areas.present?
