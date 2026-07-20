@@ -34,8 +34,9 @@ class BandRecruitment < ApplicationRecord
   # バリデーション設定
   validates :title, presence: true, length: { maximum: 100 }
   validate :at_least_one_part_present
+  # 募集期限を作成・変更した時だけバリデーションチェックする
   validates :deadline, presence: true
-  validate :deadline_not_past
+  validate :deadline_not_past, if: :will_save_change_to_deadline?
   validates :comment, length: { maximum: 300 }, allow_blank: true
 
   # 募集パートは1つ以上入力必須
@@ -56,5 +57,39 @@ class BandRecruitment < ApplicationRecord
   # 自分の応募を取得
   def application_by(user)
     recruitment_applications.find_by(user: user)
+  end
+
+  # 応募パートの空きがあるか確認
+  def part_full?(part)
+    recruitment_part = recruitment_parts.find_by(part: part)
+    unless recruitment_part
+      errors.add(:part, "は募集されていません")
+      return false
+    end
+      approved_count = recruitment_applications.approved.where(application_part: part).count
+      approved_count >= recruitment_part.max_count
+  end
+
+  # 全募集パートが定員に達したら、募集ステータスを「定員到達」にする
+  def all_parts_full?
+    # 全て条件を満たせばtrue
+    recruitment_parts.all? do |rp|
+      approved_count = recruitment_applications.approved.where(application_part: rp.part).count
+      approved_count >= rp.max_count
+    end
+  end
+
+  # 募集ステータスの更新
+  def update_status!
+    # 募集期限が過ぎたら、募集ステータスを「募集終了」にする
+    if deadline < Date.current
+      update!(status: "closed")
+    # 全募集パートが定員に達したら、募集ステータスを「満員」にする
+    elsif all_parts_full?
+      update!(status: "full")
+    # それ以外は、募集ステータスを「募集中」にする
+    else
+      update!(status: "recruiting")
+    end
   end
 end

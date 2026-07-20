@@ -7,7 +7,8 @@
   .recruitment-card.detail
     .recruitment-card-top
       .recruitment-card-top-left
-        .card-status= t("enums.band_recruitment.status.#{@band_recruitment.status}")
+        .card-status{ class: @band_recruitment.status }
+          = t("enums.band_recruitment.status.#{@band_recruitment.status}")
         .card-deadline= "期限：#{@band_recruitment.deadline}"
       .recruitment-card-top-right
     .recruitment-card-middle
@@ -120,7 +121,8 @@
                     .display-text.application= simple_format(recruitment_application.application_comment)
     -# 募集編集画面へのリンク
     - if @band_recruitment.user == current_user
-      - unless @band_recruitment.recruitment_applications.approved.exists?
+      -# 一人でも承認したら、その募集の編集・削除はできない
+      - unless @band_recruitment.recruitment_applications.approved.exists? || @band_recruitment.status == "closed"
         .display-btn
           .display-delete-btn
             = link_to "削除", band_recruitment_path(@band_recruitment), data: { turbo_method: "delete", turbo_confirm: "本当に削除してもよろしいですか？"}, class: "btn-secondary delete"

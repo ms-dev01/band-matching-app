@@ -4,7 +4,8 @@
       .recruitment-card
         .recruitment-card-top
           .recruitment-card-top-left
-            .card-status= t("enums.band_recruitment.status.#{band_recruitment.status}")
+            .card-status{ class: band_recruitment.status }
+              = t("enums.band_recruitment.status.#{band_recruitment.status}")
             .card-deadline= "期限：#{band_recruitment.deadline}"
           .recruitment-card-top-right
         .recruitment-card-middle
