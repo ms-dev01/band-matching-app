@@ -1,0 +1,39 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "d82ea7fd56df09c233db9f77b23333cd14f142ad2fb8bcbdbfcdfc07151870c7",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/band_recruitments/show.html.haml",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"card-status\", BandRecruitment.find(params[:id]).status)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "BandRecruitmentsController",
+          "method": "show",
+          "line": 25,
+          "file": "app/controllers/band_recruitments_controller.rb",
+          "rendered": {
+            "name": "band_recruitments/show",
+            "file": "app/views/band_recruitments/show.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "band_recruitments/show"
+      },
+      "user_input": "BandRecruitment.find(params[:id]).status",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "False positive: status is an enum with fixed values, not user-controlled."
+    }
+  ],
+  "brakeman_version": "8.0.5"
+}
