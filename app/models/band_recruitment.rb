@@ -83,10 +83,14 @@ class BandRecruitment < ApplicationRecord
     # 募集期限が過ぎたら、募集ステータスを「募集終了」にする
     if deadline < Date.current
       update!(status: "closed")
-    # 全募集パートが定員に達したら、募集ステータスを「満員」にする
+      # 募集終了の募集への応募は見送りにする
+      recruitment_applications.pending.update_all(status: RecruitmentApplication.statuses[:rejected])
+
+      # 全募集パートが定員に達したら、募集ステータスを「満員」にする
     elsif all_parts_full?
       update!(status: "full")
-    # それ以外は、募集ステータスを「募集中」にする
+
+      # それ以外は、募集ステータスを「募集中」にする
     else
       update!(status: "recruiting")
     end

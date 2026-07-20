@@ -53,7 +53,11 @@ class BandRecruitmentsController < ApplicationController
   end
 
   def edit
-    rebuild_parts
+    # 一人でも承認したら、その募集の編集・削除はできない
+    if @band_recruitment.recruitment_applications.approved.exists? || @band_recruitment.status == "closed"
+      redirect_to band_recruitment_path(@band_recruitment), alert: "編集できません"
+    end
+      rebuild_parts
   end
 
   def update
