@@ -95,4 +95,43 @@ class BandRecruitment < ApplicationRecord
       update!(status: "recruiting")
     end
   end
+
+  # 募集相性計算
+  def recruitment_compatibility_with(my_profile)
+    # 活動ジャンル一致率の計算
+    activity_genre_matching_rate = matching_rate(activity_genres.ids, my_profile.activity_genres.ids)
+
+    # 活動志向一致率の計算（配列にする、nilを取り除く）
+    activity_style_matching_rate = matching_rate([ activity_style ].compact, [ my_profile.activity_style ].compact)
+
+    # 楽曲タイプ一致率の計算（配列にする、nilを取り除く）
+    music_type_matching_rate = matching_rate([ music_type ].compact, [ my_profile.music_type ].compact)
+
+    # 募集相性計算
+    # 活動ジャンルと活動志向と楽曲タイプの一致数が0の場合、30%表示
+    if activity_genre_matching_rate.zero? && activity_style_matching_rate.zero? && music_type_matching_rate.zero?
+      30
+    else
+      # 平均値を計算
+      recruitment_compatibility_average = (activity_genre_matching_rate + activity_style_matching_rate + music_type_matching_rate) / 3.0
+      # 表示補正
+      50 + (recruitment_compatibility_average * 0.5).round
+    end
+  end
+
+  private
+  def matching_rate(recruitment_values, profile_values)
+    # 共通のものだけ取り出して一致数を数える
+    matching_count = (recruitment_values & profile_values).size
+    # 少ない方のタグ数
+    base_count = [ recruitment_values.size, profile_values.size ].min
+
+    # タグ数が0の場合
+    if base_count.zero?
+      matching_count = 0
+    else
+      # 一致数 ÷ 少ない方のタグ数（結果：整数の%）
+      matching_count = ((matching_count.to_f / base_count) * 100).round
+    end
+  end
 end
