@@ -92,4 +92,40 @@ class Profile < ApplicationRecord
       "#{experience_year}年#{experience_month}ヶ月"
     end
   end
+
+  # 人物相性計算
+  def profile_compatibility_with(other_profile)
+    # 好きなバンドタグ一致率の計算
+    band_matching_rate = matching_rate(favorite_bands.ids, other_profile.favorite_bands.ids)
+
+    # 性格タグ一致率の計算
+    personality_matching_rate = matching_rate(personalities.ids, other_profile.personalities.ids)
+
+    # 人物相性計算
+    # 好きなバンドタグと性格タグの一致数が0の場合、30%表示
+    if band_matching_rate.zero? && personality_matching_rate.zero?
+      30
+    else
+      # 平均値を計算
+      person_compatibility_average = (band_matching_rate + personality_matching_rate) / 2.0
+      # 表示補正
+      50 + (person_compatibility_average * 0.5).round
+    end
+  end
+
+  private
+  def matching_rate(my_ids, other_ids)
+    # 共通idだけ取り出して一致数を数える
+    matching_count = (my_ids & other_ids).size
+    # 少ない方のタグ数
+    base_count = [ my_ids.size, other_ids.size ].min
+
+    # タグ数が0の場合
+    if base_count.zero?
+      matching_count = 0
+    else
+      # 一致数 ÷ 少ない方のタグ数（結果：整数の%）
+      matching_count = ((matching_count.to_f / base_count) * 100).round
+    end
+  end
 end
