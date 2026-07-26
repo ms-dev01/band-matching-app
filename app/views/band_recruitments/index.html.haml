@@ -8,6 +8,12 @@
               = t("enums.band_recruitment.status.#{band_recruitment.status}")
             .card-deadline= "期限：#{band_recruitment.deadline}"
           .recruitment-card-top-right
+            - if band_recruitment.user == current_user
+              .card-recruitment-compatibility 自分の募集
+            - else
+              .card-recruitment-compatibility
+                募集相性:
+                %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
         .recruitment-card-middle
           .card-team
             .card-team-title チーム名
