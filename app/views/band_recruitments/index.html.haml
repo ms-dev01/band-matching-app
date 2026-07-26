@@ -1,67 +1,11 @@
 .recruitment-container
   - @band_recruitments.each do |band_recruitment|
-    = link_to band_recruitment_path(band_recruitment), class: 'recruitment-card-link' do
-      .recruitment-card
-        .recruitment-card-top
-          .recruitment-card-top-left
-            .card-status{ class: band_recruitment.status }
-              = t("enums.band_recruitment.status.#{band_recruitment.status}")
-            .card-deadline= "期限：#{band_recruitment.deadline}"
-          .recruitment-card-top-right
-            - if band_recruitment.user == current_user
-              .card-recruitment-compatibility 自分の募集
-            - else
-              .card-recruitment-compatibility
-                募集相性:
-                %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
-        .recruitment-card-middle
-          .card-team
-            .card-team-title チーム名
-            - if band_recruitment.team_name.present?
-              .card-team-name= band_recruitment.team_name
-            - else
-              .card-team-name 未設定
-          .card-title= band_recruitment.title
-        .recruitment-card-bottom
-          .card-content
-            .card-content-title 募集パート：
-            %ul.card-content-list
-              - band_recruitment.recruitment_parts.sort_by { |rp| RecruitmentPart.parts[rp.part] }.each do |rp|
-                -# 募集パートが定員に到達していたら、満員と表示
-                - if band_recruitment.part_full?(rp.part)
-                  .display-group-content.part_full= t("enums.recruitment_part.part.#{rp.part}")
-                  %span.card-content-count-lg.part_full 満員
-                - else
-                  %li.card-content-text= t("enums.recruitment_part.part.#{rp.part}")
-                  %span.card-content-count= "×#{rp.max_count}"
-          .card-content
-            .card-content-title 活動地域：
-            - if band_recruitment.activity_areas.present?
-              %ul.card-content-list
-                - band_recruitment.activity_areas.each do |activity_area|
-                  %li.card-content-text= activity_area.name
-            - else
-              .card-content-text 未設定
-          .card-content
-            .card-content-title 活動ジャンル：
-            - if band_recruitment.activity_genres.present?
-              .card-content-list
-                - band_recruitment.activity_genres.each do |activity_genre|
-                  %li.card-content-text= activity_genre.name
-            - else
-              .card-content-text 未設定
-          .card-content
-            .card-content-title 活動志向：
-            - if band_recruitment.activity_style.present?
-              .card-content-list
-                .card-content-text= t("enums.band_recruitment.activity_style.#{band_recruitment.activity_style}")
-            - else
-              .card-content-text 未設定
-          .card-icon-container
-            = image_tag band_recruitment.user.profile.avatar_image, class: 'card-icon'
-            .card-icon-info
-              .card-icon-info-top= "#{band_recruitment.user.profile.nickname} (#{t("ui.parts.short.#{band_recruitment.user.profile.part}")})"
-              .card-icon-info-bottom= "#{band_recruitment.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{band_recruitment.user.profile.gender}")}"
-- if user_signed_in?
-  .display-create-btn
-    = link_to "", new_band_recruitment_path, class: "btn-add"
+    .recruitment-card
+      = render "commons/band_recruitment_card", band_recruitment: band_recruitment do
+        - if user_signed_in?
+          - if band_recruitment.user == current_user
+            .card-recruitment-compatibility 自分の募集
+          - else
+            .card-recruitment-compatibility
+              募集相性:
+              %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
