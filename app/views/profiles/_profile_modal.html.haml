@@ -1,0 +1,6 @@
+= turbo_frame_tag "profile_modal" do
+  .modal-container{ data: { controller: "modal", action: "click->modal#close" } }
+    .modal-profile{ data: { action: "click->modal#stop" } }
+      .form-title プロフィール
+      .form-container
+        = render "profile", profile: @profile
