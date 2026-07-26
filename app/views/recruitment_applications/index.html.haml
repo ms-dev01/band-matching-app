@@ -17,6 +17,12 @@
                   .display-my-application-status.approved 承認
                 - else
                   .display-my-application-status.pending 承認待ち
+            - if band_recruitment.user == current_user
+              .card-recruitment-compatibility 自分の募集
+            - else
+              .card-recruitment-compatibility.application
+                募集相性:
+                %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
         .recruitment-card-middle
           .card-team
             .card-team-title チーム名

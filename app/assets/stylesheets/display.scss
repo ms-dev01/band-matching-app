@@ -125,9 +125,11 @@
 }
 
 .display-my-application-status {
-  padding: 3px 8px;
-  margin-top: 4px;
-  font-size: 13px;
+  padding: 2px 8px;
+  margin-top: 12px;
+  font-size: 12px;
+  text-align: center;
+  width: 70px;
 
   &.approved {
     background-color: $secondary-color;

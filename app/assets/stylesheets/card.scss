@@ -19,9 +19,10 @@
 }
 
 .recruitment-card-top {
+  height: 37px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 }
 
 .recruitment-card-top-left {
@@ -29,6 +30,34 @@
   justify-content: start;
   align-items: center;
   gap: 8px;
+}
+
+.recruitment-card-top-right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+}
+
+.card-recruitment-compatibility {
+  font-size: 13px;
+
+  &.application {
+    font-size: 10px;
+  }
+
+  span {
+    color: $main-color;
+  }
+}
+
+.card-profile-compatibility {
+  font-size: 11px;
+
+  span {
+    color: $main-color;
+  }
 }
 
 .card-status {
@@ -199,6 +228,6 @@
 
 .card-icon-profile {
   position: absolute;
-  top: 30px;
-  right: 25px;
+  top: 47px;
+  right: 26px;
 }
