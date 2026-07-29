@@ -1,0 +1,31 @@
+-# 参加希望ボタンの表示
+- if user_signed_in?
+  - unless @band_recruitment.owner?(current_user)
+    - if @band_recruitment.application_by(current_user)
+      .btn-container
+        .btn-secondary.applied 応募済み
+    - else
+      - if !@band_recruitment.part_full?(current_user.profile.part) && @band_recruitment.status == "recruiting" && @band_recruitment.recruitment_parts.exists?(part: current_user.profile.part)
+        .btn-container
+          .btn-secondary.js-application-btn{ data: { controller: "application", action: "click->application#show" } }
+            参加希望
+        .js-application-container
+          -# エラーがある場合、メッセージを表示（将来用）
+          -if @application && @application.errors.any?
+            %ul.error-message-container
+              - @application.errors.full_messages.each do |message|
+                %li.error-message= "※#{message}"
+          .form-container.application
+            = form_with(model: @application, url: band_recruitment_recruitment_applications_path(@band_recruitment), method: 'post', local: true) do |f|
+              .form-group.application
+                .label
+                  = f.label :application_comment do
+                    参加希望メッセージ：
+                %div
+                  = f.text_area :application_comment, class: 'text-area'
+              .display-btn.application
+                .display-cancel-btn
+                  .btn-secondary.cancel.js-cancel-btn{ data: { controller: "application", action: "click->application#hide" } }
+                    キャンセル
+                .display-submit-btn
+                  = f.submit '送信', class: 'btn-secondary submit'

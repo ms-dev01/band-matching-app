@@ -11,7 +11,7 @@
           = t("enums.band_recruitment.status.#{@band_recruitment.status}")
         .card-deadline= "期限：#{@band_recruitment.deadline}"
       .recruitment-card-top-right
-        - if @band_recruitment.user == current_user
+        - if @band_recruitment.owner?(current_user)
           .card-recruitment-compatibility 自分の募集
         - else
           .card-recruitment-compatibility
@@ -86,55 +86,9 @@
           .display-title 募集コメント
           .display-text= simple_format(@band_recruitment.comment)
       -if user_signed_in?
-        - if @band_recruitment.recruitment_applications.present?
-          -# 募集者の場合
-          - if @band_recruitment.user == current_user
-            .recruitment-section
-              .display-title 応募メッセージ
-              - @band_recruitment.recruitment_applications.each do |recruitment_application|
-                .display-application
-                  .card-icon-container.application
-                    .card-profile-compatibility
-                      相性:
-                      %span= "#{current_user.profile.profile_compatibility_with(recruitment_application.user.profile)}%"
-                    = image_tag recruitment_application.user.profile.avatar_image, class: "card-icon application"
-                    -# リンクをクリックしたら、画面遷移ではなく、profile_modal の中だけ更新
-                    = link_to profile_path(recruitment_application.user.profile), data: { turbo_frame: "profile_modal" }, class: "card-icon-profile" do
-                      = image_tag "magnifying-glass.svg", class: "magnifying-glass-icon"
-                    = turbo_frame_tag "profile_modal"
-                    .card-icon-info.application
-                      .card-icon-info-top.application= "#{recruitment_application.user.profile.nickname} (#{t("ui.parts.short.#{recruitment_application.user.profile.part}")})"
-                      .card-icon-info-bottom.application= "#{recruitment_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{recruitment_application.user.profile.gender}")}"
-                    .display-application-status-container
-                      - if recruitment_application.status == "rejected"
-                        .display-application-status.rejected
-                          = image_tag "check-rejected.svg", class: "check-icon"
-                          %span 見送り
-                      - elsif recruitment_application.status == "approved"
-                        .display-application-status.approved
-                          = image_tag "check-approved.svg", class: "check-icon"
-                          %span 承認済み
-                      - else
-                        .display-btn-container
-                          = button_to "見送る", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application), method: "patch", data: { turbo_confirm: "この応募を見送りますか？"}, params: { status: :rejected }, class: "btn-third rejected"
-                        .display-btn-container
-                          = button_to "承認する", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application), method: "patch", data: { turbo_confirm: "この応募を承認しますか？"}, params: { status: :approved }, class: "btn-third approved"
-                  - if recruitment_application.application_comment.present?
-                    .display-text.application= simple_format(recruitment_application.application_comment)
-          - elsif current_user.recruitment_applications.exists?(band_recruitment: @band_recruitment)
-            .recruitment-section
-              .display-title 応募メッセージ
-              - current_user.recruitment_applications.where(band_recruitment: @band_recruitment).each do |recruitment_application|
-                .display-application
-                  .card-icon-container.application
-                    = image_tag recruitment_application.user.profile.avatar_image, class: 'card-icon application'
-                    .card-icon-info.application
-                      .card-icon-info-top.application= "#{recruitment_application.user.profile.nickname} (#{t("ui.parts.short.#{recruitment_application.user.profile.part}")})"
-                      .card-icon-info-bottom.application= "#{recruitment_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{recruitment_application.user.profile.gender}")}"
-                  - if recruitment_application.application_comment.present?
-                    .display-text.application= simple_format(recruitment_application.application_comment)
+        = render "application_messages", band_recruitment: @band_recruitment
     -# 募集編集画面へのリンク
-    - if @band_recruitment.user == current_user
+    - if @band_recruitment.owner?(current_user)
       -# 一人でも承認したら、その募集の編集・削除はできない
       - unless @band_recruitment.recruitment_applications.approved.exists? || @band_recruitment.status == "closed"
         .display-btn
@@ -142,34 +96,4 @@
             = link_to "削除", band_recruitment_path(@band_recruitment), data: { turbo_method: "delete", turbo_confirm: "本当に削除してもよろしいですか？"}, class: "btn-secondary delete"
           .display-edit-btn
             = link_to "編集", edit_band_recruitment_path(@band_recruitment), class: "btn-secondary edit"
-    -# 参加希望ボタンの表示
-    - if user_signed_in?
-      - unless @band_recruitment.user == current_user
-        - if current_user.recruitment_applications.exists?(band_recruitment: @band_recruitment)
-          .btn-container
-            .btn-secondary.applied 応募済み
-        - else
-          - if !@band_recruitment.part_full?(current_user.profile.part) && @band_recruitment.status == "recruiting" && @band_recruitment.recruitment_parts.exists?(part: current_user.profile.part)
-            .btn-container
-              .btn-secondary.js-application-btn{ data: { controller: "application", action: "click->application#show" } }
-                参加希望
-            .js-application-container
-              -# エラーがある場合、メッセージを表示（将来用）
-              -if @application && @application.errors.any?
-                %ul.error-message-container
-                  - @application.errors.full_messages.each do |message|
-                    %li.error-message= "※#{message}"
-              .form-container.application
-                = form_with(model: @application, url: band_recruitment_recruitment_applications_path(@band_recruitment), method: 'post', local: true) do |f|
-                  .form-group.application
-                    .label
-                      = f.label :application_comment do
-                        参加希望メッセージ：
-                    %div
-                      = f.text_area :application_comment, class: 'text-area'
-                  .display-btn.application
-                    .display-cancel-btn
-                      .btn-secondary.cancel.js-cancel-btn{ data: { controller: "application", action: "click->application#hide" } }
-                        キャンセル
-                    .display-submit-btn
-                      = f.submit '送信', class: 'btn-secondary submit'
+    = render "application_button", band_recruitment: @band_recruitment

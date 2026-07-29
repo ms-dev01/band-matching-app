@@ -54,6 +54,11 @@ class BandRecruitment < ApplicationRecord
     end
   end
 
+  # 募集者がログインユーザーかどうか
+  def owner?(user)
+    user == self.user
+  end
+
   # 自分の応募を取得
   def application_by(user)
     recruitment_applications.find_by(user: user)
