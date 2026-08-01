@@ -15,9 +15,10 @@ class RecruitmentApplicationsController < ApplicationController
     @sent_applications = BandRecruitment.joins(:recruitment_applications).where(recruitment_applications: { user_id: current_user.id })
 
     if params[:filter] == "received"
-        @band_recruitments = @received_applications
+        # 募集ステータスをenumの昇順に並び替え、同じ募集ステータス内では募集期限の昇順に並び替え
+        @band_recruitments = @received_applications.order(:status, :deadline)
     else # params[:filter] == "sent"
-        @band_recruitments = @sent_applications
+        @band_recruitments = @sent_applications.order(:status, :deadline)
     end
 
     @received_applications_count = @received_applications.count

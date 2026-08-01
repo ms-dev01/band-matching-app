@@ -11,9 +11,10 @@ class BandRecruitmentsController < ApplicationController
     end
 
     if params[:filter] == "my-band-recruitment"
-      @band_recruitments = current_user.band_recruitments.order(updated_at: :desc)
+      # 募集ステータスをenumの昇順に並び替え、同じ募集ステータス内では募集期限の昇順に並び替え
+      @band_recruitments = current_user.band_recruitments.order(:status, :deadline)
     else
-      @band_recruitments = BandRecruitment.order(updated_at: :desc)
+      @band_recruitments = BandRecruitment.order(:status, :deadline)
     end
   end
 
