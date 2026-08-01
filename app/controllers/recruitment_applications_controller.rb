@@ -9,8 +9,8 @@ class RecruitmentApplicationsController < ApplicationController
       band_recruitment.update_status!
     end
 
-    # 「相手から」 = 自分の募集に対する応募一覧を表示
-    @received_applications = BandRecruitment.joins(:recruitment_applications).where(band_recruitments: { user_id: current_user.id })
+    # 「相手から」 = 応募のあった自分の募集一覧を表示（同一募集への応募は1つの募集にまとめる）
+    @received_applications = BandRecruitment.joins(:recruitment_applications).where(band_recruitments: { user_id: current_user.id }).distinct
     # 「自分から」 = 自分が応募した募集の一覧を取得
     @sent_applications = BandRecruitment.joins(:recruitment_applications).where(recruitment_applications: { user_id: current_user.id })
 
