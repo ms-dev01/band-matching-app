@@ -11,12 +11,44 @@
           = t("enums.band_recruitment.status.#{@band_recruitment.status}")
         .card-deadline= "期限：#{@band_recruitment.deadline}"
       .recruitment-card-top-right
-        - if @band_recruitment.owner?(current_user)
-          .card-recruitment-compatibility 自分の募集
-        - else
-          .card-recruitment-compatibility
-            募集相性:
-            %span= "#{@band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
+        -if user_signed_in?
+          -# 「自分の募集一覧」タブなら参加メンバー状況を表示
+          - if @source == "my-band-recruitment"
+            - if @band_recruitment.has_approved_applications?
+              .display-member-status
+                参加メンバー
+                %span= "#{@band_recruitment.approved_applications_count}名"
+            - else
+              .display-member-status
+                参加メンバー
+                %span.none なし
+            -# 「参加希望」-「自分から」タブなら承認ステータスと募集相性を表示
+          - elsif @source == "sent"
+            - application = @band_recruitment.application_by(current_user)
+            .display-my-application-status-container
+              - if application.status == "rejected"
+                .display-my-application-status.rejected 不成立
+              - elsif application.status == "approved"
+                .display-my-application-status.approved 承認
+              - else
+                .display-my-application-status.pending 承認待ち
+            .card-recruitment-compatibility.application
+              募集相性:
+              %span= "#{@band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
+            -# 「参加希望」-「相手から」タブなら応募件数と対応状況を表示を表示
+          - elsif @source == "received"
+            .display-applications-group
+              .display-applications-count= "応募#{@band_recruitment.applications_count}件"
+              - if @band_recruitment.has_pending_applications?
+                .display-applications-status.pending= "未対応あり"
+              - else
+                .display-applications-status.processed= "対応済"
+          - elsif @band_recruitment.owner?(current_user)
+            .card-recruitment-compatibility 自分の募集
+          - else
+            .card-recruitment-compatibility
+              募集相性:
+              %span= "#{@band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
     .recruitment-card-middle
       .card-team
         .card-team-title チーム名
@@ -85,10 +117,18 @@
         .recruitment-section
           .display-title 募集コメント
           .display-text= simple_format(@band_recruitment.comment)
-      -if user_signed_in?
-        = render "application_messages", band_recruitment: @band_recruitment
-    -# 募集編集画面へのリンク
-    - if @band_recruitment.owner?(current_user)
+      - if user_signed_in?
+        -# 「自分の募集一覧」タブなら参加メンバー一覧を表示
+        - if @source == "my-band-recruitment"
+          = render "approved_members", band_recruitment: @band_recruitment
+          -# 「参加希望」-「自分から」タブなら自分が応募したメッセージを表示
+        - elsif @source == "sent"
+          = render "my_application_messages", band_recruitment: @band_recruitment
+          -# 「参加希望」-「相手から」タブなら相手からの応募メッセージ一覧を表示
+        - elsif @source == "received"
+          = render "application_messages", band_recruitment: @band_recruitment
+      -# 募集編集画面へのリンク（自分の募集一覧画面のみで編集・削除が可能）
+    - if @band_recruitment.owner?(current_user) && @source == "my-band-recruitment"
       -# 一人でも承認したら、その募集の編集・削除はできない
       - unless @band_recruitment.recruitment_applications.approved.exists? || @band_recruitment.status == "closed"
         .display-btn

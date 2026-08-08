@@ -1,19 +1,26 @@
 .recruitment-container
   - @band_recruitments.each do |band_recruitment|
     .recruitment-card
-      = render "commons/band_recruitment_card", band_recruitment: band_recruitment do
-        -# 自分が応募した募集であれば、応募ステータスを表示
-        - if (application = band_recruitment.application_by(current_user))
-          .display-my-application-status-container
-            - if application.status == "rejected"
-              .display-my-application-status.rejected 不成立
-            - elsif application.status == "approved"
-              .display-my-application-status.approved 承認
-            - else
-              .display-my-application-status.pending 承認待ち
-        - if band_recruitment.user == current_user
-          .card-recruitment-compatibility 自分の募集
-        - else
-          .card-recruitment-compatibility.application
-            募集相性:
-            %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
+      = link_to band_recruitment_path(band_recruitment, source: params[:filter]), class: 'recruitment-card-link' do
+        = render "commons/band_recruitment_card", band_recruitment: band_recruitment do
+          -# 「参加希望」-「自分から」タブでは応募ステータスと募集相性を表示
+          - if params[:filter] == "sent"
+            - application = band_recruitment.application_by(current_user)
+            .display-my-application-status-container
+              - if application.status == "rejected"
+                .display-my-application-status.rejected 不成立
+              - elsif application.status == "approved"
+                .display-my-application-status.approved 承認
+              - else
+                .display-my-application-status.pending 承認待ち
+            .card-recruitment-compatibility.application
+              募集相性:
+              %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
+            -# 「参加希望」-「相手から」タブで自分の募集に応募があったら、応募件数と対応状況を表示
+          - if params[:filter] == "received"
+            .display-applications-group
+              .display-applications-count= "応募#{band_recruitment.applications_count}件"
+              - if band_recruitment.has_pending_applications?
+                .display-applications-status.pending= "未対応あり"
+              - else
+                .display-applications-status.processed= "対応済"

@@ -1,11 +1,23 @@
 .recruitment-container
   - @band_recruitments.each do |band_recruitment|
     .recruitment-card
-      = render "commons/band_recruitment_card", band_recruitment: band_recruitment do
-        - if user_signed_in?
-          - if band_recruitment.user == current_user
-            .card-recruitment-compatibility 自分の募集
-          - else
-            .card-recruitment-compatibility
-              募集相性:
-              %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
+      = link_to band_recruitment_path(band_recruitment, source: params[:filter]), class: 'recruitment-card-link' do
+        = render "commons/band_recruitment_card", band_recruitment: band_recruitment do
+          - if user_signed_in?
+            - if band_recruitment.owner?(current_user)
+              - if params[:filter] == "my-band-recruitment"
+                - if band_recruitment.has_approved_applications?
+                  .display-member-status
+                    参加メンバー
+                    %span= "#{band_recruitment.approved_applications_count}名"
+                - else
+                  .display-member-status
+                    参加メンバー
+                    %span.none なし
+              - else
+                -# 全体募集一覧でのみ「自分の募集」と表示
+                .card-recruitment-compatibility 自分の募集
+            - else
+              .card-recruitment-compatibility
+                募集相性:
+                %span= "#{band_recruitment.recruitment_compatibility_with(current_user.profile)}%"
