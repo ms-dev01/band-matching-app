@@ -12,8 +12,21 @@ class BandRecruitmentsController < ApplicationController
 
     if params[:filter] == "my-band-recruitment"
       # 募集ステータスをenumの昇順に並び替え、同じ募集ステータス内では募集期限の昇順に並び替え
-      @band_recruitments = current_user.band_recruitments.order(:status, :deadline)
+      @band_recruitments = current_user.band_recruitments.includes(:recruitment_applications).order(:status, :deadline)
+    elsif user_signed_in?
+      # ログインしている場合
+      profile = current_user.profile
+      # プロフィールの活動地域が設定されている場合
+      if profile.activity_area_ids.present?
+        activity_area_ids = profile.activity_area_ids
+        # プロフィールの活動地域・パートで募集を絞り込み
+        @band_recruitments = BandRecruitment.joins(:recruitment_parts).joins(:recruitment_activity_areas).where(recruitment_parts: { part: profile.part }).where(recruitment_activity_areas: { activity_area_id: activity_area_ids }).distinct.order(:status, :deadline)
+      else
+        # プロフィールのパートで募集を絞り込み
+        @band_recruitments = BandRecruitment.joins(:recruitment_parts).where(recruitment_parts: { part: profile.part }).order(:status, :deadline)
+      end
     else
+      # ログインしていない場合
       @band_recruitments = BandRecruitment.order(:status, :deadline)
     end
   end
@@ -21,6 +34,8 @@ class BandRecruitmentsController < ApplicationController
   def show
     # 募集ステータスの更新
     @band_recruitment.update_status!
+    # どの画面から募集詳細画面に遷移したか
+    @source = params[:source]
 
     if user_signed_in?
       @application = current_user.recruitment_applications.new
