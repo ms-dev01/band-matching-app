@@ -122,6 +122,10 @@
     background-color: none;
     color: $secondary-color;
   }
+
+  &.pending {
+    color: $red-color;
+  }
 }
 
 .display-my-application-status {
@@ -144,5 +148,36 @@
   &.pending {
     background-color: $main-color;
     color: #fff;
+  }
+}
+
+.display-applications-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  gap: 10px;
+  margin-top: -3px;
+}
+
+.display-applications-status {
+  &.pending {
+    color: $main-color;
+  }
+
+  &.processed {
+    color: $inactive-color;
+  }
+}
+
+.display-member-status {
+  font-size: 13px;
+
+  span {
+    color: $main-color;
+
+    &.none {
+      color: $inactive-color;
+    }
   }
 }

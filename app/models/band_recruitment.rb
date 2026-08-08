@@ -74,6 +74,26 @@ class BandRecruitment < ApplicationRecord
       approved_count >= recruitment_part.max_count
   end
 
+  # 応募ステータスにpendingがあるか
+  def has_pending_applications?
+    recruitment_applications.pending.exists?
+  end
+
+  # 応募ステータスにapprovedがあるか
+  def has_approved_applications?
+    recruitment_applications.approved.exists?
+  end
+
+  # 募集に対する応募件数
+  def applications_count
+    recruitment_applications.count
+  end
+
+  # 募集に対する応募への承認数
+  def approved_applications_count
+    recruitment_applications.approved.count
+  end
+
   # 全募集パートが定員に達したら、募集ステータスを「定員到達」にする
   def all_parts_full?
     # 全て条件を満たせばtrue

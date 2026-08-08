@@ -10,13 +10,21 @@ class RecruitmentApplicationsController < ApplicationController
     end
 
     # 「相手から」 = 応募のあった自分の募集一覧を表示（同一募集への応募は1つの募集にまとめる）
-    @received_applications = BandRecruitment.joins(:recruitment_applications).where(band_recruitments: { user_id: current_user.id }).distinct
+    @received_applications = BandRecruitment.includes(:recruitment_applications).joins(:recruitment_applications).where(band_recruitments: { user_id: current_user.id }).distinct
     # 「自分から」 = 自分が応募した募集の一覧を取得
     @sent_applications = BandRecruitment.joins(:recruitment_applications).where(recruitment_applications: { user_id: current_user.id })
 
     if params[:filter] == "received"
-        # 募集ステータスをenumの昇順に並び替え、同じ募集ステータス内では募集期限の昇順に並び替え
-        @band_recruitments = @received_applications.order(:status, :deadline)
+        @band_recruitments = @received_applications.sort_by do |recruitment|
+          [
+            # 募集ステータスをenum順にする
+            recruitment.status_before_type_cast,
+            # 未対応の応募があれば0、なければ1
+            recruitment.has_pending_applications? ? 0 : 1,
+            # 募集期限順にする
+            recruitment.deadline
+          ]
+        end
     else # params[:filter] == "sent"
         @band_recruitments = @sent_applications.order(:status, :deadline)
     end
