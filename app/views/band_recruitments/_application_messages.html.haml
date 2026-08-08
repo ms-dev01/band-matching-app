@@ -26,22 +26,11 @@
                 .display-application-status.approved
                   = image_tag "check-approved.svg", class: "check-icon"
                   %span 承認済み
-              - else
+                -# 「参加希望」-「相手から」タブなら承認する/見送る操作が可能
+              - elsif @source == "received"
                 .display-btn-container
                   = button_to "見送る", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application), method: "patch", data: { turbo_confirm: "この応募を見送りますか？"}, params: { status: :rejected }, class: "btn-third rejected"
                 .display-btn-container
                   = button_to "承認する", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application), method: "patch", data: { turbo_confirm: "この応募を承認しますか？"}, params: { status: :approved }, class: "btn-third approved"
-          - if recruitment_application.application_comment.present?
-            .display-text.application= simple_format(recruitment_application.application_comment)
-  - elsif @band_recruitment.application_by(current_user)
-    .recruitment-section
-      .display-title 応募メッセージ
-      - current_user.recruitment_applications.where(band_recruitment: @band_recruitment).each do |recruitment_application|
-        .display-application
-          .card-icon-container.application
-            = image_tag recruitment_application.user.profile.avatar_image, class: 'card-icon application'
-            .card-icon-info.application
-              .card-icon-info-top.application= "#{recruitment_application.user.profile.nickname} (#{t("ui.parts.short.#{recruitment_application.user.profile.part}")})"
-              .card-icon-info-bottom.application= "#{recruitment_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{recruitment_application.user.profile.gender}")}"
           - if recruitment_application.application_comment.present?
             .display-text.application= simple_format(recruitment_application.application_comment)
