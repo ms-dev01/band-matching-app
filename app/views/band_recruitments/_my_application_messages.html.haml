@@ -1,0 +1,13 @@
+-# 自分が応募した募集の場合
+- recruitment_application = @band_recruitment.application_by(current_user)
+- if recruitment_application
+  .recruitment-section
+    .display-title 応募メッセージ
+    .display-application
+      .card-icon-container.application
+        = image_tag current_user.profile.avatar_image, class: 'card-icon application'
+        .card-icon-info.application
+          .card-icon-info-top.application= "#{current_user.profile.nickname} (#{t("ui.parts.short.#{current_user.profile.part}")})"
+          .card-icon-info-bottom.application= "#{current_user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{current_user.profile.gender}")}"
+      - if recruitment_application.application_comment.present?
+        .display-text.application= simple_format(recruitment_application.application_comment)

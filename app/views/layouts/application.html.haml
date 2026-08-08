@@ -52,7 +52,7 @@
           - else
             .tab-link.deactive 自分の募集一覧
           - if user_signed_in?
-            = link_to "参加希望", recruitment_applications_path, class: "#{active_parent_tab(controller: "recruitment_applications")} tab-link"
+            = link_to "参加希望", recruitment_applications_path(filter: "sent"), class: "#{active_parent_tab(controller: "recruitment_applications", filter: "sent")} tab-link"
           - else
             .tab-link.deactive 参加希望
         - if controller_name == "recruitment_applications"
