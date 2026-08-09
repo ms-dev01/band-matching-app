@@ -183,6 +183,7 @@
     margin: 10px 0 0 auto;
     width: fit-content;
     justify-content: center;
+    gap: 15px;
   }
 
   &.application {
@@ -195,27 +196,30 @@
   }
 }
 
+.card-icon-img {
+  position: relative;
+}
+
 .card-icon {
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   display: block;
   margin: 0;
-
-  &.application {
-    width: 45px;
-    height: 45px;
-  }
 }
 
 .card-icon-info {
+  &.detail {
+    margin-left: 15px;
+  }
+
   &.application {
     text-align: center;
   }
 }
 
 .card-icon-info-top {
-  font-size: 11px;
+  font-size: 12px;
 
   &.application {
     font-size: 13px;
@@ -223,11 +227,5 @@
 }
 
 .card-icon-info-bottom {
-  font-size: 9px;
-}
-
-.card-icon-profile {
-  position: absolute;
-  top: 47px;
-  right: 26px;
+  font-size: 10px;
 }
