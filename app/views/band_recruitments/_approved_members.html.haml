@@ -8,11 +8,12 @@
             .card-profile-compatibility
               相性:
               %span= "#{current_user.profile.profile_compatibility_with(approved_application.user.profile)}%"
-            = image_tag approved_application.user.profile.avatar_image, class: "card-icon application"
-            -# リンクをクリックしたら、画面遷移ではなく、profile_modal の中だけ更新
-            = link_to profile_path(approved_application.user.profile), data: { turbo_frame: "profile_modal" }, class: "card-icon-profile" do
-              = image_tag "magnifying-glass.svg", class: "magnifying-glass-icon"
-            = turbo_frame_tag "profile_modal"
+            .card-icon-img
+              = image_tag approved_application.user.profile.avatar_image, class: "card-icon"
+              -# リンクをクリックしたら、画面遷移ではなく、profile_modal の中だけ更新
+              = link_to profile_path(approved_application.user.profile), data: { turbo_frame: "profile_modal" }, class: "card-icon-profile" do
+                = image_tag "magnifying-glass.svg", class: "magnifying-glass-icon"
+              = turbo_frame_tag "profile_modal"
             .card-icon-info.application
               .card-icon-info-top.application= "#{approved_application.user.profile.nickname} (#{t("ui.parts.short.#{approved_application.user.profile.part}")})"
               .card-icon-info-bottom.application= "#{approved_application.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{approved_application.user.profile.gender}")}"

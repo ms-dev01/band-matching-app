@@ -58,7 +58,12 @@
           .card-team-name 未設定
       .card-title= @band_recruitment.title
       .card-icon-container.detail
-        = image_tag @band_recruitment.user.profile.avatar_image, class: 'card-icon'
+        .card-icon-img
+          = image_tag @band_recruitment.user.profile.avatar_image, class: 'card-icon'
+          -# リンクをクリックしたら、画面遷移ではなく、profile_modal の中だけ更新
+          = link_to profile_path(@band_recruitment.user.profile), data: { turbo_frame: "profile_modal" }, class: "card-icon-profile" do
+            = image_tag "magnifying-glass.svg", class: "magnifying-glass-icon"
+          = turbo_frame_tag "profile_modal"
         .card-icon-info
           .card-icon-info-top= "#{@band_recruitment.user.profile.nickname} (#{t("ui.parts.short.#{@band_recruitment.user.profile.part}")})"
           .card-icon-info-bottom= "#{@band_recruitment.user.profile.calculate_age}歳 / #{t("enums.profile.gender.#{@band_recruitment.user.profile.gender}")}"
