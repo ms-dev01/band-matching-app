@@ -10,6 +10,12 @@ class ProfilesController < ApplicationController
     unless turbo_frame_request? || @profile.user == current_user
       redirect_to root_path, alert: "権限がありません"
     end
+
+    # どの画面から遷移したか
+    @source = params[:source]
+    if turbo_frame_request?
+      @band_recruitment = BandRecruitment.find(params[:band_recruitment_id])
+    end
   end
 
   def new

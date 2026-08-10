@@ -13,4 +13,14 @@ class User < ApplicationRecord
   # ユーザーに紐づく募集を取得（中間テーブル経由）
   has_many :applied_band_recruitments, through: :recruitment_applications,
            source: :band_recruitment
+
+  def connected_with?(other_user, band_recruitment)
+    # 自分の募集に対してその応募者が承認されているか
+    if band_recruitment.user_id == id
+      other_user.recruitment_applications.approved.where(band_recruitment_id: band_recruitment.id).exists?
+    # 他人の募集に対して自分の応募が承認されているか
+    elsif band_recruitment.user_id == other_user.id
+      recruitment_applications.approved.where(band_recruitment_id: band_recruitment.id).exists?
+    end
+  end
 end

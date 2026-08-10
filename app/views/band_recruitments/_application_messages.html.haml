@@ -12,7 +12,7 @@
             .card-icon-img
               = image_tag recruitment_application.user.profile.avatar_image, class: "card-icon"
               -# リンクをクリックしたら、画面遷移ではなく、profile_modal の中だけ更新
-              = link_to profile_path(recruitment_application.user.profile), data: { turbo_frame: "profile_modal" }, class: "card-icon-profile" do
+              = link_to profile_path(recruitment_application.user.profile, band_recruitment_id: @band_recruitment, source: @source), data: { turbo_frame: "profile_modal" }, class: "card-icon-profile" do
                 = image_tag "magnifying-glass.svg", class: "magnifying-glass-icon"
               = turbo_frame_tag "profile_modal"
             .card-icon-info.application
@@ -30,8 +30,8 @@
                 -# 「参加希望」-「相手から」タブなら承認する/見送る操作が可能
               - elsif @source == "received"
                 .display-btn-container
-                  = button_to "見送る", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application), method: "patch", data: { turbo_confirm: "この応募を見送りますか？"}, params: { status: :rejected }, class: "btn-third rejected"
+                  = button_to "見送る", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application, source: @source), method: "patch", data: { turbo_confirm: "この応募を見送りますか？"}, params: { status: :rejected }, class: "btn-third rejected"
                 .display-btn-container
-                  = button_to "承認する", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application), method: "patch", data: { turbo_confirm: "この応募を承認しますか？"}, params: { status: :approved }, class: "btn-third approved"
+                  = button_to "承認する", band_recruitment_recruitment_application_path(@band_recruitment, recruitment_application, source: @source), method: "patch", data: { turbo_confirm: "この応募を承認しますか？"}, params: { status: :approved }, class: "btn-third approved"
           - if recruitment_application.application_comment.present?
             .display-text.application= simple_format(recruitment_application.application_comment)

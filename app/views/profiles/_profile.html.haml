@@ -63,9 +63,13 @@
       %ul.display-group-wrapper
         - @profile.favorite_bands.each do |favorite_band|
           %li.display-group-content= favorite_band.name
-.profile-section
-  .display-title SNSリンク
-  .display-text= simple_format(@profile.sns_links)
+- if (@source == "received" || @source == "sent" || @source == "my-band-recruitment") && current_user.connected_with?(@profile.user, @band_recruitment) || @profile.user == current_user
+  .profile-section
+    .display-title SNSリンク
+    - if @profile.sns_links.blank?
+      .display-text 未登録
+    - else
+      .display-text= simple_format(@profile.sns_links)
 .profile-section
   .display-title 自己紹介
   .display-text= simple_format(@profile.bio)
