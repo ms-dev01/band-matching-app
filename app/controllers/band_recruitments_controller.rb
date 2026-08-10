@@ -59,7 +59,7 @@ class BandRecruitmentsController < ApplicationController
 
     # DBに値が保存されれば、作成された募集ページに飛ぶ
     if @band_recruitment.save
-      redirect_to band_recruitment_path(@band_recruitment), notice: "作成できました"
+      redirect_to band_recruitment_path(@band_recruitment, source: "my-band-recruitment"), notice: "作成できました"
     else
       rebuild_parts
       flash.now[:error] = "作成できませんでした"
@@ -71,7 +71,7 @@ class BandRecruitmentsController < ApplicationController
   def edit
     # 一人でも承認したら、その募集の編集・削除はできない
     if @band_recruitment.recruitment_applications.approved.exists? || @band_recruitment.status == "closed"
-      redirect_to band_recruitment_path(@band_recruitment), alert: "編集できません"
+      redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "編集できません"
     end
       rebuild_parts
   end
@@ -86,7 +86,7 @@ class BandRecruitmentsController < ApplicationController
 
     # 更新できたら、更新した募集詳細画面に飛ぶ
     if @band_recruitment.update(band_recruitment_params)
-      redirect_to band_recruitment_path(@band_recruitment), notice: "更新できました"
+      redirect_to band_recruitment_path(@band_recruitment, source: "my-band-recruitment"), notice: "更新できました"
     else
       rebuild_parts
       flash.now[:error] = "更新できませんでした"

@@ -43,13 +43,13 @@ class RecruitmentApplicationsController < ApplicationController
 
     # 募集パートがなければ、エラーメッセージを表示
     unless @band_recruitment.recruitment_parts.exists?(part: @application.application_part)
-      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは募集されていません"
+      redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "このパートは募集されていません"
       return
     end
 
     # 承認するパートが定員に達していたら、エラーメッセージを表示
     if @band_recruitment.part_full?(@application.application_part)
-      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは定員に達しています"
+      redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "このパートは定員に達しています"
       return
     end
 
@@ -69,7 +69,7 @@ class RecruitmentApplicationsController < ApplicationController
     if params[:status] == "approved"
       # 承認するパートが定員に達していたら、エラーメッセージを表示
       if @band_recruitment.part_full?(@application.application_part)
-        redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは定員に達しています"
+        redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "このパートは定員に達しています"
         return
       end
       if @application.update(status: :approved)
@@ -81,18 +81,18 @@ class RecruitmentApplicationsController < ApplicationController
         if @band_recruitment.all_parts_full?
           @band_recruitment.update(status: :full)
         end
-        redirect_to band_recruitment_path(@band_recruitment), notice: "承認しました"
+        redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), notice: "承認しました"
       else
-        redirect_to band_recruitment_path(@band_recruitment), alert: "承認できませんでした"
+        redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "承認できませんでした"
       end
     elsif params[:status] == "rejected"
       if @application.update(status: :rejected)
-        redirect_to band_recruitment_path(@band_recruitment), notice: "見送りました"
+        redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), notice: "見送りました"
       else
-        redirect_to band_recruitment_path(@band_recruitment), alert: "見送りできませんでした"
+        redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "見送りできませんでした"
       end
     else
-      redirect_to band_recruitment_path(@band_recruitment), alert: "操作できませんでした"
+      redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "操作できませんでした"
     end
   end
 
