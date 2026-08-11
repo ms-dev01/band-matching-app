@@ -1,12 +1,12 @@
 .container
-  %h2.devise-h2 Resend unlock instructions
+  %h2.devise-h2 ロック解除用メールを再送する
   %div.devise-container
     = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
       = render "devise/shared/error_messages", resource: resource
       .field
-        = f.label :email, class: 'text'
+        = f.label :email, "メールアドレス", class: 'text'
         %br/
         = f.email_field :email, autofocus: true, autocomplete: "email", class: 'text-input'
       .actions
-        = f.submit "Resend unlock instructions", class: 'devise-btn'
+        = f.submit "送信", class: 'devise-btn'
     = render "devise/shared/links"
