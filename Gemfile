@@ -22,6 +22,8 @@ gem "hamlit"
 gem "sassc-rails"
 # ユーザー認証機能を簡単に実装するためのgem
 gem "devise"
+# deviseの国際化用
+gem "devise-i18n"
 # ダミーデータ作成用ツール
 gem "faker"
 
