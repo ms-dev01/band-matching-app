@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   # ログインしていないと使えないようにする
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update ]
   before_action :set_profile, only: [ :show, :edit, :update ]
   # 自分以外のプロフィールは編集できないようにする
   before_action :authorize_profile!, only: [ :edit, :update ]
