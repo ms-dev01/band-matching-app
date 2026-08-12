@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BandRecruitment, type: :model do
   # ユーザーの作成
-  let!(:user) { create(:user, email: 'test@sample.com') }
+  let!(:user) { create(:user) }
 
   # プロフィールの作成
   let!(:profile) { create(:profile) }
