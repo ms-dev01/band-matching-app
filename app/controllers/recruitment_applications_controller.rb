@@ -1,6 +1,9 @@
 class RecruitmentApplicationsController < ApplicationController
   # ログインしていないと使えないようにする
   before_action :authenticate_user!
+  before_action :set_band_recruitment, only: [ :create, :update ]
+  before_action :authorize_create, only: [ :create ]
+  before_action :authorize_update, only: [ :update ]
 
   def index
     # 募集ステータスの更新
@@ -34,8 +37,6 @@ class RecruitmentApplicationsController < ApplicationController
   end
 
   def create
-    @band_recruitment = BandRecruitment.find(params[:band_recruitment_id])
-
     @application = current_user.recruitment_applications.build(recruitment_application_params)
     @application.band_recruitment = @band_recruitment
     @application.application_part = current_user.profile.part
@@ -43,13 +44,13 @@ class RecruitmentApplicationsController < ApplicationController
 
     # 募集パートがなければ、エラーメッセージを表示
     unless @band_recruitment.recruitment_parts.exists?(part: @application.application_part)
-      redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "このパートは募集されていません"
+      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは募集されていません"
       return
     end
 
     # 承認するパートが定員に達していたら、エラーメッセージを表示
     if @band_recruitment.part_full?(@application.application_part)
-      redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "このパートは定員に達しています"
+      redirect_to band_recruitment_path(@band_recruitment), alert: "このパートは定員に達しています"
       return
     end
 
@@ -62,7 +63,6 @@ class RecruitmentApplicationsController < ApplicationController
   end
 
   def update
-    @band_recruitment = BandRecruitment.find(params[:band_recruitment_id])
     @application = @band_recruitment.recruitment_applications.find(params[:id])
 
     # 応募ステータスの変更
@@ -93,6 +93,22 @@ class RecruitmentApplicationsController < ApplicationController
       end
     else
       redirect_to band_recruitment_path(@band_recruitment, source: params[:source]), alert: "操作できませんでした"
+    end
+  end
+
+  def set_band_recruitment
+    @band_recruitment = BandRecruitment.find(params[:band_recruitment_id])
+  end
+
+  def authorize_create
+    if @band_recruitment.user == current_user
+      redirect_to band_recruitment_path(@band_recruitment), alert: "自分の募集には参加希望できません"
+    end
+  end
+
+  def authorize_update
+    unless @band_recruitment.user == current_user
+      redirect_to band_recruitment_path(@band_recruitment), alert: "権限がありません"
     end
   end
 
