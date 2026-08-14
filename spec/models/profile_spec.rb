@@ -37,7 +37,7 @@ RSpec.describe Profile, type: :model do
   # 前提条件
   context '必須項目が入力されている場合' do
     # プロフィールの作成
-    let!(:profile) { create(:profile) }
+    let!(:profile) { create(:profile, user: user) }
 
     # be_valid = 保存できる状態であるか確認する
     it 'プロフィールを保存できる' do

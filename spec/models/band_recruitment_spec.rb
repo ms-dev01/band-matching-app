@@ -5,7 +5,7 @@ RSpec.describe BandRecruitment, type: :model do
   let!(:user) { create(:user) }
 
   # プロフィールの作成
-  let!(:profile) { create(:profile) }
+  let!(:profile) { create(:profile, user: user) }
 
   # 活動ジャンルの作成
   let!(:activity_genres) do
@@ -176,7 +176,7 @@ RSpec.describe BandRecruitment, type: :model do
       )
       band_recruitment
     end
-    let!(:applicant_profile) { create(:profile, activity_style: :hobby, music_type: :cover) }
+    let!(:applicant_profile) { create(:profile, user: user, activity_style: :hobby, music_type: :cover) }
 
     # itが実行される前に必ず走る処理
     before do
@@ -201,7 +201,7 @@ RSpec.describe BandRecruitment, type: :model do
       )
       band_recruitment
     end
-    let!(:applicant_profile) { create(:profile, activity_style: :hobby, music_type: :cover) }
+    let!(:applicant_profile) { create(:profile, user: user, activity_style: :hobby, music_type: :cover) }
 
     # itが実行される前に必ず走る処理
     before do
@@ -226,7 +226,7 @@ RSpec.describe BandRecruitment, type: :model do
       )
       band_recruitment
     end
-    let!(:applicant_profile) { create(:profile, activity_style: :amateur, music_type: :cover) }
+    let!(:applicant_profile) { create(:profile, user: user, activity_style: :amateur, music_type: :cover) }
 
     # itが実行される前に必ず走る処理
     before do
