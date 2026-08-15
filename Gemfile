@@ -65,6 +65,12 @@ group :development, :test do
 
   # デバッグツール追加
   gem "pry-byebug"
+
+  # rspec
+  gem "rspec-rails"
+
+  # factory_bot
+  gem "factory_bot_rails"
 end
 
 group :development do
