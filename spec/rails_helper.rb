@@ -72,6 +72,7 @@ RSpec.configure do |config|
 
   # RSpecの中でFactoryBotのメソッドを「FactoryBot.」なしで使えるようにする設定
   config.include FactoryBot::Syntax::Methods
-  # RSpecのrequest specでDeviseの機能を使えるようにする
+  # RSpecでDeviseの機能を使えるようにする
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :system
 end
