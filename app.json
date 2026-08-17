@@ -1,0 +1,14 @@
+{
+  "name": "band-matching-app",
+  "description": "This is band-matching-app",
+  "keywords": [],
+  "website": "",
+  "repository": "https://github.com/ms-dev01/band-matching-app",
+  "env": {},
+  "addons": ["heroku-postgresql:essential-0"],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
