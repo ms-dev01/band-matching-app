@@ -26,6 +26,9 @@ gem "devise"
 gem "devise-i18n"
 # ダミーデータ作成用ツール
 gem "faker"
+# AWSが用意しているgemで、S3に画像やファイルをアップロードできる
+# require: false = Rails起動時に自動で読み込まない
+gem 'aws-sdk-s3', require: false
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -71,6 +74,9 @@ group :development, :test do
 
   # factory_bot
   gem "factory_bot_rails"
+
+  # 環境変数設定用
+  gem 'dotenv-rails'
 end
 
 group :development do
