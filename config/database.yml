@@ -1,7 +1,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
   timeout: 5000
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
@@ -14,6 +13,10 @@ test:
   database: band_app_test
 
 production:
-  <<: *default
-  database: band_app_production
-  url: <%= ENV['DATABASE_URL'] %>
+  primary:
+    <<: *default
+    database: band_app_production
+    url: <%= ENV['DATABASE_URL'] %>
+  cable:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
