@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    // 以下を追記
+    "jsx": "react",
+    // ソースマップを有効化
+    "sourceMap": true,
+    // どのくらい新しいJavaScriptとして出力するか
+    "target": "ES2020",
+    // import/exportをどのモジュール方式として扱うか
+    "module": "ESNext",
+    // 厳密モードとして設定（曖昧な書き方をするとエラーになる）
+    "strict": true,
+    // CommonJS形式のモジュールとES Modules形式のimportの違いを、TypeScript側でうまく扱えるようにする設定
+    "esModuleInterop": true
+  },
+  "include": ["app/javascript"]
+}

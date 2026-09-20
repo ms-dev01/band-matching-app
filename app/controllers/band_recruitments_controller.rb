@@ -10,24 +10,100 @@ class BandRecruitmentsController < ApplicationController
       band_recruitment.update_status!
     end
 
-    if params[:filter] == "my-band-recruitment"
-      # 募集ステータスをenumの昇順に並び替え、同じ募集ステータス内では募集期限の昇順に並び替え
-      @band_recruitments = current_user.band_recruitments.includes(:recruitment_applications).order(:status, :deadline)
-    elsif user_signed_in?
-      # ログインしている場合
-      profile = current_user.profile
-      # プロフィールの活動地域が設定されている場合
-      if profile.activity_area_ids.present?
-        activity_area_ids = profile.activity_area_ids
-        # プロフィールの活動地域・パートで募集を絞り込み
-        @band_recruitments = BandRecruitment.joins(:recruitment_parts).joins(:recruitment_activity_areas).where(recruitment_parts: { part: profile.part }).where(recruitment_activity_areas: { activity_area_id: activity_area_ids }).distinct.order(:status, :deadline)
+    if user_signed_in?
+      if params[:filter] == "my-band-recruitment"
+        # 募集ステータスをenumの昇順に並び替え、同じ募集ステータス内では募集期限の昇順に並び替え
+        @band_recruitments = current_user.band_recruitments.includes(:recruitment_applications).order(:status, :deadline)
       else
-        # プロフィールのパートで募集を絞り込み
-        @band_recruitments = BandRecruitment.joins(:recruitment_parts).where(recruitment_parts: { part: profile.part }).order(:status, :deadline)
+        profile = current_user.profile
+        # プロフィールの活動地域が設定されている場合
+        if profile.activity_area_ids.present?
+          activity_area_ids = profile.activity_area_ids
+          # プロフィールの活動地域・パートで募集を絞り込み
+          @band_recruitments = BandRecruitment.joins(:recruitment_parts).joins(:recruitment_activity_areas).where(recruitment_parts: { part: profile.part }).where(recruitment_activity_areas: { activity_area_id: activity_area_ids }).distinct.order(:status, :deadline)
+        else
+          # プロフィールのパートで募集を絞り込み
+          @band_recruitments = BandRecruitment.joins(:recruitment_parts).where(recruitment_parts: { part: profile.part }).order(:status, :deadline)
+        end
       end
     else
       # ログインしていない場合
       @band_recruitments = BandRecruitment.order(:status, :deadline)
+    end
+
+    # リクエストされた形式によって処理を分ける
+    respond_to do |format|
+      # HTMLならHamlを表示
+      format.html
+      format.json do
+        # JSONで要求されたら、@band_recruitmentsをJSONに変換して返す
+        render json: {
+          currentUser: {
+            signedIn: user_signed_in?
+          },
+          bandRecruitments: @band_recruitments.map do |band_recruitment|
+            {
+              id: band_recruitment.id,
+              user: {
+                userId: band_recruitment.user_id,
+                profile: {
+                  nickname: band_recruitment.user.profile.nickname,
+                  part: I18n.t("ui.parts.short.#{band_recruitment.user.profile.part}"),
+                  calculateAge: band_recruitment.user.profile.calculate_age,
+                  gender: I18n.t("enums.profile.gender.#{band_recruitment.user.profile.gender}"),
+                  avatarImage:
+                    if band_recruitment.user.profile.avatar&.attached?
+                      url_for(band_recruitment.user.profile.avatar)
+                    else
+                      helpers.asset_path("default-avatar.png")
+                    end
+                }
+              },
+              teamName: band_recruitment.team_name,
+              title: band_recruitment.title,
+              activityStyle: band_recruitment.activity_style,
+              activityStyleLabel: I18n.t("enums.band_recruitment.activity_style.#{band_recruitment.activity_style}"),
+              practiceFrequencyUnit: band_recruitment.practice_frequency_unit,
+              practiceFrequencyUnitLabel: I18n.t("enums.band_recruitment.practice_frequency_unit.#{band_recruitment.practice_frequency_unit}"),
+              practiceFrequencyCount: band_recruitment.practice_frequency_count,
+              practiceStyle: band_recruitment.practice_style,
+              practiceStyleLabel: I18n.t("enums.band_recruitment.practice_style.#{band_recruitment.practice_style}"),
+              musicType: band_recruitment.music_type,
+              musicTypeLabel: I18n.t("enums.band_recruitment.music_type.#{band_recruitment.music_type}"),
+              wantsLivePerformance: band_recruitment.wants_live_performance,
+              deadline: band_recruitment.deadline,
+              status: band_recruitment.status,
+              statusLabel: I18n.t("enums.band_recruitment.status.#{band_recruitment.status}"),
+              comment: band_recruitment.comment,
+              recruitmentParts: band_recruitment.recruitment_parts.sort_by { |rp| RecruitmentPart.parts[rp.part] }.map do |rp|
+                {
+                  id: rp.id,
+                  bandRecruitmentId: band_recruitment.id,
+                  part: I18n.t("enums.recruitment_part.part.#{rp.part}"),
+                  maxCount: rp.max_count,
+                  full: band_recruitment.part_full?(rp.part)
+                }
+              end,
+              activityGenres: band_recruitment.activity_genres.map do |activity_genre|
+                {
+                  id: activity_genre.id,
+                  name: activity_genre.name
+                }
+              end,
+              activityAreas: band_recruitment.activity_areas.map do |activity_area|
+                {
+                  id: activity_area.id,
+                  name: activity_area.name
+                }
+              end,
+              isOwner: user_signed_in? && band_recruitment.owner?(current_user),
+              hasApprovedApplications: band_recruitment.has_approved_applications?,
+              approvedApplicationsCount: band_recruitment.approved_applications_count,
+              recruitmentCompatibility: user_signed_in? ? band_recruitment.recruitment_compatibility_with(current_user.profile) : nil
+            }
+          end
+        }
+      end
     end
   end
 

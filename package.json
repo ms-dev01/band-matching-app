@@ -1,0 +1,39 @@
+{
+  "name": "band_app",
+  "version": "1.0.0",
+  "description": "Gather Bandは、バンドの募集者と応募者が相性を確認してからマッチングできるバンドマッチングアプリです。<br/> 応募者は募集内容との相性と募集者のプロフィールを確認してから応募ができ、募集者は応募者のプロフィールと人物相性を確認してから承認/見送りを判断できます。<br/> 相性や活動の方向性を確認してからバンドを組めるサービスが欲しいと考え、開発しました。",
+  "homepage": "https://github.com/ms-dev01/band-matching-app#readme",
+  "bugs": {
+    "url": "https://github.com/ms-dev01/band-matching-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ms-dev01/band-matching-app.git"
+  },
+  "license": "ISC",
+  "author": "ms-dev01",
+  "type": "commonjs",
+  "main": "app/javascript/react/main.tsx",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "build:dev": "webpack"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "ts-loader": "9.6.2",
+    "typescript": "5.9.3",
+    "webpack": "5.110.2",
+    "webpack-cli": "7.2.3"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  }
+}
