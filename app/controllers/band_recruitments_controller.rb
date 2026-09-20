@@ -51,11 +51,12 @@ class BandRecruitmentsController < ApplicationController
                   part: I18n.t("ui.parts.short.#{band_recruitment.user.profile.part}"),
                   calculateAge: band_recruitment.user.profile.calculate_age,
                   gender: I18n.t("enums.profile.gender.#{band_recruitment.user.profile.gender}"),
-                  avatarImage: if band_recruitment.user.profile.avatar&.attached?
-                    url_for(band_recruitment.user.profile.avatar)
-                  else
-                    helpers.asset_path("default-avatar.png")
-                  end
+                  avatarImage:
+                    if band_recruitment.user.profile.avatar&.attached?
+                      url_for(band_recruitment.user.profile.avatar)
+                    else
+                      helpers.asset_path("default-avatar.png")
+                    end
                 }
               },
               teamName: band_recruitment.team_name,
