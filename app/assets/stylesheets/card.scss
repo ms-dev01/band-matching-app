@@ -137,6 +137,17 @@
   padding: 0;
 }
 
+.card-content-item {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
 .card-content-text {
   color: $main-color;
   font-size: 11px;
@@ -166,6 +177,7 @@
 
   &.part_full {
     color: $inactive-color;
+    font-size: 12px;
   }
 }
 
