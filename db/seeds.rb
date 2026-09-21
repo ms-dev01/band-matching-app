@@ -9,11 +9,12 @@
 #   end
 
 # ダミーデータの作成
-cat = User.create!(email: "cat@sample.com", password: "password")
-dog = User.create!(email: "dog@sample.com", password: "password")
-rabbit = User.create!(email: "rabbit@sample.com", password: "password")
+cat = User.find_or_create_by!(email: "cat@sample.com", password: "password")
+dog = User.find_or_create_by!(email: "dog@sample.com", password: "password")
+rabbit = User.find_or_create_by!(email: "rabbit@sample.com", password: "password")
+guest_user = User.find_or_create_by!(email: "guest@sample.com", password: "password")
 
-users = [ cat, dog, rabbit ]
+users = [ cat, dog, rabbit, guest_user ]
 
 users.each do |user|
   user.create_profile!(
@@ -21,23 +22,25 @@ users.each do |user|
     gender: "male",
     birth_date: Date.today - 40.years,
     part: "vocal"
-  )
+  ) unless user.profile
 
-  6.times do
-    recruitment = user.band_recruitments.build(
-      user: user,
-      title: Faker::Lorem.sentence(word_count: 3),
-      # 今日から30日以内の未来の日付をランダムで返す
-      deadline: Faker::Date.forward(days: 30),
-      status: 0
-    )
+  if user.band_recruitments.empty?
+    5.times do
+      recruitment = user.band_recruitments.build(
+        user: user,
+        title: Faker::Lorem.sentence(word_count: 3),
+        # 今日から30日以内の未来の日付をランダムで返す
+        deadline: Faker::Date.forward(days: 30),
+        status: 0
+      )
 
-    recruitment.recruitment_parts.build(
-    part: "vocal",
-    max_count: 1
-    )
+      recruitment.recruitment_parts.build(
+      part: "vocal",
+      max_count: 1
+      )
 
-    recruitment.save!
+      recruitment.save!
+    end
   end
 end
 

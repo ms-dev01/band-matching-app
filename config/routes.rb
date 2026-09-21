@@ -24,4 +24,7 @@ Rails.application.routes.draw do
     resources :recruitment_applications, only: [ :create, :update ]
   end
   resources :recruitment_applications, only: [ :index ]
+
+  # ゲストログイン
+  post "guest_login", to: "guest_sessions#create", as: :guest_login
 end

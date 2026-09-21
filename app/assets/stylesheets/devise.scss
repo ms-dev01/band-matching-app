@@ -55,6 +55,16 @@ input {
   }
 }
 
+.guest-login-container {
+  margin-top: 10px;
+}
+
+.guest-login-btn {
+  margin-top: 5px;
+  display: inline-block;
+  color: $main-color;
+}
+
 .devise-error-message {
   font-size: 12px;
   list-style: none;
