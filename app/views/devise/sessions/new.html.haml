@@ -16,4 +16,7 @@
           = f.label :remember_me, "ログイン状態を保持する", class: 'text-mini'
       .actions
         = f.submit "ログイン", class: 'devise-btn login'
+    .guest-login-container
+      .guest-login-or または
+      = link_to "ゲストログイン", guest_login_path, data: { turbo_method: :post }, class: 'guest-login-btn'
   = render "devise/shared/links"
