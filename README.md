@@ -5,6 +5,7 @@ Gather Bandは、バンドの募集者と応募者が相性を確認してから
 
 ※本アプリはポートフォリオ作品です。本アプリの利用によって生じたトラブル等については、一切の責任を負いかねます。<br/>
 ※個人情報保護のため、実際に利用しているメールアドレスの登録はお控えください。<br/>
+※アプリの機能をお試しいただく際は、ログイン→「ゲストログイン」をご利用ください。ゲストアカウントで各種機能をお試しいただけます。<br/>
 
 アプリURL：https://band-app-production-97ba5b7758b6.herokuapp.com/
 <br/><br/>
@@ -33,6 +34,8 @@ https://github.com/user-attachments/assets/28ea085c-35f5-49d0-bde9-be232ff5fef6
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat&logo=sass&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
 ![Haml](https://img.shields.io/badge/Haml-000000?style=flat)
 
 <h3>インフラ・データベース</h3>
